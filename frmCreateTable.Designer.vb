@@ -25,15 +25,15 @@ Partial Class frmCreateTable
         Me.lblTableName = New System.Windows.Forms.Label
         Me.txtTableName = New System.Windows.Forms.TextBox
         Me.dgvCreateTable = New System.Windows.Forms.DataGridView
-        Me.cmdDelete = New System.Windows.Forms.Button
-        Me.cmdCancel = New System.Windows.Forms.Button
-        Me.cmdOk = New System.Windows.Forms.Button
         Me.ColumnName = New System.Windows.Forms.DataGridViewTextBoxColumn
         Me.DataType = New System.Windows.Forms.DataGridViewComboBoxColumn
         Me.ucLength = New System.Windows.Forms.DataGridViewTextBoxColumn
         Me.ucAllowNulls = New System.Windows.Forms.DataGridViewComboBoxColumn
         Me.ucUnique = New System.Windows.Forms.DataGridViewComboBoxColumn
         Me.ucPrimaryKey = New System.Windows.Forms.DataGridViewComboBoxColumn
+        Me.cmdDelete = New System.Windows.Forms.Button
+        Me.cmdCancel = New System.Windows.Forms.Button
+        Me.cmdOk = New System.Windows.Forms.Button
         CType(Me.dgvCreateTable, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -42,7 +42,7 @@ Partial Class frmCreateTable
         Me.lblTableName.AutoSize = True
         Me.lblTableName.Location = New System.Drawing.Point(15, 20)
         Me.lblTableName.Name = "lblTableName"
-        Me.lblTableName.Size = New System.Drawing.Size(39, 15)
+        Me.lblTableName.Size = New System.Drawing.Size(41, 15)
         Me.lblTableName.TabIndex = 0
         Me.lblTableName.Text = "&Name"
         '
@@ -50,7 +50,7 @@ Partial Class frmCreateTable
         '
         Me.txtTableName.Location = New System.Drawing.Point(64, 15)
         Me.txtTableName.Name = "txtTableName"
-        Me.txtTableName.Size = New System.Drawing.Size(468, 23)
+        Me.txtTableName.Size = New System.Drawing.Size(468, 21)
         Me.txtTableName.TabIndex = 1
         '
         'dgvCreateTable
@@ -73,6 +73,61 @@ Partial Class frmCreateTable
         Me.dgvCreateTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvCreateTable.Size = New System.Drawing.Size(514, 219)
         Me.dgvCreateTable.TabIndex = 2
+        '
+        'ColumnName
+        '
+        Me.ColumnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.ColumnName.HeaderText = "Column Name"
+        Me.ColumnName.Name = "ColumnName"
+        Me.ColumnName.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.ColumnName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'DataType
+        '
+        Me.DataType.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.DataType.HeaderText = "Data Type"
+        Me.DataType.Items.AddRange(New Object() {"bigint", "binary", "bit", "datetime", "float", "image", "int", "money", "nchar", "nvarchar", "ntext", "numeric", "real", "smallint", "uniqueidentifier", "tinyint", "varbinary"})
+        Me.DataType.Name = "DataType"
+        Me.DataType.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        '
+        'ucLength
+        '
+        Me.ucLength.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.ucLength.HeaderText = "Length"
+        Me.ucLength.Name = "ucLength"
+        Me.ucLength.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.ucLength.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.ucLength.Width = 51
+        '
+        'ucAllowNulls
+        '
+        Me.ucAllowNulls.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.ucAllowNulls.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.ucAllowNulls.HeaderText = "Allow Nulls"
+        Me.ucAllowNulls.Items.AddRange(New Object() {"Yes", "No"})
+        Me.ucAllowNulls.Name = "ucAllowNulls"
+        Me.ucAllowNulls.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.ucAllowNulls.Width = 73
+        '
+        'ucUnique
+        '
+        Me.ucUnique.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.ucUnique.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.ucUnique.HeaderText = "Unique"
+        Me.ucUnique.Items.AddRange(New Object() {"No", "Yes"})
+        Me.ucUnique.Name = "ucUnique"
+        Me.ucUnique.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.ucUnique.Width = 53
+        '
+        'ucPrimaryKey
+        '
+        Me.ucPrimaryKey.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.ucPrimaryKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.ucPrimaryKey.HeaderText = "Primary Key"
+        Me.ucPrimaryKey.Items.AddRange(New Object() {"No", "Yes"})
+        Me.ucPrimaryKey.Name = "ucPrimaryKey"
+        Me.ucPrimaryKey.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.ucPrimaryKey.Width = 78
         '
         'cmdDelete
         '
@@ -101,61 +156,6 @@ Partial Class frmCreateTable
         Me.cmdOk.Text = "&OK"
         Me.cmdOk.UseVisualStyleBackColor = True
         '
-        'ColumnName
-        '
-        Me.ColumnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.ColumnName.HeaderText = "Column Name"
-        Me.ColumnName.Name = "ColumnName"
-        Me.ColumnName.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.ColumnName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'DataType
-        '
-        Me.DataType.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.DataType.HeaderText = "Data Type"
-        Me.DataType.Items.AddRange(New Object() {"bigint", "binary", "bit", "datetime", "float", "image", "int", "money", "nchar", "nvarchar", "ntext", "numeric", "real", "smallint", "uniqueidentifier", "tinyint", "varbinary"})
-        Me.DataType.Name = "DataType"
-        Me.DataType.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        '
-        'ucLength
-        '
-        Me.ucLength.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
-        Me.ucLength.HeaderText = "Length"
-        Me.ucLength.Name = "ucLength"
-        Me.ucLength.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.ucLength.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.ucLength.Width = 50
-        '
-        'ucAllowNulls
-        '
-        Me.ucAllowNulls.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
-        Me.ucAllowNulls.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ucAllowNulls.HeaderText = "Allow Nulls"
-        Me.ucAllowNulls.Items.AddRange(New Object() {"Yes", "No"})
-        Me.ucAllowNulls.Name = "ucAllowNulls"
-        Me.ucAllowNulls.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.ucAllowNulls.Width = 73
-        '
-        'ucUnique
-        '
-        Me.ucUnique.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
-        Me.ucUnique.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ucUnique.HeaderText = "Unique"
-        Me.ucUnique.Items.AddRange(New Object() {"No", "Yes"})
-        Me.ucUnique.Name = "ucUnique"
-        Me.ucUnique.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.ucUnique.Width = 51
-        '
-        'ucPrimaryKey
-        '
-        Me.ucPrimaryKey.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
-        Me.ucPrimaryKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ucPrimaryKey.HeaderText = "Primary Key"
-        Me.ucPrimaryKey.Items.AddRange(New Object() {"No", "Yes"})
-        Me.ucPrimaryKey.Name = "ucPrimaryKey"
-        Me.ucPrimaryKey.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.ucPrimaryKey.Width = 76
-        '
         'frmCreateTable
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -167,7 +167,7 @@ Partial Class frmCreateTable
         Me.Controls.Add(Me.dgvCreateTable)
         Me.Controls.Add(Me.txtTableName)
         Me.Controls.Add(Me.lblTableName)
-        Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.MinimizeBox = False

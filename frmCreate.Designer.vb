@@ -71,7 +71,7 @@ Partial Class frmCreate
         Me.txtPassword.Location = New System.Drawing.Point(125, 68)
         Me.txtPassword.Name = "txtPassword"
         Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txtPassword.Size = New System.Drawing.Size(251, 23)
+        Me.txtPassword.Size = New System.Drawing.Size(251, 21)
         Me.txtPassword.TabIndex = 6
         '
         'txtDBPath
@@ -80,7 +80,7 @@ Partial Class frmCreate
         Me.txtDBPath.Location = New System.Drawing.Point(125, 11)
         Me.txtDBPath.Name = "txtDBPath"
         Me.txtDBPath.ReadOnly = True
-        Me.txtDBPath.Size = New System.Drawing.Size(251, 23)
+        Me.txtDBPath.Size = New System.Drawing.Size(251, 21)
         Me.txtDBPath.TabIndex = 1
         '
         'chkIsEncrypted
@@ -88,7 +88,7 @@ Partial Class frmCreate
         Me.chkIsEncrypted.AutoSize = True
         Me.chkIsEncrypted.Location = New System.Drawing.Point(125, 126)
         Me.chkIsEncrypted.Name = "chkIsEncrypted"
-        Me.chkIsEncrypted.Size = New System.Drawing.Size(117, 19)
+        Me.chkIsEncrypted.Size = New System.Drawing.Size(122, 19)
         Me.chkIsEncrypted.TabIndex = 9
         Me.chkIsEncrypted.Text = "&Encrypt Database"
         Me.chkIsEncrypted.UseVisualStyleBackColor = True
@@ -98,7 +98,7 @@ Partial Class frmCreate
         Me.lblPassword.AutoSize = True
         Me.lblPassword.Location = New System.Drawing.Point(55, 72)
         Me.lblPassword.Name = "lblPassword"
-        Me.lblPassword.Size = New System.Drawing.Size(57, 15)
+        Me.lblPassword.Size = New System.Drawing.Size(61, 15)
         Me.lblPassword.TabIndex = 5
         Me.lblPassword.Text = "&Password"
         '
@@ -107,7 +107,7 @@ Partial Class frmCreate
         Me.lblSqlDbName.AutoSize = True
         Me.lblSqlDbName.Location = New System.Drawing.Point(23, 15)
         Me.lblSqlDbName.Name = "lblSqlDbName"
-        Me.lblSqlDbName.Size = New System.Drawing.Size(89, 15)
+        Me.lblSqlDbName.Size = New System.Drawing.Size(92, 15)
         Me.lblSqlDbName.TabIndex = 0
         Me.lblSqlDbName.Text = "&Folder to create"
         '
@@ -116,7 +116,7 @@ Partial Class frmCreate
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(8, 101)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(104, 15)
+        Me.Label1.Size = New System.Drawing.Size(107, 15)
         Me.Label1.TabIndex = 7
         Me.Label1.Text = "&Confirm Password"
         '
@@ -125,7 +125,7 @@ Partial Class frmCreate
         Me.txtConfirmPassword.Location = New System.Drawing.Point(125, 97)
         Me.txtConfirmPassword.Name = "txtConfirmPassword"
         Me.txtConfirmPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txtConfirmPassword.Size = New System.Drawing.Size(251, 23)
+        Me.txtConfirmPassword.Size = New System.Drawing.Size(251, 21)
         Me.txtConfirmPassword.TabIndex = 8
         '
         'lblDbName
@@ -133,7 +133,7 @@ Partial Class frmCreate
         Me.lblDbName.AutoSize = True
         Me.lblDbName.Location = New System.Drawing.Point(22, 44)
         Me.lblDbName.Name = "lblDbName"
-        Me.lblDbName.Size = New System.Drawing.Size(90, 15)
+        Me.lblDbName.Size = New System.Drawing.Size(97, 15)
         Me.lblDbName.TabIndex = 3
         Me.lblDbName.Text = "&Database Name"
         '
@@ -141,7 +141,7 @@ Partial Class frmCreate
         '
         Me.txtDBName.Location = New System.Drawing.Point(125, 40)
         Me.txtDBName.Name = "txtDBName"
-        Me.txtDBName.Size = New System.Drawing.Size(251, 23)
+        Me.txtDBName.Size = New System.Drawing.Size(251, 21)
         Me.txtDBName.TabIndex = 4
         '
         'chkOverwrite
@@ -149,7 +149,7 @@ Partial Class frmCreate
         Me.chkOverwrite.AutoSize = True
         Me.chkOverwrite.Location = New System.Drawing.Point(124, 151)
         Me.chkOverwrite.Name = "chkOverwrite"
-        Me.chkOverwrite.Size = New System.Drawing.Size(118, 19)
+        Me.chkOverwrite.Size = New System.Drawing.Size(120, 19)
         Me.chkOverwrite.TabIndex = 10
         Me.chkOverwrite.Text = "&Overwrite if exists"
         Me.chkOverwrite.UseVisualStyleBackColor = True
@@ -174,7 +174,7 @@ Partial Class frmCreate
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.lblPassword)
         Me.Controls.Add(Me.lblSqlDbName)
-        Me.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.MinimizeBox = False

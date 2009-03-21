@@ -57,7 +57,7 @@ Partial Class frmAbout
         Me.lblDevelopedBy.AutoSize = True
         Me.lblDevelopedBy.Location = New System.Drawing.Point(47, 45)
         Me.lblDevelopedBy.Name = "lblDevelopedBy"
-        Me.lblDevelopedBy.Size = New System.Drawing.Size(127, 15)
+        Me.lblDevelopedBy.Size = New System.Drawing.Size(130, 15)
         Me.lblDevelopedBy.TabIndex = 2
         Me.lblDevelopedBy.Text = "Developed by Anuraj P"
         '
@@ -66,7 +66,7 @@ Partial Class frmAbout
         Me.lblAppVersion.AutoSize = True
         Me.lblAppVersion.Location = New System.Drawing.Point(47, 243)
         Me.lblAppVersion.Name = "lblAppVersion"
-        Me.lblAppVersion.Size = New System.Drawing.Size(46, 15)
+        Me.lblAppVersion.Size = New System.Drawing.Size(48, 15)
         Me.lblAppVersion.TabIndex = 3
         Me.lblAppVersion.Text = "Version"
         '
@@ -98,7 +98,7 @@ Partial Class frmAbout
         Me.llLinkToCodePlex.AutoSize = True
         Me.llLinkToCodePlex.Location = New System.Drawing.Point(47, 220)
         Me.llLinkToCodePlex.Name = "llLinkToCodePlex"
-        Me.llLinkToCodePlex.Size = New System.Drawing.Size(160, 15)
+        Me.llLinkToCodePlex.Size = New System.Drawing.Size(171, 15)
         Me.llLinkToCodePlex.TabIndex = 6
         Me.llLinkToCodePlex.TabStop = True
         Me.llLinkToCodePlex.Text = "SQL CE Explorer - Homepage"
@@ -118,7 +118,7 @@ Partial Class frmAbout
         Me.Controls.Add(Me.lblDevelopedBy)
         Me.Controls.Add(Me.lblAppName)
         Me.Controls.Add(Me.picIcon)
-        Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.MinimizeBox = False

@@ -38,6 +38,8 @@ Partial Class frmMain
         Me.mniSave = New System.Windows.Forms.ToolStripMenuItem
         Me.mniSaveAs = New System.Windows.Forms.ToolStripMenuItem
         Me.mniSep2 = New System.Windows.Forms.ToolStripSeparator
+        Me.mniRecentFiles = New System.Windows.Forms.ToolStripMenuItem
+        Me.mniSep10 = New System.Windows.Forms.ToolStripSeparator
         Me.mniQuit = New System.Windows.Forms.ToolStripMenuItem
         Me.mnuEdit = New System.Windows.Forms.ToolStripMenuItem
         Me.mniUndo = New System.Windows.Forms.ToolStripMenuItem
@@ -65,8 +67,10 @@ Partial Class frmMain
         Me.ctxiCreateDatabase = New System.Windows.Forms.ToolStripMenuItem
         Me.ctxiSep1 = New System.Windows.Forms.ToolStripSeparator
         Me.ctxiCreateTable = New System.Windows.Forms.ToolStripMenuItem
+        Me.ctxiDropTable = New System.Windows.Forms.ToolStripMenuItem
         Me.ctxisep2 = New System.Windows.Forms.ToolStripSeparator
         Me.ctxiSelectAll = New System.Windows.Forms.ToolStripMenuItem
+        Me.ctxiDeleteAllRows = New System.Windows.Forms.ToolStripMenuItem
         Me.ctxiSep3 = New System.Windows.Forms.ToolStripSeparator
         Me.ctxiRefersh = New System.Windows.Forms.ToolStripMenuItem
         Me.iltvExplorer = New System.Windows.Forms.ImageList(Me.components)
@@ -77,6 +81,7 @@ Partial Class frmMain
         Me.tspSep7 = New System.Windows.Forms.ToolStripSeparator
         Me.ctxiSelectAllEditor = New System.Windows.Forms.ToolStripMenuItem
         Me.tspSep5 = New System.Windows.Forms.ToolStripSeparator
+        Me.ctxiDeleteSelected = New System.Windows.Forms.ToolStripMenuItem
         Me.ctxiParse = New System.Windows.Forms.ToolStripMenuItem
         Me.ctxiExecute = New System.Windows.Forms.ToolStripMenuItem
         Me.ctxiSep4 = New System.Windows.Forms.ToolStripSeparator
@@ -112,7 +117,6 @@ Partial Class frmMain
         Me.ctxiOutputCut = New System.Windows.Forms.ToolStripMenuItem
         Me.ctxiOutputSep1 = New System.Windows.Forms.ToolStripSeparator
         Me.ctxiOutputSelectAll = New System.Windows.Forms.ToolStripMenuItem
-        Me.ctxiDropTable = New System.Windows.Forms.ToolStripMenuItem
         Me.stsMain.SuspendLayout()
         Me.msMain.SuspendLayout()
         Me.ctxTreeMenu.SuspendLayout()
@@ -160,7 +164,7 @@ Partial Class frmMain
         '
         'mnuFile
         '
-        Me.mnuFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mniConnect, Me.mniDisconnect, Me.mniSep1, Me.mniCreatSqlCeDatabase, Me.mniSep8, Me.mniOpenFile, Me.mniSep9, Me.mniSave, Me.mniSaveAs, Me.mniSep2, Me.mniQuit})
+        Me.mnuFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mniConnect, Me.mniDisconnect, Me.mniSep1, Me.mniCreatSqlCeDatabase, Me.mniSep8, Me.mniOpenFile, Me.mniSep9, Me.mniSave, Me.mniSaveAs, Me.mniSep2, Me.mniRecentFiles, Me.mniSep10, Me.mniQuit})
         Me.mnuFile.Name = "mnuFile"
         Me.mnuFile.Size = New System.Drawing.Size(37, 20)
         Me.mnuFile.Text = "&File"
@@ -227,6 +231,17 @@ Partial Class frmMain
         '
         Me.mniSep2.Name = "mniSep2"
         Me.mniSep2.Size = New System.Drawing.Size(234, 6)
+        '
+        'mniRecentFiles
+        '
+        Me.mniRecentFiles.Name = "mniRecentFiles"
+        Me.mniRecentFiles.Size = New System.Drawing.Size(237, 22)
+        Me.mniRecentFiles.Text = "Re&cent Files"
+        '
+        'mniSep10
+        '
+        Me.mniSep10.Name = "mniSep10"
+        Me.mniSep10.Size = New System.Drawing.Size(234, 6)
         '
         'mniQuit
         '
@@ -386,7 +401,7 @@ Partial Class frmMain
         '
         'ctxTreeMenu
         '
-        Me.ctxTreeMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCreateDatabase, Me.ctxiSep1, Me.ctxiCreateTable, Me.ctxiDropTable, Me.ctxisep2, Me.ctxiSelectAll, Me.ctxiSep3, Me.ctxiRefersh})
+        Me.ctxTreeMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCreateDatabase, Me.ctxiSep1, Me.ctxiCreateTable, Me.ctxiDropTable, Me.ctxisep2, Me.ctxiSelectAll, Me.ctxiDeleteAllRows, Me.ctxiSep3, Me.ctxiRefersh})
         Me.ctxTreeMenu.Name = "ctxTreeMenu"
         Me.ctxTreeMenu.Size = New System.Drawing.Size(213, 154)
         '
@@ -409,6 +424,13 @@ Partial Class frmMain
         Me.ctxiCreateTable.Size = New System.Drawing.Size(212, 22)
         Me.ctxiCreateTable.Text = "Create Table ..."
         '
+        'ctxiDropTable
+        '
+        Me.ctxiDropTable.Image = Global.SQLCEExplorer.My.Resources.Resources.trash
+        Me.ctxiDropTable.Name = "ctxiDropTable"
+        Me.ctxiDropTable.Size = New System.Drawing.Size(212, 22)
+        Me.ctxiDropTable.Text = "Delete Table ..."
+        '
         'ctxisep2
         '
         Me.ctxisep2.Name = "ctxisep2"
@@ -418,7 +440,13 @@ Partial Class frmMain
         '
         Me.ctxiSelectAll.Name = "ctxiSelectAll"
         Me.ctxiSelectAll.Size = New System.Drawing.Size(212, 22)
-        Me.ctxiSelectAll.Text = "Select All "
+        Me.ctxiSelectAll.Text = "Select All Rows"
+        '
+        'ctxiDeleteAllRows
+        '
+        Me.ctxiDeleteAllRows.Name = "ctxiDeleteAllRows"
+        Me.ctxiDeleteAllRows.Size = New System.Drawing.Size(212, 22)
+        Me.ctxiDeleteAllRows.Text = "Delete All Rows"
         '
         'ctxiSep3
         '
@@ -444,9 +472,9 @@ Partial Class frmMain
         '
         'ctxEditor
         '
-        Me.ctxEditor.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCopy, Me.ctxiCut, Me.ctxiPaste, Me.tspSep7, Me.ctxiSelectAllEditor, Me.tspSep5, Me.ctxiParse, Me.ctxiExecute, Me.ctxiSep4, Me.ctxiClear})
+        Me.ctxEditor.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCopy, Me.ctxiCut, Me.ctxiPaste, Me.tspSep7, Me.ctxiSelectAllEditor, Me.tspSep5, Me.ctxiDeleteSelected, Me.ctxiParse, Me.ctxiExecute, Me.ctxiSep4, Me.ctxiClear})
         Me.ctxEditor.Name = "ctxEditor"
-        Me.ctxEditor.Size = New System.Drawing.Size(171, 176)
+        Me.ctxEditor.Size = New System.Drawing.Size(171, 198)
         '
         'ctxiCopy
         '
@@ -485,6 +513,13 @@ Partial Class frmMain
         '
         Me.tspSep5.Name = "tspSep5"
         Me.tspSep5.Size = New System.Drawing.Size(167, 6)
+        '
+        'ctxiDeleteSelected
+        '
+        Me.ctxiDeleteSelected.Name = "ctxiDeleteSelected"
+        Me.ctxiDeleteSelected.ShortcutKeys = System.Windows.Forms.Keys.Delete
+        Me.ctxiDeleteSelected.Size = New System.Drawing.Size(170, 22)
+        Me.ctxiDeleteSelected.Text = "&Delete"
         '
         'ctxiParse
         '
@@ -746,10 +781,10 @@ Partial Class frmMain
         'tpText
         '
         Me.tpText.Controls.Add(Me.txtOutput)
-        Me.tpText.Location = New System.Drawing.Point(4, 22)
+        Me.tpText.Location = New System.Drawing.Point(4, 24)
         Me.tpText.Name = "tpText"
         Me.tpText.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpText.Size = New System.Drawing.Size(509, 266)
+        Me.tpText.Size = New System.Drawing.Size(509, 264)
         Me.tpText.TabIndex = 1
         Me.tpText.Text = "Messages"
         Me.tpText.UseVisualStyleBackColor = True
@@ -764,7 +799,7 @@ Partial Class frmMain
         Me.txtOutput.Name = "txtOutput"
         Me.txtOutput.ReadOnly = True
         Me.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.txtOutput.Size = New System.Drawing.Size(503, 260)
+        Me.txtOutput.Size = New System.Drawing.Size(503, 258)
         Me.txtOutput.TabIndex = 3
         '
         'ctxOutputWindow
@@ -796,14 +831,6 @@ Partial Class frmMain
         Me.ctxiOutputSelectAll.Size = New System.Drawing.Size(122, 22)
         Me.ctxiOutputSelectAll.Text = "&Select All"
         '
-        'ctxiDropTable
-        '
-        Me.ctxiDropTable.Image = Global.SQLCEExplorer.My.Resources.Resources.trash
-        Me.ctxiDropTable.Name = "ctxiDropTable"
-        Me.ctxiDropTable.ShortcutKeys = System.Windows.Forms.Keys.Delete
-        Me.ctxiDropTable.Size = New System.Drawing.Size(212, 22)
-        Me.ctxiDropTable.Text = "Delete Table ..."
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -813,7 +840,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.tsMain)
         Me.Controls.Add(Me.stsMain)
         Me.Controls.Add(Me.msMain)
-        Me.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.msMain
         Me.Name = "frmMain"
@@ -895,7 +922,6 @@ Partial Class frmMain
     Friend WithEvents mnuOptions As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tsMain As System.Windows.Forms.ToolStrip
     Friend WithEvents tsbConnect As System.Windows.Forms.ToolStripButton
-    Friend WithEvents tsbDisconnect As System.Windows.Forms.ToolStripButton
     Friend WithEvents tsbSep1 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents tsbCreateDb As System.Windows.Forms.ToolStripButton
     Friend WithEvents tsbSep2 As System.Windows.Forms.ToolStripSeparator
@@ -934,5 +960,10 @@ Partial Class frmMain
     Friend WithEvents ctxiOutputSep1 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ctxiOutputSelectAll As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ctxiDropTable As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tsbDisconnect As System.Windows.Forms.ToolStripButton
+    Friend WithEvents mniRecentFiles As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents mniSep10 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ctxiDeleteSelected As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxiDeleteAllRows As System.Windows.Forms.ToolStripMenuItem
 
 End Class

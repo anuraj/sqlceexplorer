@@ -42,6 +42,8 @@
             .FontName = m_CurrentFont.Name
             .FontSize = m_CurrentFont.Size
             .ShowConnectDialogAtStartUp = Me.chkConneciondlg.Checked
+            .RecentItems = Me.nuRecentFiles.Value
+            .EnableRecentItems = Me.chkRecentItems.Checked
             .SaveConfig()
         End With
         Me.Close()
@@ -59,12 +61,15 @@
         Else
             Me.txtFont.Text = String.Format("{0} - {1}", m_CurrentFont.Name, m_CurrentFont.Size)
         End If
-
+        Me.chkRecentItems.Checked = oSqlCeConfig.EnableRecentItems
+        Me.nuRecentFiles.Value = oSqlCeConfig.RecentItems
         Me.chkConneciondlg.Checked = oSqlCeConfig.ShowConnectDialogAtStartUp
+        Me.ToggleRecentItems()
         oSqlCeConfig = Nothing
 
         Me.cmdCompact.Enabled = Me.m_IsConnected
         Me.cmdRepair.Enabled = Me.m_IsConnected
+
     End Sub
 
     Private Sub cmdCompact_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCompact.Click
@@ -80,5 +85,13 @@
             Dim oSqlCeExplorerDB As New SqlCeExplorerDB
             oSqlCeExplorerDB.RepairDatabase()
         End If
+    End Sub
+
+    Private Sub chkRecentItems_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkRecentItems.CheckedChanged
+        Me.ToggleRecentItems()
+    End Sub
+    Private Sub ToggleRecentItems()
+        Me.nuRecentFiles.Enabled = Me.chkRecentItems.Checked
+        Me.lblRecentItems.Enabled = Me.chkRecentItems.Checked
     End Sub
 End Class

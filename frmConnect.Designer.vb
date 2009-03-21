@@ -25,11 +25,11 @@ Partial Class frmConnect
         Me.lblSqlDbName = New System.Windows.Forms.Label
         Me.lblPassword = New System.Windows.Forms.Label
         Me.chkIsEncrypted = New System.Windows.Forms.CheckBox
-        Me.txtDatabaseFilename = New System.Windows.Forms.TextBox
         Me.cmdBrowse = New System.Windows.Forms.Button
         Me.txtPassword = New System.Windows.Forms.TextBox
         Me.CmdConnect = New System.Windows.Forms.Button
         Me.CmdCancel = New System.Windows.Forms.Button
+        Me.cmbFiles = New System.Windows.Forms.ComboBox
         Me.SuspendLayout()
         '
         'lblSqlDbName
@@ -37,7 +37,7 @@ Partial Class frmConnect
         Me.lblSqlDbName.AutoSize = True
         Me.lblSqlDbName.Location = New System.Drawing.Point(6, 12)
         Me.lblSqlDbName.Name = "lblSqlDbName"
-        Me.lblSqlDbName.Size = New System.Drawing.Size(96, 15)
+        Me.lblSqlDbName.Size = New System.Drawing.Size(106, 15)
         Me.lblSqlDbName.TabIndex = 0
         Me.lblSqlDbName.Text = "&SQL CE Database"
         '
@@ -46,7 +46,7 @@ Partial Class frmConnect
         Me.lblPassword.AutoSize = True
         Me.lblPassword.Location = New System.Drawing.Point(45, 43)
         Me.lblPassword.Name = "lblPassword"
-        Me.lblPassword.Size = New System.Drawing.Size(57, 15)
+        Me.lblPassword.Size = New System.Drawing.Size(61, 15)
         Me.lblPassword.TabIndex = 3
         Me.lblPassword.Text = "&Password"
         '
@@ -55,19 +55,10 @@ Partial Class frmConnect
         Me.chkIsEncrypted.AutoSize = True
         Me.chkIsEncrypted.Location = New System.Drawing.Point(122, 70)
         Me.chkIsEncrypted.Name = "chkIsEncrypted"
-        Me.chkIsEncrypted.Size = New System.Drawing.Size(90, 19)
+        Me.chkIsEncrypted.Size = New System.Drawing.Size(92, 19)
         Me.chkIsEncrypted.TabIndex = 5
         Me.chkIsEncrypted.Text = "&Is Encrypted"
         Me.chkIsEncrypted.UseVisualStyleBackColor = True
-        '
-        'txtDatabaseFilename
-        '
-        Me.txtDatabaseFilename.BackColor = System.Drawing.SystemColors.Window
-        Me.txtDatabaseFilename.Location = New System.Drawing.Point(122, 8)
-        Me.txtDatabaseFilename.Name = "txtDatabaseFilename"
-        Me.txtDatabaseFilename.ReadOnly = True
-        Me.txtDatabaseFilename.Size = New System.Drawing.Size(251, 23)
-        Me.txtDatabaseFilename.TabIndex = 1
         '
         'cmdBrowse
         '
@@ -84,7 +75,7 @@ Partial Class frmConnect
         Me.txtPassword.Location = New System.Drawing.Point(122, 38)
         Me.txtPassword.Name = "txtPassword"
         Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txtPassword.Size = New System.Drawing.Size(251, 23)
+        Me.txtPassword.Size = New System.Drawing.Size(251, 21)
         Me.txtPassword.TabIndex = 4
         '
         'CmdConnect
@@ -106,22 +97,31 @@ Partial Class frmConnect
         Me.CmdCancel.Text = "C&ancel"
         Me.CmdCancel.UseVisualStyleBackColor = True
         '
+        'cmbFiles
+        '
+        Me.cmbFiles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbFiles.FormattingEnabled = True
+        Me.cmbFiles.Location = New System.Drawing.Point(122, 9)
+        Me.cmbFiles.Name = "cmbFiles"
+        Me.cmbFiles.Size = New System.Drawing.Size(251, 23)
+        Me.cmbFiles.TabIndex = 8
+        '
         'frmConnect
         '
         Me.AcceptButton = Me.CmdConnect
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.CmdCancel
-        Me.ClientSize = New System.Drawing.Size(429, 134)
+        Me.ClientSize = New System.Drawing.Size(429, 140)
+        Me.Controls.Add(Me.cmbFiles)
         Me.Controls.Add(Me.CmdConnect)
         Me.Controls.Add(Me.CmdCancel)
         Me.Controls.Add(Me.cmdBrowse)
         Me.Controls.Add(Me.txtPassword)
-        Me.Controls.Add(Me.txtDatabaseFilename)
         Me.Controls.Add(Me.chkIsEncrypted)
         Me.Controls.Add(Me.lblPassword)
         Me.Controls.Add(Me.lblSqlDbName)
-        Me.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -137,9 +137,9 @@ Partial Class frmConnect
     Friend WithEvents lblSqlDbName As System.Windows.Forms.Label
     Friend WithEvents lblPassword As System.Windows.Forms.Label
     Friend WithEvents chkIsEncrypted As System.Windows.Forms.CheckBox
-    Friend WithEvents txtDatabaseFilename As System.Windows.Forms.TextBox
     Friend WithEvents cmdBrowse As System.Windows.Forms.Button
     Friend WithEvents txtPassword As System.Windows.Forms.TextBox
     Friend WithEvents CmdConnect As System.Windows.Forms.Button
     Friend WithEvents CmdCancel As System.Windows.Forms.Button
+    Friend WithEvents cmbFiles As System.Windows.Forms.ComboBox
 End Class

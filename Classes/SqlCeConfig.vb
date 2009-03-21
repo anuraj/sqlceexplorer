@@ -13,6 +13,8 @@ Public Class SqlCeConfig
     Private m_FontName As String
     Private m_FontSize As String
     Private m_ShowConnectDialogAtStartUp As Boolean
+    Private m_RecentItems As String = "1"
+    Private m_EnableRecentItems As Boolean = True
     <XmlElement("FontName")> _
     Public Property FontName() As String
         Get
@@ -40,7 +42,22 @@ Public Class SqlCeConfig
             m_ShowConnectDialogAtStartUp = value
         End Set
     End Property
-
+    Public Property RecentItems() As String
+        Get
+            Return m_RecentItems
+        End Get
+        Set(ByVal value As String)
+            m_RecentItems = value
+        End Set
+    End Property
+    Public Property EnableRecentItems() As Boolean
+        Get
+            Return m_EnableRecentItems
+        End Get
+        Set(ByVal value As Boolean)
+            m_EnableRecentItems = value
+        End Set
+    End Property
     Public Sub New()
         m_FilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly.Location)
         m_FileName = String.Format("SQLCEExplorer.{0}.Config", Environment.UserName)
@@ -60,6 +77,8 @@ Public Class SqlCeConfig
         settingsKey.SetValue("FontName", Me.FontName)
         settingsKey.SetValue("FontSize", Me.FontSize)
         settingsKey.SetValue("ShowConnectDialogAtStartUp", Me.ShowConnectDialogAtStartUp)
+        settingsKey.SetValue("EnableRecentItems", Me.EnableRecentItems)
+        settingsKey.SetValue("RecentItems", Me.RecentItems)
         settingsKey.Close()
         AppNameKey.Close()
         rootKey.Close()
@@ -90,6 +109,8 @@ Public Class SqlCeConfig
             If settingsKey IsNot Nothing AndAlso settingsKey.ValueCount >= 1 Then
                 Me.m_FontName = settingsKey.GetValue("FontName").ToString
                 Me.m_FontSize = settingsKey.GetValue("FontSize").ToString
+                Me.m_RecentItems = IIf(settingsKey.GetValue("RecentItems") Is Nothing, "1", settingsKey.GetValue("RecentItems"))
+                Me.m_EnableRecentItems = Boolean.Parse(IIf(settingsKey.GetValue("EnableRecentItems") Is Nothing, True, settingsKey.GetValue("EnableRecentItems").ToString).ToString)
                 Me.m_ShowConnectDialogAtStartUp = Boolean.Parse(settingsKey.GetValue("ShowConnectDialogAtStartUp").ToString)
                 settingsKey.Close()
             End If

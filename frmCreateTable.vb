@@ -57,7 +57,8 @@ Public Class frmCreateTable
                     allowNull = "NOT NULL"
                 End If
 
-                query.AppendFormat("[{0}] {1}({2}) {5} {3} {4} ", row.Cells(0).Value, row.Cells(1).Value, row.Cells(2).Value, uniqueKey, primaryKey, allowNull)
+                'query.AppendFormat("[{0}] {1}({2}) {5} {3} {4} ", row.Cells(0).Value, row.Cells(1).Value, row.Cells(2).Value, uniqueKey, primaryKey, allowNull)
+                query.AppendFormat("[{0}] {1} {4} {2} {3} ", row.Cells(0).Value, GetDataLength(row.Cells(1).Value, row.Cells(2).Value), uniqueKey, primaryKey, allowNull)
                 query.Append(",")
             Else
                 Dim lastPos As Integer = query.ToString.LastIndexOf(",")
@@ -70,6 +71,17 @@ Public Class frmCreateTable
         query.AppendFormat("){0}", Environment.NewLine)
         SqlCeMain.CurrentQuery(query.ToString)
     End Sub
+    Private Function GetDataLength(ByVal dataType As String, ByVal length As String) As String
+        Dim result As String = ""
+
+        Select Case dataType
+            Case "bigint", "bit", "datetime", "float", "image", "int", "money", "numeric", "real", "smallint", "uniqueidentifier", "tinyint"
+                result = String.Format(" {0}", dataType)
+            Case Else
+                result = String.Format(" {0}({1})", dataType, length)
+        End Select
+        Return result
+    End Function
 
     Private Sub dgvCreateTable_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvCreateTable.CellEnter
         Select Case e.ColumnIndex
@@ -102,11 +114,6 @@ Public Class frmCreateTable
     Private Sub cmdCancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCancel.Click
         Me.Close()
     End Sub
-
-    Private Sub dgvCreateTable_CellLeave(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvCreateTable.CellLeave
-
-    End Sub
-
     Private Sub frmCreateTable_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.m_DataLengths = New Dictionary(Of String, String)
         Me.m_DataLengths.Add("bigint", "8")

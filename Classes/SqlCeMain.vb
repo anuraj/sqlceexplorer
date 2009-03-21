@@ -22,7 +22,8 @@
         Return m_ConnectionString
     End Function
     Public Function GetFileName() As String
-        Dim fileName As String = m_ConnectionString.Substring(m_ConnectionString.IndexOf("Data Source="), m_ConnectionString.IndexOf(";"))
+        Dim tempFilename As String = m_ConnectionString.Substring(m_ConnectionString.IndexOf("Data Source="), m_ConnectionString.IndexOf(";"))
+        Dim fileName As String = tempFilename.Substring(tempFilename.IndexOf("=") + 1)
         Return fileName
     End Function
     Public Sub ClearConnectionString()

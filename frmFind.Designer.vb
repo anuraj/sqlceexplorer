@@ -34,7 +34,7 @@ Partial Class frmFind
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(13, 17)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(65, 15)
+        Me.Label1.Size = New System.Drawing.Size(66, 15)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Find &what :"
         '
@@ -42,7 +42,7 @@ Partial Class frmFind
         '
         Me.txtFindWhat.Location = New System.Drawing.Point(81, 13)
         Me.txtFindWhat.Name = "txtFindWhat"
-        Me.txtFindWhat.Size = New System.Drawing.Size(166, 23)
+        Me.txtFindWhat.Size = New System.Drawing.Size(166, 21)
         Me.txtFindWhat.TabIndex = 1
         '
         'cmdFind
@@ -70,7 +70,7 @@ Partial Class frmFind
         Me.chkMatchCase.AutoSize = True
         Me.chkMatchCase.Location = New System.Drawing.Point(16, 47)
         Me.chkMatchCase.Name = "chkMatchCase"
-        Me.chkMatchCase.Size = New System.Drawing.Size(86, 19)
+        Me.chkMatchCase.Size = New System.Drawing.Size(89, 19)
         Me.chkMatchCase.TabIndex = 4
         Me.chkMatchCase.Text = "&Match case"
         Me.chkMatchCase.UseVisualStyleBackColor = True
@@ -87,7 +87,7 @@ Partial Class frmFind
         Me.Controls.Add(Me.cmdFind)
         Me.Controls.Add(Me.txtFindWhat)
         Me.Controls.Add(Me.Label1)
-        Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.MinimizeBox = False
