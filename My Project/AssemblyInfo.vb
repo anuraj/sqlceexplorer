@@ -1,4 +1,6 @@
-﻿Imports System
+﻿Imports System.Resources
+
+Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
@@ -10,12 +12,12 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("SQLCEExplorer")> 
 <Assembly: AssemblyDescription("A Simple utility to Explore SQL CE Database")> 
-<Assembly: AssemblyCompany("gayathrionline.com")> 
+<Assembly: AssemblyCompany("www.gayathrionline.com")> 
 <Assembly: AssemblyProduct("SQLCEExplorer")> 
 <Assembly: AssemblyCopyright("Copyright ©  2009 Anuraj.P. All rights reserved.")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTrademark("www.gayathrionline.com trademark of Gayathri Online Technologies")> 
 
-<Assembly: ComVisible(False)>
+<Assembly: ComVisible(False)> 
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
 <Assembly: Guid("0e069c5d-fd31-4840-98c3-c6140d8a372a")> 
@@ -31,5 +33,7 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyVersion("1.2.0.0")> 
+<Assembly: AssemblyFileVersion("1.2.0.0")> 
+
+<Assembly: NeutralResourcesLanguageAttribute("en-US")> 

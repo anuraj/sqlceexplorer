@@ -72,6 +72,17 @@ Partial Class frmMain
         Me.ctxiSelectAll = New System.Windows.Forms.ToolStripMenuItem
         Me.ctxiDeleteAllRows = New System.Windows.Forms.ToolStripMenuItem
         Me.ctxiSep3 = New System.Windows.Forms.ToolStripSeparator
+        Me.ctxiManageColumns = New System.Windows.Forms.ToolStripMenuItem
+        Me.CtxiAddNewColumn = New System.Windows.Forms.ToolStripMenuItem
+        Me.ctxiDropaColumn = New System.Windows.Forms.ToolStripMenuItem
+        Me.ctxiSep6 = New System.Windows.Forms.ToolStripSeparator
+        Me.ctxiChangeColDataType = New System.Windows.Forms.ToolStripMenuItem
+        Me.ctxiSep8 = New System.Windows.Forms.ToolStripSeparator
+        Me.CtxiManageIndexes = New System.Windows.Forms.ToolStripMenuItem
+        Me.ctxiCreateNewIndex = New System.Windows.Forms.ToolStripMenuItem
+        Me.ctxiSep5 = New System.Windows.Forms.ToolStripSeparator
+        Me.ctxiDropAnIndex = New System.Windows.Forms.ToolStripMenuItem
+        Me.ctxiSep7 = New System.Windows.Forms.ToolStripSeparator
         Me.ctxiRefersh = New System.Windows.Forms.ToolStripMenuItem
         Me.iltvExplorer = New System.Windows.Forms.ImageList(Me.components)
         Me.ctxEditor = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -106,7 +117,6 @@ Partial Class frmMain
         Me.scMain = New System.Windows.Forms.SplitContainer
         Me.tvDatabaseExplorer = New System.Windows.Forms.TreeView
         Me.scRightSide = New System.Windows.Forms.SplitContainer
-        Me.txtQueryWindow = New System.Windows.Forms.TextBox
         Me.tcMain = New System.Windows.Forms.TabControl
         Me.tpGrid = New System.Windows.Forms.TabPage
         Me.dgvResults = New System.Windows.Forms.DataGridView
@@ -117,6 +127,7 @@ Partial Class frmMain
         Me.ctxiOutputCut = New System.Windows.Forms.ToolStripMenuItem
         Me.ctxiOutputSep1 = New System.Windows.Forms.ToolStripSeparator
         Me.ctxiOutputSelectAll = New System.Windows.Forms.ToolStripMenuItem
+        Me.txtQueryWindow = New SQLCEExplorer.SQLTextbox
         Me.stsMain.SuspendLayout()
         Me.msMain.SuspendLayout()
         Me.ctxTreeMenu.SuspendLayout()
@@ -401,9 +412,9 @@ Partial Class frmMain
         '
         'ctxTreeMenu
         '
-        Me.ctxTreeMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCreateDatabase, Me.ctxiSep1, Me.ctxiCreateTable, Me.ctxiDropTable, Me.ctxisep2, Me.ctxiSelectAll, Me.ctxiDeleteAllRows, Me.ctxiSep3, Me.ctxiRefersh})
+        Me.ctxTreeMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCreateDatabase, Me.ctxiSep1, Me.ctxiCreateTable, Me.ctxiDropTable, Me.ctxisep2, Me.ctxiSelectAll, Me.ctxiDeleteAllRows, Me.ctxiSep3, Me.ctxiManageColumns, Me.ctxiSep8, Me.CtxiManageIndexes, Me.ctxiSep7, Me.ctxiRefersh})
         Me.ctxTreeMenu.Name = "ctxTreeMenu"
-        Me.ctxTreeMenu.Size = New System.Drawing.Size(213, 154)
+        Me.ctxTreeMenu.Size = New System.Drawing.Size(213, 232)
         '
         'ctxiCreateDatabase
         '
@@ -453,6 +464,70 @@ Partial Class frmMain
         Me.ctxiSep3.Name = "ctxiSep3"
         Me.ctxiSep3.Size = New System.Drawing.Size(209, 6)
         '
+        'ctxiManageColumns
+        '
+        Me.ctxiManageColumns.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CtxiAddNewColumn, Me.ctxiDropaColumn, Me.ctxiSep6, Me.ctxiChangeColDataType})
+        Me.ctxiManageColumns.Name = "ctxiManageColumns"
+        Me.ctxiManageColumns.Size = New System.Drawing.Size(212, 22)
+        Me.ctxiManageColumns.Text = "Manage Columns"
+        '
+        'CtxiAddNewColumn
+        '
+        Me.CtxiAddNewColumn.Name = "CtxiAddNewColumn"
+        Me.CtxiAddNewColumn.Size = New System.Drawing.Size(210, 22)
+        Me.CtxiAddNewColumn.Text = "Add a new Column"
+        '
+        'ctxiDropaColumn
+        '
+        Me.ctxiDropaColumn.Name = "ctxiDropaColumn"
+        Me.ctxiDropaColumn.Size = New System.Drawing.Size(210, 22)
+        Me.ctxiDropaColumn.Text = "Drop a Column"
+        '
+        'ctxiSep6
+        '
+        Me.ctxiSep6.Name = "ctxiSep6"
+        Me.ctxiSep6.Size = New System.Drawing.Size(207, 6)
+        '
+        'ctxiChangeColDataType
+        '
+        Me.ctxiChangeColDataType.Name = "ctxiChangeColDataType"
+        Me.ctxiChangeColDataType.Size = New System.Drawing.Size(210, 22)
+        Me.ctxiChangeColDataType.Text = "Change Column datatype"
+        '
+        'ctxiSep8
+        '
+        Me.ctxiSep8.Name = "ctxiSep8"
+        Me.ctxiSep8.Size = New System.Drawing.Size(209, 6)
+        '
+        'CtxiManageIndexes
+        '
+        Me.CtxiManageIndexes.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCreateNewIndex, Me.ctxiSep5, Me.ctxiDropAnIndex})
+        Me.CtxiManageIndexes.Name = "CtxiManageIndexes"
+        Me.CtxiManageIndexes.Size = New System.Drawing.Size(212, 22)
+        Me.CtxiManageIndexes.Text = "Manage Indexes"
+        '
+        'ctxiCreateNewIndex
+        '
+        Me.ctxiCreateNewIndex.Name = "ctxiCreateNewIndex"
+        Me.ctxiCreateNewIndex.Size = New System.Drawing.Size(164, 22)
+        Me.ctxiCreateNewIndex.Text = "Create new Index"
+        '
+        'ctxiSep5
+        '
+        Me.ctxiSep5.Name = "ctxiSep5"
+        Me.ctxiSep5.Size = New System.Drawing.Size(161, 6)
+        '
+        'ctxiDropAnIndex
+        '
+        Me.ctxiDropAnIndex.Name = "ctxiDropAnIndex"
+        Me.ctxiDropAnIndex.Size = New System.Drawing.Size(164, 22)
+        Me.ctxiDropAnIndex.Text = "Drop an Index"
+        '
+        'ctxiSep7
+        '
+        Me.ctxiSep7.Name = "ctxiSep7"
+        Me.ctxiSep7.Size = New System.Drawing.Size(209, 6)
+        '
         'ctxiRefersh
         '
         Me.ctxiRefersh.Image = Global.SQLCEExplorer.My.Resources.Resources.arrows_circle
@@ -466,9 +541,12 @@ Partial Class frmMain
         Me.iltvExplorer.ImageStream = CType(resources.GetObject("iltvExplorer.ImageStream"), System.Windows.Forms.ImageListStreamer)
         Me.iltvExplorer.TransparentColor = System.Drawing.Color.Transparent
         Me.iltvExplorer.Images.SetKeyName(0, "database.gif")
-        Me.iltvExplorer.Images.SetKeyName(1, "theme.gif")
-        Me.iltvExplorer.Images.SetKeyName(2, "symbol_equal.gif")
-        Me.iltvExplorer.Images.SetKeyName(3, "album.gif")
+        Me.iltvExplorer.Images.SetKeyName(1, "application_view_icons.gif")
+        Me.iltvExplorer.Images.SetKeyName(2, "album.gif")
+        Me.iltvExplorer.Images.SetKeyName(3, "album_sub_album.gif")
+        Me.iltvExplorer.Images.SetKeyName(4, "application_view_icons.gif")
+        Me.iltvExplorer.Images.SetKeyName(5, "album.gif")
+        Me.iltvExplorer.Images.SetKeyName(6, "album_sub_album.gif")
         '
         'ctxEditor
         '
@@ -728,18 +806,6 @@ Partial Class frmMain
         Me.scRightSide.SplitterWidth = 5
         Me.scRightSide.TabIndex = 0
         '
-        'txtQueryWindow
-        '
-        Me.txtQueryWindow.ContextMenuStrip = Me.ctxEditor
-        Me.txtQueryWindow.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.txtQueryWindow.HideSelection = False
-        Me.txtQueryWindow.Location = New System.Drawing.Point(0, 0)
-        Me.txtQueryWindow.Multiline = True
-        Me.txtQueryWindow.Name = "txtQueryWindow"
-        Me.txtQueryWindow.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtQueryWindow.Size = New System.Drawing.Size(517, 184)
-        Me.txtQueryWindow.TabIndex = 0
-        '
         'tcMain
         '
         Me.tcMain.Controls.Add(Me.tpGrid)
@@ -799,7 +865,7 @@ Partial Class frmMain
         Me.txtOutput.Name = "txtOutput"
         Me.txtOutput.ReadOnly = True
         Me.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.txtOutput.Size = New System.Drawing.Size(503, 258)
+        Me.txtOutput.Size = New System.Drawing.Size(503, 260)
         Me.txtOutput.TabIndex = 3
         '
         'ctxOutputWindow
@@ -831,6 +897,29 @@ Partial Class frmMain
         Me.ctxiOutputSelectAll.Size = New System.Drawing.Size(122, 22)
         Me.ctxiOutputSelectAll.Text = "&Select All"
         '
+        'txtQueryWindow
+        '
+        Me.txtQueryWindow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtQueryWindow.CommentsColor = System.Drawing.Color.Green
+        Me.txtQueryWindow.ContextMenuStrip = Me.ctxEditor
+        Me.txtQueryWindow.DetectUrls = False
+        Me.txtQueryWindow.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.txtQueryWindow.HideSelection = False
+        Me.txtQueryWindow.HighlightComments = True
+        Me.txtQueryWindow.HighlightVariables = True
+        Me.txtQueryWindow.KeywordColor = System.Drawing.Color.Blue
+        Me.txtQueryWindow.Keywords = CType(resources.GetObject("txtQueryWindow.Keywords"), System.Collections.Generic.List(Of String))
+        Me.txtQueryWindow.Location = New System.Drawing.Point(0, 0)
+        Me.txtQueryWindow.Name = "txtQueryWindow"
+        Me.txtQueryWindow.OperatorColor = System.Drawing.Color.Gray
+        Me.txtQueryWindow.Operators = CType(resources.GetObject("txtQueryWindow.Operators"), System.Collections.Generic.List(Of String))
+        Me.txtQueryWindow.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical
+        Me.txtQueryWindow.ShortcutsEnabled = False
+        Me.txtQueryWindow.Size = New System.Drawing.Size(517, 184)
+        Me.txtQueryWindow.TabIndex = 0
+        Me.txtQueryWindow.Text = ""
+        Me.txtQueryWindow.VariableColor = System.Drawing.Color.Red
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -859,7 +948,6 @@ Partial Class frmMain
         Me.scMain.Panel2.ResumeLayout(False)
         Me.scMain.ResumeLayout(False)
         Me.scRightSide.Panel1.ResumeLayout(False)
-        Me.scRightSide.Panel1.PerformLayout()
         Me.scRightSide.Panel2.ResumeLayout(False)
         Me.scRightSide.ResumeLayout(False)
         Me.tcMain.ResumeLayout(False)
@@ -939,7 +1027,7 @@ Partial Class frmMain
     Friend WithEvents scMain As System.Windows.Forms.SplitContainer
     Friend WithEvents tvDatabaseExplorer As System.Windows.Forms.TreeView
     Friend WithEvents scRightSide As System.Windows.Forms.SplitContainer
-    Friend WithEvents txtQueryWindow As System.Windows.Forms.TextBox
+    Friend WithEvents txtQueryWindow As SQLCEExplorer.SQLTextbox
     Friend WithEvents tcMain As System.Windows.Forms.TabControl
     Friend WithEvents tpGrid As System.Windows.Forms.TabPage
     Friend WithEvents dgvResults As System.Windows.Forms.DataGridView
@@ -965,5 +1053,16 @@ Partial Class frmMain
     Friend WithEvents mniSep10 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ctxiDeleteSelected As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ctxiDeleteAllRows As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxiManageColumns As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxiSep7 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents CtxiAddNewColumn As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxiDropaColumn As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxiSep6 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ctxiChangeColDataType As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxiSep8 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents CtxiManageIndexes As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxiCreateNewIndex As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxiSep5 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ctxiDropAnIndex As System.Windows.Forms.ToolStripMenuItem
 
 End Class

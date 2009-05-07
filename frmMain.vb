@@ -55,7 +55,6 @@ Public Class frmMain
         'TODO: Ask confirmation to switch to new database?
         'Now it is automatically switching to the new db.
         PopulateUI()
-
     End Sub
     Private Sub PopulateUI()
 
@@ -76,7 +75,7 @@ Public Class frmMain
             tableRootNode.Tag = "#__TABLE_ROOT_NODE__#"
             If oTablesReader IsNot Nothing Then
                 While oTablesReader.Read
-                    tableNameNode = New TreeNode(oTablesReader("TABLE_NAME").ToString, 2, 2)
+                    tableNameNode = New TreeNode(oTablesReader("TABLE_NAME").ToString, 4, 4)
                     tableNameNode.Tag = tableNameNode.Text
                     tableRootNode.Nodes.Add(tableNameNode)
                 End While
@@ -91,34 +90,14 @@ Public Class frmMain
             oTablesReader = Nothing
         End Try
     End Sub
-    Private Sub FillColumns(ByVal TableName As String, ByVal Node As TreeNode)
-        If Node.Nodes IsNot Nothing AndAlso Node.Nodes.Count >= 1 Then
-            Return
-        End If
-        Dim oTablesReader As SqlCeDataReader
-        Dim query As String = String.Format(SELECTQUERYCOLUMNS, TableName)
-        Dim oSqlCeExplorerData As New SqlCeExplorerData
-        Dim columnsNode As New TreeNode("Columns")
-        columnsNode.Tag = "#__COLUMNS__ROOT_NODE#"
-        Dim columnNode As TreeNode
-        oTablesReader = oSqlCeExplorerData.ExecuteQuery(query)
-
-        While oTablesReader.Read
-            columnNode = New TreeNode(String.Format("{0} - {1}", oTablesReader("COLUMN_NAME").ToString(), oTablesReader("DATA_TYPE").ToString()), 3, 3)
-            columnNode.Tag = columnNode.Text
-            columnsNode.Nodes.Add(columnNode)
-        End While
-        Node.Nodes.Add(columnsNode)
-        oTablesReader.Close()
-        oTablesReader = Nothing
-        oSqlCeExplorerData = Nothing
-    End Sub
+   
 
     Private Sub tvDatabaseExplorer_BeforeExpand(ByVal sender As System.Object, ByVal e As System.Windows.Forms.TreeViewCancelEventArgs) Handles tvDatabaseExplorer.BeforeExpand
         Select Case e.Node.Tag.ToString
             Case "#__TABLE_ROOT_NODE__#"
                 For Each node As TreeNode In e.Node.Nodes
-                    FillColumns(node.Text, node)
+                    Me.FillColumns(node.Text, node)
+                    Me.FillIndexes(node.Text, node)
                 Next
         End Select
     End Sub
@@ -127,61 +106,56 @@ Public Class frmMain
         If e.Button = Windows.Forms.MouseButtons.Right Then
 
             ctxiCreateDatabase.Enabled = False
-            ctxiRefersh.Enabled = False
+            ctxiRefersh.Enabled = True
             ctxiCreateTable.Enabled = False
             ctxiSelectAll.Enabled = False
             ctxiDeleteAllRows.Enabled = False
             ctxiDropTable.Enabled = False
+            ctxiManageColumns.Enabled = False
+            CtxiManageIndexes.Enabled = False
+            CtxiAddNewColumn.Enabled = True
+            ctxiDropaColumn.Enabled = False
+            ctxiChangeColDataType.Enabled = False
+            ctxiCreateNewIndex.Enabled = False
+            ctxiDropAnIndex.Enabled = False
 
             Dim currentNode As TreeNode = tvDatabaseExplorer.GetNodeAt(e.Location)
             If currentNode IsNot Nothing Then
                 m_currentNode = currentNode
                 Select Case currentNode.ImageIndex
                     Case 0
-                        'Database operations.
                         ctxiCreateDatabase.Enabled = True
-                        ctxiRefersh.Enabled = True
-                        ctxiCreateTable.Enabled = False
-                        ctxiSelectAll.Enabled = False
-                        ctxiDropTable.Enabled = False
-                        ctxiDeleteAllRows.Enabled = False
                     Case 1
-                        'Tables operations
-                        ctxiCreateDatabase.Enabled = False
-                        ctxiRefersh.Enabled = True
                         ctxiCreateTable.Enabled = True
-                        ctxiSelectAll.Enabled = False
-                        ctxiDeleteAllRows.Enabled = False
-                        ctxiDropTable.Enabled = False
-                    Case 2
-                        'Table operations
-                        ctxiCreateDatabase.Enabled = False
                         ctxiDropTable.Enabled = True
-                        ctxiRefersh.Enabled = True
-                        ctxiCreateTable.Enabled = False
+                    Case 4
+                        ctxiCreateTable.Enabled = True
+                        ctxiDropTable.Enabled = True
                         ctxiSelectAll.Enabled = True
                         ctxiDeleteAllRows.Enabled = True
-                    Case 3
-                        'Table operations - Column level
-                        ctxiDropTable.Enabled = False
-                        ctxiCreateDatabase.Enabled = False
-                        ctxiRefersh.Enabled = True
-                        ctxiCreateTable.Enabled = False
-                        ctxiSelectAll.Enabled = False
-                        ctxiDeleteAllRows.Enabled = False
+                        ctxiManageColumns.Enabled = True
+                        CtxiAddNewColumn.Enabled = True
+                        ctxiDropaColumn.Enabled = True
+                        ctxiChangeColDataType.Enabled = True
+                        CtxiManageIndexes.Enabled = True
+                        ctxiCreateNewIndex.Enabled = True
+                        ctxiDropAnIndex.Enabled = True
+                    Case 2, 5
+                        ctxiManageColumns.Enabled = True
+                        CtxiAddNewColumn.Enabled = True
+                        ctxiDropaColumn.Enabled = True
+                        ctxiChangeColDataType.Enabled = True
+                    Case 3, 6
+                        CtxiManageIndexes.Enabled = True
+                        ctxiCreateNewIndex.Enabled = True
+                        ctxiDropAnIndex.Enabled = True
                 End Select
-
             End If
         End If
     End Sub
 
     Private Sub ctxiRefersh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiRefersh.Click
         PopulateUI()
-        If m_currentNode IsNot Nothing Then
-            m_currentNode.Collapse()
-            m_currentNode.ExpandAll()
-        End If
-
     End Sub
 
     Private Sub mniDisconnect_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniDisconnect.Click
@@ -191,10 +165,12 @@ Public Class frmMain
         Me.Text = SqlCeMain.APPLICATION_NAME
 
     End Sub
-
-    Private Sub mniHomePage_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniHomePage.Click
+    Private Sub GotoSqlCeExplorerHome()
         Dim url As String = "http://sqlceexplorer.codeplex.com/"
         Process.Start(url)
+    End Sub
+    Private Sub mniHomePage_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniHomePage.Click
+        Me.GotoSqlCeExplorerHome()
     End Sub
 
     Private Sub ctxiCreateTable_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiCreateTable.Click
@@ -434,16 +410,18 @@ Public Class frmMain
     End Sub
 
     Private Sub mniCopy_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniCopy.Click, ctxiCopy.Click
-        Clipboard.SetText(Me.txtQueryWindow.SelectedText)
+        'Clipboard.SetText(Me.txtQueryWindow.SelectedText)
+        Me.txtQueryWindow.Copy()
     End Sub
 
     Private Sub mniCut_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniCut.Click, ctxiCut.Click
-        Clipboard.SetText(Me.txtQueryWindow.SelectedText)
-        Me.txtQueryWindow.SelectedText = String.Empty
+        Me.txtQueryWindow.Cut()
     End Sub
 
     Private Sub mniPaste_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniPaste.Click, ctxiPaste.Click
-        Me.txtQueryWindow.SelectedText = Clipboard.GetText
+        If Clipboard.ContainsText() Then
+            Me.txtQueryWindow.Paste()
+        End If
     End Sub
 
     Private Sub mniSelectAll_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniSelectAll.Click, ctxiSelectAllEditor.Click
@@ -585,13 +563,19 @@ Public Class frmMain
     End Sub
 
     Private Sub ctxiDropTable_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDropTable.Click
+        Dim ofrmDeleteTable As frmDeleteTable
         If m_currentNode IsNot Nothing Then
-            If MessageBox.Show(String.Format("This will permanently delete the ""{0}"" table from the database.{1}Are you sure want to continue?", m_currentNode.Text, Environment.NewLine), SqlCeMain.APPLICATION_NAME, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = Windows.Forms.DialogResult.Yes Then
-                Me.txtQueryWindow.SelectedText = String.Format("DROP TABLE [{0}]", m_currentNode.Text)
-                Me.txtQueryWindow.SelectAll()
-                Me.ExecuteQuery()
-            End If
+            ofrmDeleteTable = New frmDeleteTable(m_currentNode.Text)
+        Else
+            ofrmDeleteTable = New frmDeleteTable
         End If
+        AddHandler ofrmDeleteTable.DeleteTableQueryFormed, AddressOf ofrmDeleteTable_DeleteTableQueryFormed
+        ofrmDeleteTable.ShowDialog(Me)
+    End Sub
+    Private Sub ofrmDeleteTable_DeleteTableQueryFormed(ByVal sender As Object, ByVal e As EventArgs)
+        Me.txtQueryWindow.SelectedText = SqlCeMain.GetCurrentQuery
+        Me.txtQueryWindow.SelectAll()
+        Me.ExecuteQuery()
     End Sub
     Private Sub ExecuteCommand(ByVal Command As ToolStripButton)
         Dim result As Boolean = False
@@ -645,6 +629,10 @@ Public Class frmMain
             result = True
             mnuOptions_Click(tsbOptions, EventArgs.Empty)
         End If
+        If Command Is tsbWeb Then
+            result = True
+            Me.GotoSqlCeExplorerHome()
+        End If
     End Sub
 
     Private Sub ExecuteCommand(ByVal sender As Object, ByVal e As EventArgs) _
@@ -654,13 +642,7 @@ Public Class frmMain
         Me.ExecuteCommand(TryCast(sender, ToolStripButton))
 
     End Sub
-
-    Private Sub mniClearRecent_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        SqlCeExplorerUtility.ClearRecentItems(String.Empty)
-        m_List.Clear()
-        Me.LoadRecentItems()
-    End Sub
-
+    
     Private Sub mniDeleteSelected_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDeleteSelected.Click
         Me.txtQueryWindow.SelectedText = String.Empty
     End Sub
@@ -671,5 +653,100 @@ Public Class frmMain
             Me.txtQueryWindow.SelectAll()
             Me.ExecuteQuery()
         End If
+    End Sub
+    Private Sub CtxiAddNewColumn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CtxiAddNewColumn.Click
+        Me.ShowModifyColumnDialog(frmModifyColumn.OperationMode.CreateColumn)
+    End Sub
+
+    Private Sub ctxiDropaColumn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDropaColumn.Click
+        Me.ShowModifyColumnDialog(frmModifyColumn.OperationMode.DropColumn)
+    End Sub
+
+    Private Sub ctxiChangeColDataType_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiChangeColDataType.Click
+        Me.ShowModifyColumnDialog(frmModifyColumn.OperationMode.AlterColumn)
+    End Sub
+    Private Sub ShowModifyColumnDialog(ByVal ModeOfOperation As frmModifyColumn.OperationMode)
+        If m_currentNode IsNot Nothing Then
+            Dim oFrmModifyColumn As frmModifyColumn = Nothing
+            Select Case ModeOfOperation
+                Case frmModifyColumn.OperationMode.AlterColumn
+                    oFrmModifyColumn = New frmModifyColumn(frmModifyColumn.OperationMode.AlterColumn, m_currentNode.Text)
+                Case frmModifyColumn.OperationMode.DropColumn
+                    oFrmModifyColumn = New frmModifyColumn(frmModifyColumn.OperationMode.DropColumn, m_currentNode.Text)
+                Case frmModifyColumn.OperationMode.CreateColumn
+                    oFrmModifyColumn = New frmModifyColumn(frmModifyColumn.OperationMode.CreateColumn, m_currentNode.Text)
+            End Select
+            AddHandler oFrmModifyColumn.AlterColumnQueryFormed, AddressOf oFrmModifyColumn_AlterColumnQueryFormed
+            oFrmModifyColumn.ShowDialog(Me)
+        End If
+    End Sub
+    Private Sub oFrmModifyColumn_AlterColumnQueryFormed(ByVal sender As Object, ByVal e As EventArgs)
+        Me.txtQueryWindow.Text = SqlCeMain.GetCurrentQuery
+        Me.txtQueryWindow.SelectAll()
+        Me.ExecuteQuery()
+        Me.PopulateUI()
+    End Sub
+    Private Function NodeExists(ByVal NodeText As String, ByVal Node As TreeNode) As Boolean
+        For Each currentNode As TreeNode In Node.Nodes
+            If currentNode.Text = NodeText Then
+                Return True
+            End If
+        Next
+        Return False
+    End Function
+    Private Sub FillIndexes(ByVal TableName As String, ByVal Node As TreeNode)
+        If Not NodeExists("Indexes", Node) Then
+            Dim oTablesReader As SqlCeDataReader
+            Dim query As String = String.Format(SELECTQUERYINDEXES, TableName)
+            Dim oSqlCeExplorerData As New SqlCeExplorerData
+            Dim columnsNode As New TreeNode("Indexes", 3, 3)
+            Dim nodeText As String
+            Dim columnNode As TreeNode
+
+            columnsNode.Tag = "#__INDEXES__ROOT_NODE#"
+            oTablesReader = oSqlCeExplorerData.ExecuteQuery(query)
+            While oTablesReader.Read
+                nodeText = String.Format("{0} - {1} {2}", oTablesReader("INDEX_NAME").ToString(), _
+                                                        IIf(CBool(oTablesReader("UNIQUE").ToString()), "Unique", "Non-Unique"), _
+                                                        IIf(CBool(oTablesReader("CLUSTERED").ToString()) = "0", "Non-Clustered", "Clustered"))
+                columnNode = New TreeNode(nodeText, 6, 6)
+                columnNode.Tag = columnNode.Text
+                columnsNode.Nodes.Add(columnNode)
+            End While
+            Node.Nodes.Add(columnsNode)
+            oTablesReader.Close()
+            oTablesReader = Nothing
+            oSqlCeExplorerData = Nothing
+        End If
+    End Sub
+    Private Sub FillColumns(ByVal TableName As String, ByVal Node As TreeNode)
+        If Not NodeExists("Columns", Node) Then
+            Dim oTablesReader As SqlCeDataReader
+            Dim query As String = String.Format(SELECTQUERYCOLUMNS, TableName)
+            Dim oSqlCeExplorerData As New SqlCeExplorerData
+            Dim columnsNode As New TreeNode("Columns", 2, 2)
+            columnsNode.Tag = "#__COLUMNS__ROOT_NODE#"
+            Dim columnNode As TreeNode
+            oTablesReader = oSqlCeExplorerData.ExecuteQuery(query)
+
+            While oTablesReader.Read
+                columnNode = New TreeNode(String.Format("{0} - {1}", _
+                    oTablesReader("COLUMN_NAME").ToString(), oTablesReader("DATA_TYPE").ToString()), 5, 5)
+                columnNode.Tag = columnNode.Text
+                columnsNode.Nodes.Add(columnNode)
+            End While
+            Node.Nodes.Add(columnsNode)
+            oTablesReader.Close()
+            oTablesReader = Nothing
+            oSqlCeExplorerData = Nothing
+        End If
+    End Sub
+
+    Private Sub ctxiCreateNewIndex_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiCreateNewIndex.Click
+        Throw New NotImplementedException
+    End Sub
+
+    Private Sub ctxiDropAnIndex_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDropAnIndex.Click
+        Throw New NotImplementedException
     End Sub
 End Class

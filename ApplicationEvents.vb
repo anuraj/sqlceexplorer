@@ -1,4 +1,7 @@
-﻿Namespace My
+﻿Imports System.IO
+Imports System.Reflection
+
+Namespace My
 
     ' The following events are available for MyApplication:
     ' 
@@ -12,6 +15,7 @@
             SqlCeExplorerException.ShowError(e.Exception)
             e.ExitApplication = True
         End Sub
+        
     End Class
 
 End Namespace

@@ -26,9 +26,9 @@ Partial Class frmAbout
         Me.lblAppName = New System.Windows.Forms.Label
         Me.lblDevelopedBy = New System.Windows.Forms.Label
         Me.lblAppVersion = New System.Windows.Forms.Label
-        Me.txtLicenceInfo = New System.Windows.Forms.TextBox
         Me.cmdOk = New System.Windows.Forms.Button
         Me.llLinkToCodePlex = New System.Windows.Forms.LinkLabel
+        Me.Label1 = New System.Windows.Forms.Label
         CType(Me.picIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -46,7 +46,7 @@ Partial Class frmAbout
         '
         Me.lblAppName.AutoSize = True
         Me.lblAppName.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAppName.Location = New System.Drawing.Point(47, 12)
+        Me.lblAppName.Location = New System.Drawing.Point(50, 12)
         Me.lblAppName.Name = "lblAppName"
         Me.lblAppName.Size = New System.Drawing.Size(106, 17)
         Me.lblAppName.TabIndex = 1
@@ -55,39 +55,28 @@ Partial Class frmAbout
         'lblDevelopedBy
         '
         Me.lblDevelopedBy.AutoSize = True
-        Me.lblDevelopedBy.Location = New System.Drawing.Point(47, 45)
+        Me.lblDevelopedBy.Location = New System.Drawing.Point(50, 67)
         Me.lblDevelopedBy.Name = "lblDevelopedBy"
-        Me.lblDevelopedBy.Size = New System.Drawing.Size(130, 15)
+        Me.lblDevelopedBy.Size = New System.Drawing.Size(304, 60)
         Me.lblDevelopedBy.TabIndex = 2
-        Me.lblDevelopedBy.Text = "Developed by Anuraj P"
+        Me.lblDevelopedBy.Text = "Copyright © 2009 Anuraj.P" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Version Beta 0.1 ( May 09, 2009)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "See gnu_licence.tx" & _
+            "t for copyright and redistribution info"
         '
         'lblAppVersion
         '
         Me.lblAppVersion.AutoSize = True
-        Me.lblAppVersion.Location = New System.Drawing.Point(47, 243)
+        Me.lblAppVersion.Location = New System.Drawing.Point(50, 167)
         Me.lblAppVersion.Name = "lblAppVersion"
-        Me.lblAppVersion.Size = New System.Drawing.Size(48, 15)
+        Me.lblAppVersion.Size = New System.Drawing.Size(103, 15)
         Me.lblAppVersion.TabIndex = 3
-        Me.lblAppVersion.Text = "Version"
-        '
-        'txtLicenceInfo
-        '
-        Me.txtLicenceInfo.BackColor = System.Drawing.SystemColors.Window
-        Me.txtLicenceInfo.Location = New System.Drawing.Point(47, 68)
-        Me.txtLicenceInfo.Multiline = True
-        Me.txtLicenceInfo.Name = "txtLicenceInfo"
-        Me.txtLicenceInfo.ReadOnly = True
-        Me.txtLicenceInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtLicenceInfo.ShortcutsEnabled = False
-        Me.txtLicenceInfo.Size = New System.Drawing.Size(394, 145)
-        Me.txtLicenceInfo.TabIndex = 0
+        Me.lblAppVersion.Text = "Assembly Version"
         '
         'cmdOk
         '
         Me.cmdOk.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.cmdOk.Location = New System.Drawing.Point(366, 10)
+        Me.cmdOk.Location = New System.Drawing.Point(140, 201)
         Me.cmdOk.Name = "cmdOk"
-        Me.cmdOk.Size = New System.Drawing.Size(75, 23)
+        Me.cmdOk.Size = New System.Drawing.Size(95, 23)
         Me.cmdOk.TabIndex = 5
         Me.cmdOk.Text = "OK"
         Me.cmdOk.UseVisualStyleBackColor = True
@@ -96,7 +85,7 @@ Partial Class frmAbout
         '
         Me.llLinkToCodePlex.ActiveLinkColor = System.Drawing.Color.Blue
         Me.llLinkToCodePlex.AutoSize = True
-        Me.llLinkToCodePlex.Location = New System.Drawing.Point(47, 220)
+        Me.llLinkToCodePlex.Location = New System.Drawing.Point(50, 144)
         Me.llLinkToCodePlex.Name = "llLinkToCodePlex"
         Me.llLinkToCodePlex.Size = New System.Drawing.Size(171, 15)
         Me.llLinkToCodePlex.TabIndex = 6
@@ -104,16 +93,25 @@ Partial Class frmAbout
         Me.llLinkToCodePlex.Text = "SQL CE Explorer - Homepage"
         Me.llLinkToCodePlex.VisitedLinkColor = System.Drawing.Color.Blue
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(50, 38)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(243, 15)
+        Me.Label1.TabIndex = 7
+        Me.Label1.Text = "A simple utility to explore SQL CE Database"
+        '
         'frmAbout
         '
         Me.AcceptButton = Me.cmdOk
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.cmdOk
-        Me.ClientSize = New System.Drawing.Size(453, 268)
+        Me.ClientSize = New System.Drawing.Size(374, 236)
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.llLinkToCodePlex)
         Me.Controls.Add(Me.cmdOk)
-        Me.Controls.Add(Me.txtLicenceInfo)
         Me.Controls.Add(Me.lblAppVersion)
         Me.Controls.Add(Me.lblDevelopedBy)
         Me.Controls.Add(Me.lblAppName)
@@ -136,7 +134,7 @@ Partial Class frmAbout
     Friend WithEvents lblAppName As System.Windows.Forms.Label
     Friend WithEvents lblDevelopedBy As System.Windows.Forms.Label
     Friend WithEvents lblAppVersion As System.Windows.Forms.Label
-    Friend WithEvents txtLicenceInfo As System.Windows.Forms.TextBox
     Friend WithEvents cmdOk As System.Windows.Forms.Button
     Friend WithEvents llLinkToCodePlex As System.Windows.Forms.LinkLabel
+    Friend WithEvents Label1 As System.Windows.Forms.Label
 End Class

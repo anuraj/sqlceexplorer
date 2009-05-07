@@ -43,10 +43,12 @@
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -72,6 +74,9 @@
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Classes\FindEventArgs.vb" />
     <Compile Include="Classes\SqlCeConfig.vb" />
+    <Compile Include="Controls\SQLTextbox.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="frmAbout.Designer.vb">
       <DependentUpon>frmAbout.vb</DependentUpon>
     </Compile>
@@ -96,6 +101,12 @@
     <Compile Include="frmCreateTable.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmDeleteTable.Designer.vb">
+      <DependentUpon>frmDeleteTable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDeleteTable.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmFind.Designer.vb">
       <DependentUpon>frmFind.vb</DependentUpon>
     </Compile>
@@ -110,6 +121,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Classes\SqlCeMain.vb" />
+    <Compile Include="frmModifyColumn.Designer.vb">
+      <DependentUpon>frmModifyColumn.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmModifyColumn.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmOptions.Designer.vb">
       <DependentUpon>frmOptions.vb</DependentUpon>
     </Compile>
@@ -201,10 +218,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="database.ico" />
+    <EmbeddedResource Include="frmDeleteTable.resx">
+      <DependentUpon>frmDeleteTable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmModifyColumn.resx">
+      <DependentUpon>frmModifyColumn.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmSplash.resx">
       <DependentUpon>frmSplash.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="licence.txt">
     </EmbeddedResource>
     <None Include="My Project\app.manifest" />
     <None Include="Resources\control_play.gif" />
