@@ -32,6 +32,12 @@ Partial Class frmMain
         Me.mniDisconnect = New System.Windows.Forms.ToolStripMenuItem
         Me.mniSep1 = New System.Windows.Forms.ToolStripSeparator
         Me.mniCreatSqlCeDatabase = New System.Windows.Forms.ToolStripMenuItem
+        Me.ctxiCreateSeDatabase = New System.Windows.Forms.ToolStripMenuItem
+        Me.ctxiSep12 = New System.Windows.Forms.ToolStripSeparator
+        Me.ctxiCompactSeDatabase = New System.Windows.Forms.ToolStripMenuItem
+        Me.ctxiSeRepairDatabase = New System.Windows.Forms.ToolStripMenuItem
+        Me.ctxiSep13 = New System.Windows.Forms.ToolStripSeparator
+        Me.ctxiSeGenerateSql = New System.Windows.Forms.ToolStripMenuItem
         Me.mniSep8 = New System.Windows.Forms.ToolStripSeparator
         Me.mniOpenFile = New System.Windows.Forms.ToolStripMenuItem
         Me.mniSep9 = New System.Windows.Forms.ToolStripSeparator
@@ -64,8 +70,14 @@ Partial Class frmMain
         Me.mniSep7 = New System.Windows.Forms.ToolStripSeparator
         Me.mniAbout = New System.Windows.Forms.ToolStripMenuItem
         Me.ctxTreeMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ctxiDatabaseOptions = New System.Windows.Forms.ToolStripMenuItem
         Me.ctxiCreateDatabase = New System.Windows.Forms.ToolStripMenuItem
-        Me.ctxiSep1 = New System.Windows.Forms.ToolStripSeparator
+        Me.ctxiSep10 = New System.Windows.Forms.ToolStripSeparator
+        Me.ctxiCompactDB = New System.Windows.Forms.ToolStripMenuItem
+        Me.ctxiRepairDB = New System.Windows.Forms.ToolStripMenuItem
+        Me.ctxiSep9 = New System.Windows.Forms.ToolStripSeparator
+        Me.ctxiGenerateScript = New System.Windows.Forms.ToolStripMenuItem
+        Me.ctxiSep11 = New System.Windows.Forms.ToolStripSeparator
         Me.ctxiCreateTable = New System.Windows.Forms.ToolStripMenuItem
         Me.ctxiDropTable = New System.Windows.Forms.ToolStripMenuItem
         Me.ctxisep2 = New System.Windows.Forms.ToolStripSeparator
@@ -117,6 +129,7 @@ Partial Class frmMain
         Me.scMain = New System.Windows.Forms.SplitContainer
         Me.tvDatabaseExplorer = New System.Windows.Forms.TreeView
         Me.scRightSide = New System.Windows.Forms.SplitContainer
+        Me.txtQueryWindow = New SQLCEExplorer.SQLTextbox
         Me.tcMain = New System.Windows.Forms.TabControl
         Me.tpGrid = New System.Windows.Forms.TabPage
         Me.dgvResults = New System.Windows.Forms.DataGridView
@@ -127,7 +140,6 @@ Partial Class frmMain
         Me.ctxiOutputCut = New System.Windows.Forms.ToolStripMenuItem
         Me.ctxiOutputSep1 = New System.Windows.Forms.ToolStripSeparator
         Me.ctxiOutputSelectAll = New System.Windows.Forms.ToolStripMenuItem
-        Me.txtQueryWindow = New SQLCEExplorer.SQLTextbox
         Me.stsMain.SuspendLayout()
         Me.msMain.SuspendLayout()
         Me.ctxTreeMenu.SuspendLayout()
@@ -201,10 +213,45 @@ Partial Class frmMain
         '
         'mniCreatSqlCeDatabase
         '
+        Me.mniCreatSqlCeDatabase.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCreateSeDatabase, Me.ctxiSep12, Me.ctxiCompactSeDatabase, Me.ctxiSeRepairDatabase, Me.ctxiSep13, Me.ctxiSeGenerateSql})
         Me.mniCreatSqlCeDatabase.Image = Global.SQLCEExplorer.My.Resources.Resources.database_add
         Me.mniCreatSqlCeDatabase.Name = "mniCreatSqlCeDatabase"
         Me.mniCreatSqlCeDatabase.Size = New System.Drawing.Size(237, 22)
-        Me.mniCreatSqlCeDatabase.Text = "C&reate SQL CE Database ..."
+        Me.mniCreatSqlCeDatabase.Text = "Database"
+        '
+        'ctxiCreateSeDatabase
+        '
+        Me.ctxiCreateSeDatabase.Name = "ctxiCreateSeDatabase"
+        Me.ctxiCreateSeDatabase.Size = New System.Drawing.Size(209, 22)
+        Me.ctxiCreateSeDatabase.Text = "Create SQL CE &Database..."
+        '
+        'ctxiSep12
+        '
+        Me.ctxiSep12.Name = "ctxiSep12"
+        Me.ctxiSep12.Size = New System.Drawing.Size(206, 6)
+        '
+        'ctxiCompactSeDatabase
+        '
+        Me.ctxiCompactSeDatabase.Name = "ctxiCompactSeDatabase"
+        Me.ctxiCompactSeDatabase.Size = New System.Drawing.Size(209, 22)
+        Me.ctxiCompactSeDatabase.Text = "&Compact Database..."
+        '
+        'ctxiSeRepairDatabase
+        '
+        Me.ctxiSeRepairDatabase.Name = "ctxiSeRepairDatabase"
+        Me.ctxiSeRepairDatabase.Size = New System.Drawing.Size(209, 22)
+        Me.ctxiSeRepairDatabase.Text = "&Repair Database..."
+        '
+        'ctxiSep13
+        '
+        Me.ctxiSep13.Name = "ctxiSep13"
+        Me.ctxiSep13.Size = New System.Drawing.Size(206, 6)
+        '
+        'ctxiSeGenerateSql
+        '
+        Me.ctxiSeGenerateSql.Name = "ctxiSeGenerateSql"
+        Me.ctxiSeGenerateSql.Size = New System.Drawing.Size(209, 22)
+        Me.ctxiSeGenerateSql.Text = "&Generate SQL Script..."
         '
         'mniSep8
         '
@@ -412,63 +459,98 @@ Partial Class frmMain
         '
         'ctxTreeMenu
         '
-        Me.ctxTreeMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCreateDatabase, Me.ctxiSep1, Me.ctxiCreateTable, Me.ctxiDropTable, Me.ctxisep2, Me.ctxiSelectAll, Me.ctxiDeleteAllRows, Me.ctxiSep3, Me.ctxiManageColumns, Me.ctxiSep8, Me.CtxiManageIndexes, Me.ctxiSep7, Me.ctxiRefersh})
+        Me.ctxTreeMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiDatabaseOptions, Me.ctxiSep11, Me.ctxiCreateTable, Me.ctxiDropTable, Me.ctxisep2, Me.ctxiSelectAll, Me.ctxiDeleteAllRows, Me.ctxiSep3, Me.ctxiManageColumns, Me.ctxiSep8, Me.CtxiManageIndexes, Me.ctxiSep7, Me.ctxiRefersh})
         Me.ctxTreeMenu.Name = "ctxTreeMenu"
-        Me.ctxTreeMenu.Size = New System.Drawing.Size(213, 232)
+        Me.ctxTreeMenu.Size = New System.Drawing.Size(169, 232)
+        '
+        'ctxiDatabaseOptions
+        '
+        Me.ctxiDatabaseOptions.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCreateDatabase, Me.ctxiSep10, Me.ctxiCompactDB, Me.ctxiRepairDB, Me.ctxiSep9, Me.ctxiGenerateScript})
+        Me.ctxiDatabaseOptions.Image = Global.SQLCEExplorer.My.Resources.Resources.database_add
+        Me.ctxiDatabaseOptions.Name = "ctxiDatabaseOptions"
+        Me.ctxiDatabaseOptions.Size = New System.Drawing.Size(168, 22)
+        Me.ctxiDatabaseOptions.Text = "Manage Database"
         '
         'ctxiCreateDatabase
         '
-        Me.ctxiCreateDatabase.Image = Global.SQLCEExplorer.My.Resources.Resources.database_add
         Me.ctxiCreateDatabase.Name = "ctxiCreateDatabase"
-        Me.ctxiCreateDatabase.Size = New System.Drawing.Size(212, 22)
-        Me.ctxiCreateDatabase.Text = "Create SQL CE Database ..."
+        Me.ctxiCreateDatabase.Size = New System.Drawing.Size(209, 22)
+        Me.ctxiCreateDatabase.Text = "Create SQL CE Database..."
         '
-        'ctxiSep1
+        'ctxiSep10
         '
-        Me.ctxiSep1.Name = "ctxiSep1"
-        Me.ctxiSep1.Size = New System.Drawing.Size(209, 6)
+        Me.ctxiSep10.Name = "ctxiSep10"
+        Me.ctxiSep10.Size = New System.Drawing.Size(206, 6)
+        '
+        'ctxiCompactDB
+        '
+        Me.ctxiCompactDB.Name = "ctxiCompactDB"
+        Me.ctxiCompactDB.Size = New System.Drawing.Size(209, 22)
+        Me.ctxiCompactDB.Text = "Compact Database..."
+        '
+        'ctxiRepairDB
+        '
+        Me.ctxiRepairDB.Name = "ctxiRepairDB"
+        Me.ctxiRepairDB.Size = New System.Drawing.Size(209, 22)
+        Me.ctxiRepairDB.Text = "Repair Database..."
+        '
+        'ctxiSep9
+        '
+        Me.ctxiSep9.Name = "ctxiSep9"
+        Me.ctxiSep9.Size = New System.Drawing.Size(206, 6)
+        '
+        'ctxiGenerateScript
+        '
+        Me.ctxiGenerateScript.Name = "ctxiGenerateScript"
+        Me.ctxiGenerateScript.Size = New System.Drawing.Size(209, 22)
+        Me.ctxiGenerateScript.Text = "&Generate Script..."
+        '
+        'ctxiSep11
+        '
+        Me.ctxiSep11.Name = "ctxiSep11"
+        Me.ctxiSep11.Size = New System.Drawing.Size(165, 6)
         '
         'ctxiCreateTable
         '
         Me.ctxiCreateTable.Image = Global.SQLCEExplorer.My.Resources.Resources.theme
         Me.ctxiCreateTable.Name = "ctxiCreateTable"
-        Me.ctxiCreateTable.Size = New System.Drawing.Size(212, 22)
+        Me.ctxiCreateTable.Size = New System.Drawing.Size(168, 22)
         Me.ctxiCreateTable.Text = "Create Table ..."
         '
         'ctxiDropTable
         '
         Me.ctxiDropTable.Image = Global.SQLCEExplorer.My.Resources.Resources.trash
         Me.ctxiDropTable.Name = "ctxiDropTable"
-        Me.ctxiDropTable.Size = New System.Drawing.Size(212, 22)
+        Me.ctxiDropTable.Size = New System.Drawing.Size(168, 22)
         Me.ctxiDropTable.Text = "Delete Table ..."
         '
         'ctxisep2
         '
         Me.ctxisep2.Name = "ctxisep2"
-        Me.ctxisep2.Size = New System.Drawing.Size(209, 6)
+        Me.ctxisep2.Size = New System.Drawing.Size(165, 6)
         '
         'ctxiSelectAll
         '
         Me.ctxiSelectAll.Name = "ctxiSelectAll"
-        Me.ctxiSelectAll.Size = New System.Drawing.Size(212, 22)
+        Me.ctxiSelectAll.Size = New System.Drawing.Size(168, 22)
         Me.ctxiSelectAll.Text = "Select All Rows"
         '
         'ctxiDeleteAllRows
         '
         Me.ctxiDeleteAllRows.Name = "ctxiDeleteAllRows"
-        Me.ctxiDeleteAllRows.Size = New System.Drawing.Size(212, 22)
+        Me.ctxiDeleteAllRows.Size = New System.Drawing.Size(168, 22)
         Me.ctxiDeleteAllRows.Text = "Delete All Rows"
         '
         'ctxiSep3
         '
         Me.ctxiSep3.Name = "ctxiSep3"
-        Me.ctxiSep3.Size = New System.Drawing.Size(209, 6)
+        Me.ctxiSep3.Size = New System.Drawing.Size(165, 6)
         '
         'ctxiManageColumns
         '
         Me.ctxiManageColumns.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CtxiAddNewColumn, Me.ctxiDropaColumn, Me.ctxiSep6, Me.ctxiChangeColDataType})
         Me.ctxiManageColumns.Name = "ctxiManageColumns"
-        Me.ctxiManageColumns.Size = New System.Drawing.Size(212, 22)
+        Me.ctxiManageColumns.Size = New System.Drawing.Size(168, 22)
         Me.ctxiManageColumns.Text = "Manage Columns"
         '
         'CtxiAddNewColumn
@@ -497,13 +579,13 @@ Partial Class frmMain
         'ctxiSep8
         '
         Me.ctxiSep8.Name = "ctxiSep8"
-        Me.ctxiSep8.Size = New System.Drawing.Size(209, 6)
+        Me.ctxiSep8.Size = New System.Drawing.Size(165, 6)
         '
         'CtxiManageIndexes
         '
         Me.CtxiManageIndexes.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCreateNewIndex, Me.ctxiSep5, Me.ctxiDropAnIndex})
         Me.CtxiManageIndexes.Name = "CtxiManageIndexes"
-        Me.CtxiManageIndexes.Size = New System.Drawing.Size(212, 22)
+        Me.CtxiManageIndexes.Size = New System.Drawing.Size(168, 22)
         Me.CtxiManageIndexes.Text = "Manage Indexes"
         '
         'ctxiCreateNewIndex
@@ -526,14 +608,14 @@ Partial Class frmMain
         'ctxiSep7
         '
         Me.ctxiSep7.Name = "ctxiSep7"
-        Me.ctxiSep7.Size = New System.Drawing.Size(209, 6)
+        Me.ctxiSep7.Size = New System.Drawing.Size(165, 6)
         '
         'ctxiRefersh
         '
         Me.ctxiRefersh.Image = Global.SQLCEExplorer.My.Resources.Resources.arrows_circle
         Me.ctxiRefersh.Name = "ctxiRefersh"
         Me.ctxiRefersh.ShortcutKeys = System.Windows.Forms.Keys.F5
-        Me.ctxiRefersh.Size = New System.Drawing.Size(212, 22)
+        Me.ctxiRefersh.Size = New System.Drawing.Size(168, 22)
         Me.ctxiRefersh.Text = "Refresh"
         '
         'iltvExplorer
@@ -806,6 +888,31 @@ Partial Class frmMain
         Me.scRightSide.SplitterWidth = 5
         Me.scRightSide.TabIndex = 0
         '
+        'txtQueryWindow
+        '
+        Me.txtQueryWindow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtQueryWindow.CommentsColor = System.Drawing.Color.Green
+        Me.txtQueryWindow.ContextMenuStrip = Me.ctxEditor
+        Me.txtQueryWindow.DetectUrls = False
+        Me.txtQueryWindow.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.txtQueryWindow.EnableSyntaxHighlighting = True
+        Me.txtQueryWindow.Font = New System.Drawing.Font("Courier New", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtQueryWindow.HideSelection = False
+        Me.txtQueryWindow.HighlightComments = True
+        Me.txtQueryWindow.HighlightVariables = True
+        Me.txtQueryWindow.KeywordColor = System.Drawing.Color.Blue
+        Me.txtQueryWindow.Keywords = CType(resources.GetObject("txtQueryWindow.Keywords"), System.Collections.Generic.List(Of String))
+        Me.txtQueryWindow.Location = New System.Drawing.Point(0, 0)
+        Me.txtQueryWindow.Name = "txtQueryWindow"
+        Me.txtQueryWindow.OperatorColor = System.Drawing.Color.Gray
+        Me.txtQueryWindow.Operators = CType(resources.GetObject("txtQueryWindow.Operators"), System.Collections.Generic.List(Of String))
+        Me.txtQueryWindow.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical
+        Me.txtQueryWindow.ShortcutsEnabled = False
+        Me.txtQueryWindow.Size = New System.Drawing.Size(517, 184)
+        Me.txtQueryWindow.TabIndex = 0
+        Me.txtQueryWindow.Text = ""
+        Me.txtQueryWindow.VariableColor = System.Drawing.Color.Red
+        '
         'tcMain
         '
         Me.tcMain.Controls.Add(Me.tpGrid)
@@ -847,10 +954,10 @@ Partial Class frmMain
         'tpText
         '
         Me.tpText.Controls.Add(Me.txtOutput)
-        Me.tpText.Location = New System.Drawing.Point(4, 24)
+        Me.tpText.Location = New System.Drawing.Point(4, 22)
         Me.tpText.Name = "tpText"
         Me.tpText.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpText.Size = New System.Drawing.Size(509, 264)
+        Me.tpText.Size = New System.Drawing.Size(509, 266)
         Me.tpText.TabIndex = 1
         Me.tpText.Text = "Messages"
         Me.tpText.UseVisualStyleBackColor = True
@@ -896,29 +1003,6 @@ Partial Class frmMain
         Me.ctxiOutputSelectAll.Name = "ctxiOutputSelectAll"
         Me.ctxiOutputSelectAll.Size = New System.Drawing.Size(122, 22)
         Me.ctxiOutputSelectAll.Text = "&Select All"
-        '
-        'txtQueryWindow
-        '
-        Me.txtQueryWindow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.txtQueryWindow.CommentsColor = System.Drawing.Color.Green
-        Me.txtQueryWindow.ContextMenuStrip = Me.ctxEditor
-        Me.txtQueryWindow.DetectUrls = False
-        Me.txtQueryWindow.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.txtQueryWindow.HideSelection = False
-        Me.txtQueryWindow.HighlightComments = True
-        Me.txtQueryWindow.HighlightVariables = True
-        Me.txtQueryWindow.KeywordColor = System.Drawing.Color.Blue
-        Me.txtQueryWindow.Keywords = CType(resources.GetObject("txtQueryWindow.Keywords"), System.Collections.Generic.List(Of String))
-        Me.txtQueryWindow.Location = New System.Drawing.Point(0, 0)
-        Me.txtQueryWindow.Name = "txtQueryWindow"
-        Me.txtQueryWindow.OperatorColor = System.Drawing.Color.Gray
-        Me.txtQueryWindow.Operators = CType(resources.GetObject("txtQueryWindow.Operators"), System.Collections.Generic.List(Of String))
-        Me.txtQueryWindow.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical
-        Me.txtQueryWindow.ShortcutsEnabled = False
-        Me.txtQueryWindow.Size = New System.Drawing.Size(517, 184)
-        Me.txtQueryWindow.TabIndex = 0
-        Me.txtQueryWindow.Text = ""
-        Me.txtQueryWindow.VariableColor = System.Drawing.Color.Red
         '
         'frmMain
         '
@@ -994,8 +1078,7 @@ Partial Class frmMain
     Friend WithEvents mniSep8 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents iltvExplorer As System.Windows.Forms.ImageList
     Friend WithEvents ctxTreeMenu As System.Windows.Forms.ContextMenuStrip
-    Friend WithEvents ctxiCreateDatabase As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ctxiSep1 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ctxiDatabaseOptions As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ctxiCreateTable As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ctxisep2 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ctxiSelectAll As System.Windows.Forms.ToolStripMenuItem
@@ -1064,5 +1147,18 @@ Partial Class frmMain
     Friend WithEvents ctxiCreateNewIndex As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ctxiSep5 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ctxiDropAnIndex As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxiSep11 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ctxiCompactDB As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxiRepairDB As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxiSep9 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ctxiGenerateScript As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxiCreateDatabase As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxiSep10 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ctxiCreateSeDatabase As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxiSep12 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ctxiCompactSeDatabase As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxiSeRepairDatabase As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ctxiSep13 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ctxiSeGenerateSql As System.Windows.Forms.ToolStripMenuItem
 
 End Class

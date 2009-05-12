@@ -45,7 +45,7 @@ Public Class frmMain
         Me.Close()
     End Sub
 
-    Private Sub mniCreatSqlCeDatabase_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniCreatSqlCeDatabase.Click
+    Private Sub mniCreatSqlCeDatabase_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiCreateSeDatabase.Click, ctxiCreateDatabase.Click
         Dim oFrmCreate As New frmCreate
         m_OldConnectionString = SqlCeMain.GetConnectionString
         AddHandler oFrmCreate.SqlCeDatabaseCreated, AddressOf oFrmCreate_SqlCeDatabaseCreated
@@ -63,7 +63,7 @@ Public Class frmMain
         Dim oSqlCeExplorerData As SqlCeExplorerData
         Dim oTablesReader As SqlCeDataReader
         Try
-
+           
             Me.tvDatabaseExplorer.Nodes.Clear()
 
             dbNode = New TreeNode(Path.GetFileNameWithoutExtension(SqlCeMain.GetFileName), 0, 0)
@@ -105,7 +105,6 @@ Public Class frmMain
     Private Sub tvDatabaseExplorer_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles tvDatabaseExplorer.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Right Then
 
-            ctxiCreateDatabase.Enabled = False
             ctxiRefersh.Enabled = True
             ctxiCreateTable.Enabled = False
             ctxiSelectAll.Enabled = False
@@ -118,17 +117,23 @@ Public Class frmMain
             ctxiChangeColDataType.Enabled = False
             ctxiCreateNewIndex.Enabled = False
             ctxiDropAnIndex.Enabled = False
+            ctxiGenerateScript.Enabled = False
+            ctxiRefersh.Enabled = m_IsConnected
+            ctxiDatabaseOptions.Enabled = True
 
             Dim currentNode As TreeNode = tvDatabaseExplorer.GetNodeAt(e.Location)
             If currentNode IsNot Nothing Then
                 m_currentNode = currentNode
                 Select Case currentNode.ImageIndex
                     Case 0
-                        ctxiCreateDatabase.Enabled = True
+                        ctxiGenerateScript.Enabled = True
+                        ctxiDatabaseOptions.Enabled = m_IsConnected
                     Case 1
                         ctxiCreateTable.Enabled = True
                         ctxiDropTable.Enabled = True
+                        ctxiDatabaseOptions.Enabled = False
                     Case 4
+                        ctxiDatabaseOptions.Enabled = False
                         ctxiCreateTable.Enabled = True
                         ctxiDropTable.Enabled = True
                         ctxiSelectAll.Enabled = True
@@ -141,11 +146,13 @@ Public Class frmMain
                         ctxiCreateNewIndex.Enabled = True
                         ctxiDropAnIndex.Enabled = True
                     Case 2, 5
+                        ctxiDatabaseOptions.Enabled = False
                         ctxiManageColumns.Enabled = True
                         CtxiAddNewColumn.Enabled = True
                         ctxiDropaColumn.Enabled = True
                         ctxiChangeColDataType.Enabled = True
                     Case 3, 6
+                        ctxiDatabaseOptions.Enabled = False
                         CtxiManageIndexes.Enabled = True
                         ctxiCreateNewIndex.Enabled = True
                         ctxiDropAnIndex.Enabled = True
@@ -216,6 +223,16 @@ Public Class frmMain
             If CurrentConfig.FontName IsNot Nothing Then
                 Me.txtQueryWindow.Font = New Font(CurrentConfig.FontName, Convert.ToSingle(CurrentConfig.FontSize))
             End If
+
+            Me.txtQueryWindow.EnableSyntaxHighlighting = CurrentConfig.EnableSyntaxHighlight
+            Me.txtQueryWindow.HighlightComments = CurrentConfig.EnableCommentHighlight
+            Me.txtQueryWindow.HighlightVariables = CurrentConfig.EnableVariableHighlight
+
+            Me.txtQueryWindow.KeywordColor = Color.FromName(CurrentConfig.KeywordColor)
+            Me.txtQueryWindow.CommentsColor = Color.FromName(CurrentConfig.CommentsColor)
+            Me.txtQueryWindow.VariableColor = Color.FromName(CurrentConfig.VariableColor)
+            Me.txtQueryWindow.OperatorColor = Color.FromName(CurrentConfig.FunctionsColor)
+
         Catch ex As Exception
             'Do nothing
         Finally
@@ -256,7 +273,7 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub ctxiCreateDatabase_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiCreateDatabase.Click
+    Private Sub ctxiCreateDatabase_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Dim oFrmCreate As New frmCreate
         m_OldConnectionString = SqlCeMain.GetConnectionString
         AddHandler oFrmCreate.SqlCeDatabaseCreated, AddressOf oFrmCreate_SqlCeDatabaseCreated
@@ -743,10 +760,56 @@ Public Class frmMain
     End Sub
 
     Private Sub ctxiCreateNewIndex_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiCreateNewIndex.Click
-        Throw New NotImplementedException
+        Dim ofrmModifyIndex As New frmModifyIndex(frmModifyIndex.OperationMode.Create)
+        AddHandler ofrmModifyIndex.ModifyIndexQueryFormed, AddressOf ofrmModifyIndex_ModifyIndexQueryFormed
+        ofrmModifyIndex.ShowDialog(Me)
+    End Sub
+    Private Sub ofrmModifyIndex_ModifyIndexQueryFormed(ByVal sender As Object, ByVal e As EventArgs)
+        Me.txtQueryWindow.Text = SqlCeMain.GetCurrentQuery
+        Me.txtQueryWindow.SelectAll()
+        Me.ExecuteQuery()
+        Me.PopulateUI()
+    End Sub
+    Private Sub ctxiDropAnIndex_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDropAnIndex.Click
+        Dim ofrmModifyIndex As New frmModifyIndex(frmModifyIndex.OperationMode.Drop)
+        AddHandler ofrmModifyIndex.ModifyIndexQueryFormed, AddressOf ofrmModifyIndex_ModifyIndexQueryFormed
+        ofrmModifyIndex.ShowDialog(Me)
+        Me.txtQueryWindow.Text = SqlCeMain.GetCurrentQuery
     End Sub
 
-    Private Sub ctxiDropAnIndex_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDropAnIndex.Click
-        Throw New NotImplementedException
+    Private Sub mniCreatSqlCeDatabase_DropDownOpening(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniCreatSqlCeDatabase.DropDownOpening
+        Me.ctxiSeGenerateSql.Enabled = m_IsConnected
+        Me.ctxiCompactSeDatabase.Enabled = m_IsConnected
+        Me.ctxiSeRepairDatabase.Enabled = m_IsConnected
+        Me.ctxiSeGenerateSql.Enabled = m_IsConnected
     End Sub
+
+    Private Sub ctxiDatabaseOptions_DropDownOpening(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDatabaseOptions.DropDownOpening
+        Me.ctxiCreateDatabase.Enabled = m_IsConnected
+        Me.ctxiCompactDB.Enabled = m_IsConnected
+        Me.ctxiRepairDB.Enabled = m_IsConnected
+        Me.ctxiGenerateScript.Enabled = m_IsConnected
+    End Sub
+    Private Sub CompactDB(ByVal Sender As Object, ByVal e As EventArgs) Handles ctxiCompactSeDatabase.Click, ctxiCompactDB.Click
+        Dim confirmMsg As String = "This option will compact your SQL CE Database, this will be useful if your database file size is in mega bytes."
+        If MessageBox.Show(confirmMsg, APPLICATION_NAME, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+            Dim engine As New SqlCeEngine(SqlCeMain.GetConnectionString)
+            engine.Compact(SqlCeMain.GetConnectionString)
+            MessageBox.Show("Compact database - completed successfully", APPLICATION_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+    Private Sub RepairDB(ByVal Sender As Object, ByVal e As EventArgs) Handles ctxiSeRepairDatabase.Click, ctxiRepairDB.Click
+        Dim confirmMsg As String = "This option will Repair your SQL CE Database if it is corrupted. By default it will try to recover the corrupted rows."
+        If MessageBox.Show(confirmMsg, APPLICATION_NAME, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+            Dim engine As New SqlCeEngine(SqlCeMain.GetConnectionString)
+            engine.Repair(SqlCeMain.GetConnectionString, RepairOption.RecoverCorruptedRows)
+            engine.Shrink()
+            MessageBox.Show("Repair database - completed successfully", APPLICATION_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+
+    Private Sub ctxiSeGenerateSql_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiSeGenerateSql.Click, ctxiGenerateScript.Click
+
+    End Sub
+
 End Class

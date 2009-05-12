@@ -8,5 +8,4 @@
            System.Drawing.Drawing2D.LinearGradientMode.Vertical)
         g.FillRectangle(myBrush, ClientRectangle)
     End Sub
-
 End Class

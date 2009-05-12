@@ -15,7 +15,7 @@ Namespace My
             SqlCeExplorerException.ShowError(e.Exception)
             e.ExitApplication = True
         End Sub
-        
+
     End Class
 
 End Namespace

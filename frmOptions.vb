@@ -44,6 +44,20 @@
             .ShowConnectDialogAtStartUp = Me.chkConneciondlg.Checked
             .RecentItems = Me.nuRecentFiles.Value
             .EnableRecentItems = Me.chkRecentItems.Checked
+
+            .EnableSyntaxHighlight = Me.chkEnableSyntaxHighlighting.Checked
+            If Me.chkEnableSyntaxHighlighting.Checked Then
+                .EnableCommentHighlight = Me.chkHighlightComments.Checked
+                .EnableVariableHighlight = Me.chkHighlightVariables.Checked
+                .KeywordColor = Me.txtKeywordSample.ForeColor.ToKnownColor.ToString
+                .CommentsColor = Me.txtCommentSample.ForeColor.ToKnownColor.ToString
+                .VariableColor = Me.txtVariableSample.ForeColor.ToKnownColor.ToString
+                .FunctionsColor = Me.txtFunctionSample.ForeColor.ToKnownColor.ToString
+            Else
+                .EnableCommentHighlight = False
+                .EnableVariableHighlight = False
+            End If
+
             .SaveConfig()
         End With
         Me.Close()
@@ -54,6 +68,9 @@
     End Sub
 
     Private Sub frmOptions_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        tcOptions.TabPages.Remove(tpDBOptions)
+
         Dim oSqlCeConfig As New SqlCeConfig
         oSqlCeConfig.ReadConfig()
         If oSqlCeConfig.FontName IsNot Nothing Then
@@ -64,6 +81,19 @@
         Me.chkRecentItems.Checked = oSqlCeConfig.EnableRecentItems
         Me.nuRecentFiles.Value = oSqlCeConfig.RecentItems
         Me.chkConneciondlg.Checked = oSqlCeConfig.ShowConnectDialogAtStartUp
+
+        Me.chkEnableSyntaxHighlighting.Checked = oSqlCeConfig.EnableSyntaxHighlight
+        Me.plMain.Enabled = Me.chkEnableSyntaxHighlighting.Checked
+        Me.chkHighlightComments.Checked = oSqlCeConfig.EnableCommentHighlight
+        Me.plComments.Enabled = Me.chkHighlightComments.Checked
+        Me.chkHighlightVariables.Checked = oSqlCeConfig.EnableVariableHighlight
+        Me.plVariables.Enabled = Me.chkHighlightVariables.Checked
+
+        Me.txtCommentSample.ForeColor = Color.FromName(oSqlCeConfig.CommentsColor)
+        Me.txtFunctionSample.ForeColor = Color.FromName(oSqlCeConfig.FunctionsColor)
+        Me.txtKeywordSample.ForeColor = Color.FromName(oSqlCeConfig.KeywordColor)
+        Me.txtVariableSample.ForeColor = Color.FromName(oSqlCeConfig.VariableColor)
+
         Me.ToggleRecentItems()
         oSqlCeConfig = Nothing
 
@@ -72,6 +102,7 @@
 
     End Sub
 
+
     Private Sub cmdCompact_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCompact.Click
         If MessageBox.Show(String.Format("This will try to compact the SQL CE Database you are connected.{0}Are you sure you want to continue?", Environment.NewLine), SqlCeMain.APPLICATION_NAME, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
             Dim oSqlCeExplorerDB As New SqlCeExplorerDB
@@ -79,7 +110,7 @@
         End If
     End Sub
 
-    
+
     Private Sub cmdRepair_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdRepair.Click
         If MessageBox.Show(String.Format("This will try repair the SQL CE Database you have connected.{0}This operation will try to recover corrupted rows.{0}Are you sure you want to continue?", Environment.NewLine), SqlCeMain.APPLICATION_NAME, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
             Dim oSqlCeExplorerDB As New SqlCeExplorerDB
@@ -94,4 +125,49 @@
         Me.nuRecentFiles.Enabled = Me.chkRecentItems.Checked
         Me.lblRecentItems.Enabled = Me.chkRecentItems.Checked
     End Sub
+
+    Private Sub chkEnableSyntaxHighlighting_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkEnableSyntaxHighlighting.CheckedChanged
+        Me.plMain.Enabled = Me.chkEnableSyntaxHighlighting.Checked
+    End Sub
+
+    Private Sub chkHighlightComments_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkHighlightComments.CheckedChanged
+        Me.plComments.Enabled = Me.chkHighlightComments.Checked
+    End Sub
+
+    Private Sub chkHighlightVariables_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkHighlightVariables.CheckedChanged
+        Me.plVariables.Enabled = Me.chkHighlightVariables.Checked
+    End Sub
+
+    Private Sub cmdBrowseComments_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdBrowseComments.Click
+        Me.txtCommentSample.ForeColor = Me.GetColor(Me.txtCommentSample.ForeColor)
+    End Sub
+
+    Private Sub cmdBrowseVariable_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdBrowseVariable.Click
+        Me.txtVariableSample.ForeColor = Me.GetColor(Me.txtVariableSample.ForeColor)
+    End Sub
+
+    Private Sub cmdBrowseKeyWords_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdBrowseKeyWords.Click
+        Me.txtKeywordSample.ForeColor = Me.GetColor(Me.txtKeywordSample.ForeColor)
+    End Sub
+
+    Private Sub cmdBrowseFunctions_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdBrowseFunctions.Click
+        Me.txtFunctionSample.ForeColor = Me.GetColor(Me.txtFunctionSample.ForeColor)
+    End Sub
+
+    Private Function GetColor(ByVal current As Color) As Color
+        Dim result As Color = current
+        Using dlg As New ColorDialog
+            With dlg
+                .Color = current
+                .AllowFullOpen = False
+                .AnyColor = False
+                .FullOpen = False
+                .SolidColorOnly = True
+                If .ShowDialog() = Windows.Forms.DialogResult.OK Then
+                    result = .Color
+                End If
+            End With
+        End Using
+        Return result
+    End Function
 End Class

@@ -38,21 +38,45 @@ Partial Class frmOptions
         Me.Label4 = New System.Windows.Forms.Label
         Me.cmdCompact = New System.Windows.Forms.Button
         Me.Label3 = New System.Windows.Forms.Label
+        Me.tpEditorSettings = New System.Windows.Forms.TabPage
+        Me.chkEnableSyntaxHighlighting = New System.Windows.Forms.CheckBox
+        Me.plMain = New System.Windows.Forms.Panel
+        Me.plComments = New System.Windows.Forms.Panel
+        Me.Label5 = New System.Windows.Forms.Label
+        Me.cmdBrowseComments = New System.Windows.Forms.Button
+        Me.txtCommentSample = New System.Windows.Forms.TextBox
+        Me.plVariables = New System.Windows.Forms.Panel
+        Me.Label6 = New System.Windows.Forms.Label
+        Me.cmdBrowseVariable = New System.Windows.Forms.Button
+        Me.txtVariableSample = New System.Windows.Forms.TextBox
+        Me.chkHighlightVariables = New System.Windows.Forms.CheckBox
+        Me.Label7 = New System.Windows.Forms.Label
+        Me.cmdBrowseFunctions = New System.Windows.Forms.Button
+        Me.Label2 = New System.Windows.Forms.Label
+        Me.cmdBrowseKeyWords = New System.Windows.Forms.Button
+        Me.txtFunctionSample = New System.Windows.Forms.TextBox
+        Me.txtKeywordSample = New System.Windows.Forms.TextBox
+        Me.chkHighlightComments = New System.Windows.Forms.CheckBox
         Me.tcOptions.SuspendLayout()
         Me.tpSettings.SuspendLayout()
         CType(Me.nuRecentFiles, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tpDBOptions.SuspendLayout()
+        Me.tpEditorSettings.SuspendLayout()
+        Me.plMain.SuspendLayout()
+        Me.plComments.SuspendLayout()
+        Me.plVariables.SuspendLayout()
         Me.SuspendLayout()
         '
         'tcOptions
         '
         Me.tcOptions.Controls.Add(Me.tpSettings)
         Me.tcOptions.Controls.Add(Me.tpDBOptions)
-        Me.tcOptions.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tcOptions.Controls.Add(Me.tpEditorSettings)
+        Me.tcOptions.Dock = System.Windows.Forms.DockStyle.Top
         Me.tcOptions.Location = New System.Drawing.Point(0, 0)
         Me.tcOptions.Name = "tcOptions"
         Me.tcOptions.SelectedIndex = 0
-        Me.tcOptions.Size = New System.Drawing.Size(377, 257)
+        Me.tcOptions.Size = New System.Drawing.Size(378, 257)
         Me.tcOptions.TabIndex = 0
         '
         'tpSettings
@@ -63,13 +87,11 @@ Partial Class frmOptions
         Me.tpSettings.Controls.Add(Me.cmdBrowseFonts)
         Me.tpSettings.Controls.Add(Me.txtFont)
         Me.tpSettings.Controls.Add(Me.Label1)
-        Me.tpSettings.Controls.Add(Me.cmdCancel)
-        Me.tpSettings.Controls.Add(Me.cmdOk)
         Me.tpSettings.Controls.Add(Me.chkConneciondlg)
         Me.tpSettings.Location = New System.Drawing.Point(4, 24)
         Me.tpSettings.Name = "tpSettings"
         Me.tpSettings.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpSettings.Size = New System.Drawing.Size(369, 229)
+        Me.tpSettings.Size = New System.Drawing.Size(370, 229)
         Me.tpSettings.TabIndex = 0
         Me.tpSettings.Text = "Settings"
         Me.tpSettings.UseVisualStyleBackColor = True
@@ -133,7 +155,7 @@ Partial Class frmOptions
         'cmdCancel
         '
         Me.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.cmdCancel.Location = New System.Drawing.Point(284, 198)
+        Me.cmdCancel.Location = New System.Drawing.Point(288, 262)
         Me.cmdCancel.Name = "cmdCancel"
         Me.cmdCancel.Size = New System.Drawing.Size(75, 23)
         Me.cmdCancel.TabIndex = 9
@@ -142,7 +164,7 @@ Partial Class frmOptions
         '
         'cmdOk
         '
-        Me.cmdOk.Location = New System.Drawing.Point(193, 198)
+        Me.cmdOk.Location = New System.Drawing.Point(205, 262)
         Me.cmdOk.Name = "cmdOk"
         Me.cmdOk.Size = New System.Drawing.Size(75, 23)
         Me.cmdOk.TabIndex = 8
@@ -211,14 +233,205 @@ Partial Class frmOptions
         Me.Label3.Text = "Compact SQL CE Database - This option will compact" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "your SQL CE Database, this wi" & _
             "ll be useful if your database" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "file size is in mega bytes."
         '
+        'tpEditorSettings
+        '
+        Me.tpEditorSettings.Controls.Add(Me.chkEnableSyntaxHighlighting)
+        Me.tpEditorSettings.Controls.Add(Me.plMain)
+        Me.tpEditorSettings.Location = New System.Drawing.Point(4, 24)
+        Me.tpEditorSettings.Name = "tpEditorSettings"
+        Me.tpEditorSettings.Size = New System.Drawing.Size(369, 229)
+        Me.tpEditorSettings.TabIndex = 2
+        Me.tpEditorSettings.Text = "Editor Settings"
+        Me.tpEditorSettings.UseVisualStyleBackColor = True
+        '
+        'chkEnableSyntaxHighlighting
+        '
+        Me.chkEnableSyntaxHighlighting.AutoSize = True
+        Me.chkEnableSyntaxHighlighting.Location = New System.Drawing.Point(8, 8)
+        Me.chkEnableSyntaxHighlighting.Name = "chkEnableSyntaxHighlighting"
+        Me.chkEnableSyntaxHighlighting.Size = New System.Drawing.Size(173, 19)
+        Me.chkEnableSyntaxHighlighting.TabIndex = 0
+        Me.chkEnableSyntaxHighlighting.Text = "Enable Syntax Highlighting"
+        Me.chkEnableSyntaxHighlighting.UseVisualStyleBackColor = True
+        '
+        'plMain
+        '
+        Me.plMain.Controls.Add(Me.plComments)
+        Me.plMain.Controls.Add(Me.plVariables)
+        Me.plMain.Controls.Add(Me.chkHighlightVariables)
+        Me.plMain.Controls.Add(Me.Label7)
+        Me.plMain.Controls.Add(Me.cmdBrowseFunctions)
+        Me.plMain.Controls.Add(Me.Label2)
+        Me.plMain.Controls.Add(Me.cmdBrowseKeyWords)
+        Me.plMain.Controls.Add(Me.txtFunctionSample)
+        Me.plMain.Controls.Add(Me.txtKeywordSample)
+        Me.plMain.Controls.Add(Me.chkHighlightComments)
+        Me.plMain.Enabled = False
+        Me.plMain.Location = New System.Drawing.Point(8, 34)
+        Me.plMain.Name = "plMain"
+        Me.plMain.Size = New System.Drawing.Size(270, 183)
+        Me.plMain.TabIndex = 1
+        '
+        'plComments
+        '
+        Me.plComments.Controls.Add(Me.Label5)
+        Me.plComments.Controls.Add(Me.cmdBrowseComments)
+        Me.plComments.Controls.Add(Me.txtCommentSample)
+        Me.plComments.Enabled = False
+        Me.plComments.Location = New System.Drawing.Point(0, 28)
+        Me.plComments.Name = "plComments"
+        Me.plComments.Size = New System.Drawing.Size(249, 35)
+        Me.plComments.TabIndex = 5
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(9, 10)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(67, 15)
+        Me.Label5.TabIndex = 3
+        Me.Label5.Text = "Comments"
+        '
+        'cmdBrowseComments
+        '
+        Me.cmdBrowseComments.Location = New System.Drawing.Point(207, 6)
+        Me.cmdBrowseComments.Name = "cmdBrowseComments"
+        Me.cmdBrowseComments.Size = New System.Drawing.Size(25, 23)
+        Me.cmdBrowseComments.TabIndex = 2
+        Me.cmdBrowseComments.Text = "..."
+        Me.cmdBrowseComments.UseVisualStyleBackColor = True
+        '
+        'txtCommentSample
+        '
+        Me.txtCommentSample.ForeColor = System.Drawing.Color.Green
+        Me.txtCommentSample.Location = New System.Drawing.Point(76, 7)
+        Me.txtCommentSample.Name = "txtCommentSample"
+        Me.txtCommentSample.Size = New System.Drawing.Size(129, 21)
+        Me.txtCommentSample.TabIndex = 1
+        Me.txtCommentSample.Text = "this is a comment"
+        '
+        'plVariables
+        '
+        Me.plVariables.Controls.Add(Me.Label6)
+        Me.plVariables.Controls.Add(Me.cmdBrowseVariable)
+        Me.plVariables.Controls.Add(Me.txtVariableSample)
+        Me.plVariables.Enabled = False
+        Me.plVariables.Location = New System.Drawing.Point(0, 84)
+        Me.plVariables.Name = "plVariables"
+        Me.plVariables.Size = New System.Drawing.Size(249, 35)
+        Me.plVariables.TabIndex = 4
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(9, 10)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(58, 15)
+        Me.Label6.TabIndex = 3
+        Me.Label6.Text = "Variables"
+        '
+        'cmdBrowseVariable
+        '
+        Me.cmdBrowseVariable.Location = New System.Drawing.Point(207, 6)
+        Me.cmdBrowseVariable.Name = "cmdBrowseVariable"
+        Me.cmdBrowseVariable.Size = New System.Drawing.Size(25, 23)
+        Me.cmdBrowseVariable.TabIndex = 2
+        Me.cmdBrowseVariable.Text = "..."
+        Me.cmdBrowseVariable.UseVisualStyleBackColor = True
+        '
+        'txtVariableSample
+        '
+        Me.txtVariableSample.ForeColor = System.Drawing.Color.Red
+        Me.txtVariableSample.Location = New System.Drawing.Point(76, 7)
+        Me.txtVariableSample.Name = "txtVariableSample"
+        Me.txtVariableSample.Size = New System.Drawing.Size(129, 21)
+        Me.txtVariableSample.TabIndex = 1
+        Me.txtVariableSample.Text = "this is a variable"
+        '
+        'chkHighlightVariables
+        '
+        Me.chkHighlightVariables.AutoSize = True
+        Me.chkHighlightVariables.Location = New System.Drawing.Point(12, 66)
+        Me.chkHighlightVariables.Name = "chkHighlightVariables"
+        Me.chkHighlightVariables.Size = New System.Drawing.Size(129, 19)
+        Me.chkHighlightVariables.TabIndex = 0
+        Me.chkHighlightVariables.Text = "Highlight Variables"
+        Me.chkHighlightVariables.UseVisualStyleBackColor = True
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(9, 156)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(60, 15)
+        Me.Label7.TabIndex = 3
+        Me.Label7.Text = "Functions"
+        '
+        'cmdBrowseFunctions
+        '
+        Me.cmdBrowseFunctions.Location = New System.Drawing.Point(207, 153)
+        Me.cmdBrowseFunctions.Name = "cmdBrowseFunctions"
+        Me.cmdBrowseFunctions.Size = New System.Drawing.Size(25, 23)
+        Me.cmdBrowseFunctions.TabIndex = 2
+        Me.cmdBrowseFunctions.Text = "..."
+        Me.cmdBrowseFunctions.UseVisualStyleBackColor = True
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(9, 129)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(60, 15)
+        Me.Label2.TabIndex = 3
+        Me.Label2.Text = "Keywords"
+        '
+        'cmdBrowseKeyWords
+        '
+        Me.cmdBrowseKeyWords.Location = New System.Drawing.Point(207, 126)
+        Me.cmdBrowseKeyWords.Name = "cmdBrowseKeyWords"
+        Me.cmdBrowseKeyWords.Size = New System.Drawing.Size(25, 23)
+        Me.cmdBrowseKeyWords.TabIndex = 2
+        Me.cmdBrowseKeyWords.Text = "..."
+        Me.cmdBrowseKeyWords.UseVisualStyleBackColor = True
+        '
+        'txtFunctionSample
+        '
+        Me.txtFunctionSample.ForeColor = System.Drawing.Color.Gray
+        Me.txtFunctionSample.Location = New System.Drawing.Point(76, 153)
+        Me.txtFunctionSample.Name = "txtFunctionSample"
+        Me.txtFunctionSample.Size = New System.Drawing.Size(129, 21)
+        Me.txtFunctionSample.TabIndex = 1
+        Me.txtFunctionSample.Text = "this is a function"
+        '
+        'txtKeywordSample
+        '
+        Me.txtKeywordSample.ForeColor = System.Drawing.Color.Blue
+        Me.txtKeywordSample.Location = New System.Drawing.Point(76, 126)
+        Me.txtKeywordSample.Name = "txtKeywordSample"
+        Me.txtKeywordSample.Size = New System.Drawing.Size(129, 21)
+        Me.txtKeywordSample.TabIndex = 1
+        Me.txtKeywordSample.Text = "this is a keyword"
+        '
+        'chkHighlightComments
+        '
+        Me.chkHighlightComments.AutoSize = True
+        Me.chkHighlightComments.Location = New System.Drawing.Point(12, 12)
+        Me.chkHighlightComments.Name = "chkHighlightComments"
+        Me.chkHighlightComments.Size = New System.Drawing.Size(138, 19)
+        Me.chkHighlightComments.TabIndex = 0
+        Me.chkHighlightComments.Text = "Highlight Comments"
+        Me.chkHighlightComments.UseVisualStyleBackColor = True
+        '
         'frmOptions
         '
         Me.AcceptButton = Me.cmdOk
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.cmdCancel
-        Me.ClientSize = New System.Drawing.Size(377, 257)
+        Me.ClientSize = New System.Drawing.Size(378, 291)
         Me.Controls.Add(Me.tcOptions)
+        Me.Controls.Add(Me.cmdCancel)
+        Me.Controls.Add(Me.cmdOk)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
@@ -234,6 +447,14 @@ Partial Class frmOptions
         CType(Me.nuRecentFiles, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tpDBOptions.ResumeLayout(False)
         Me.tpDBOptions.PerformLayout()
+        Me.tpEditorSettings.ResumeLayout(False)
+        Me.tpEditorSettings.PerformLayout()
+        Me.plMain.ResumeLayout(False)
+        Me.plMain.PerformLayout()
+        Me.plComments.ResumeLayout(False)
+        Me.plComments.PerformLayout()
+        Me.plVariables.ResumeLayout(False)
+        Me.plVariables.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -253,4 +474,23 @@ Partial Class frmOptions
     Friend WithEvents nuRecentFiles As System.Windows.Forms.NumericUpDown
     Friend WithEvents lblRecentItems As System.Windows.Forms.Label
     Friend WithEvents chkRecentItems As System.Windows.Forms.CheckBox
+    Friend WithEvents tpEditorSettings As System.Windows.Forms.TabPage
+    Friend WithEvents chkEnableSyntaxHighlighting As System.Windows.Forms.CheckBox
+    Friend WithEvents plMain As System.Windows.Forms.Panel
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents cmdBrowseKeyWords As System.Windows.Forms.Button
+    Friend WithEvents cmdBrowseVariable As System.Windows.Forms.Button
+    Friend WithEvents txtKeywordSample As System.Windows.Forms.TextBox
+    Friend WithEvents cmdBrowseComments As System.Windows.Forms.Button
+    Friend WithEvents txtVariableSample As System.Windows.Forms.TextBox
+    Friend WithEvents txtCommentSample As System.Windows.Forms.TextBox
+    Friend WithEvents chkHighlightVariables As System.Windows.Forms.CheckBox
+    Friend WithEvents chkHighlightComments As System.Windows.Forms.CheckBox
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents cmdBrowseFunctions As System.Windows.Forms.Button
+    Friend WithEvents txtFunctionSample As System.Windows.Forms.TextBox
+    Friend WithEvents plComments As System.Windows.Forms.Panel
+    Friend WithEvents plVariables As System.Windows.Forms.Panel
 End Class

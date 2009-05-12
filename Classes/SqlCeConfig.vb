@@ -7,14 +7,17 @@ Imports Microsoft.Win32
 
 <XmlRoot("SqlCeConfig")> _
 Public Class SqlCeConfig
-    Private m_FileName As String
-    Private m_FilePath As String
 
     Private m_FontName As String
     Private m_FontSize As String
     Private m_ShowConnectDialogAtStartUp As Boolean
     Private m_RecentItems As String = "1"
     Private m_EnableRecentItems As Boolean = True
+    Private m_FunctionsColor As String = "Grey"
+    Private m_VariableColor As String = "Red"
+    Private m_KeywordColor As String = "Blue"
+    Private m_CommentsColor As String = "Green"
+
     <XmlElement("FontName")> _
     Public Property FontName() As String
         Get
@@ -58,65 +61,139 @@ Public Class SqlCeConfig
             m_EnableRecentItems = value
         End Set
     End Property
-    Public Sub New()
-        m_FilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly.Location)
-        m_FileName = String.Format("SQLCEExplorer.{0}.Config", Environment.UserName)
-    End Sub
+    Private m_EnableSyntaxHighlight As Boolean
+    Public Property EnableSyntaxHighlight() As Boolean
+        Get
+            Return m_EnableSyntaxHighlight
+        End Get
+        Set(ByVal value As Boolean)
+            m_EnableSyntaxHighlight = value
+        End Set
+    End Property
+    Private m_EnableCommentHighlight As Boolean
+    Public Property EnableCommentHighlight() As Boolean
+        Get
+            Return m_EnableCommentHighlight
+        End Get
+        Set(ByVal value As Boolean)
+            m_EnableCommentHighlight = value
+        End Set
+    End Property
+    Private m_EnableVariableHighlight As Boolean
+    Public Property EnableVariableHighlight() As Boolean
+        Get
+            Return m_EnableVariableHighlight
+        End Get
+        Set(ByVal value As Boolean)
+            m_EnableVariableHighlight = value
+        End Set
+    End Property
+
+    Public Property KeywordColor() As String
+        Get
+            Return m_KeywordColor
+        End Get
+        Set(ByVal value As String)
+            m_KeywordColor = value
+        End Set
+    End Property
+
+
+    Public Property VariableColor() As String
+        Get
+            Return m_VariableColor
+        End Get
+        Set(ByVal value As String)
+            m_VariableColor = value
+        End Set
+    End Property
+
+
+    Public Property CommentsColor() As String
+        Get
+            Return m_CommentsColor
+        End Get
+        Set(ByVal value As String)
+            m_CommentsColor = value
+        End Set
+    End Property
+
+
+    Public Property FunctionsColor() As String
+        Get
+            Return m_FunctionsColor
+        End Get
+        Set(ByVal value As String)
+            m_FunctionsColor = value
+        End Set
+    End Property
+
     Public Sub SaveConfig()
-        'Dim fileName As String = Path.Combine(m_FilePath, m_FileName)
-        'Dim serializer As New XmlSerializer(GetType(SqlCeConfig))
-        'Using sw As New StreamWriter(File.Open(fileName, FileMode.OpenOrCreate))
-        '    serializer.Serialize(sw, Me)
-        '    sw.Flush()
-        '    sw.Close()
-        'End Using
-        Dim rootKey As RegistryKey = Registry.CurrentUser.CreateSubKey("Software")
-        Dim AppNameKey As RegistryKey = rootKey.CreateSubKey(SqlCeMain.APPLICATION_NAME)
-        Dim settingsKey As RegistryKey = AppNameKey.CreateSubKey("Settings")
-        settingsKey.SetValue("CurrentUser", Environment.UserName)
-        settingsKey.SetValue("FontName", Me.FontName)
-        settingsKey.SetValue("FontSize", Me.FontSize)
-        settingsKey.SetValue("ShowConnectDialogAtStartUp", Me.ShowConnectDialogAtStartUp)
-        settingsKey.SetValue("EnableRecentItems", Me.EnableRecentItems)
-        settingsKey.SetValue("RecentItems", Me.RecentItems)
-        settingsKey.Close()
-        AppNameKey.Close()
-        rootKey.Close()
+        Try
+            Dim rootKey As RegistryKey = Registry.CurrentUser.CreateSubKey("Software")
+            Dim AppNameKey As RegistryKey = rootKey.CreateSubKey(SqlCeMain.APPLICATION_NAME)
+            Dim settingsKey As RegistryKey = AppNameKey.CreateSubKey("Settings")
+            settingsKey.SetValue("CurrentUser", Environment.UserName)
+            settingsKey.SetValue("FontName", Me.FontName)
+            settingsKey.SetValue("FontSize", Me.FontSize)
+            settingsKey.SetValue("ShowConnectDialogAtStartUp", Me.ShowConnectDialogAtStartUp)
+            settingsKey.SetValue("EnableRecentItems", Me.EnableRecentItems)
+            settingsKey.SetValue("RecentItems", Me.RecentItems)
+
+            settingsKey.SetValue("EnableSyntaxHighlight", Me.EnableSyntaxHighlight)
+            settingsKey.SetValue("VariableHighlight", Me.EnableVariableHighlight)
+            settingsKey.SetValue("CommentHighlight", Me.EnableCommentHighlight)
+            settingsKey.SetValue("KeywordColor", Me.KeywordColor)
+            settingsKey.SetValue("FunctionsColor", Me.FunctionsColor)
+            settingsKey.SetValue("CommentsColor", Me.CommentsColor)
+            settingsKey.SetValue("VariableColor", Me.VariableColor)
+
+            settingsKey.Close()
+            AppNameKey.Close()
+            rootKey.Close()
+        Catch
+
+        End Try
     End Sub
     Public Sub ReadConfig()
-        'Try
-        '    Dim fileName As String = Path.Combine(m_FilePath, m_FileName)
-        '    If File.Exists(fileName) Then
-        '        Dim oSqlCeConfing As SqlCeConfig = Nothing
-        '        Dim serializer As New XmlSerializer(GetType(SqlCeConfig))
-        '        Using sw As New StreamReader(File.Open(fileName, FileMode.Open))
-        '            oSqlCeConfing = TryCast(serializer.Deserialize(sw), SqlCeConfig)
-        '            sw.Close()
-        '        End Using
-        '        If oSqlCeConfing IsNot Nothing Then
-        '            Me.m_FontName = oSqlCeConfing.FontName
-        '            Me.m_FontSize = oSqlCeConfing.FontSize
-        '            Me.m_ShowConnectDialogAtStartUp = oSqlCeConfing.ShowConnectDialogAtStartUp
-        '        End If
-        '    End If
-        'Catch ex As Exception
-        '    'do nothing
-        'End Try
-        Dim rootKey As RegistryKey = Registry.CurrentUser.CreateSubKey("Software")
-        Dim AppNameKey As RegistryKey = rootKey.CreateSubKey(SqlCeMain.APPLICATION_NAME)
-        If AppNameKey IsNot Nothing AndAlso AppNameKey.SubKeyCount >= 1 Then
-            Dim settingsKey As RegistryKey = AppNameKey.CreateSubKey("Settings")
-            If settingsKey IsNot Nothing AndAlso settingsKey.ValueCount >= 1 Then
-                Me.m_FontName = settingsKey.GetValue("FontName").ToString
-                Me.m_FontSize = settingsKey.GetValue("FontSize").ToString
-                Me.m_RecentItems = IIf(settingsKey.GetValue("RecentItems") Is Nothing, "1", settingsKey.GetValue("RecentItems"))
-                Me.m_EnableRecentItems = Boolean.Parse(IIf(settingsKey.GetValue("EnableRecentItems") Is Nothing, True, settingsKey.GetValue("EnableRecentItems").ToString).ToString)
-                Me.m_ShowConnectDialogAtStartUp = Boolean.Parse(settingsKey.GetValue("ShowConnectDialogAtStartUp").ToString)
-                settingsKey.Close()
+        Try
+            Dim rootKey As RegistryKey = Registry.CurrentUser.CreateSubKey("Software")
+            Dim AppNameKey As RegistryKey = rootKey.CreateSubKey(SqlCeMain.APPLICATION_NAME)
+            If AppNameKey IsNot Nothing AndAlso AppNameKey.SubKeyCount >= 1 Then
+                Dim settingsKey As RegistryKey = AppNameKey.CreateSubKey("Settings")
+                If settingsKey IsNot Nothing AndAlso settingsKey.ValueCount >= 1 Then
+                    Me.m_FontName = settingsKey.GetValue("FontName").ToString
+                    Me.m_FontSize = settingsKey.GetValue("FontSize").ToString
+                    Me.m_ShowConnectDialogAtStartUp = Boolean.Parse(settingsKey.GetValue("ShowConnectDialogAtStartUp").ToString)
+
+                    If settingsKey.GetValue("RecentItems") Is Nothing Then
+                        Me.m_RecentItems = "1"
+                    Else
+                        Me.m_RecentItems = settingsKey.GetValue("RecentItems")
+                    End If
+                    If settingsKey.GetValue("EnableRecentItems") Is Nothing Then
+                        Me.m_EnableRecentItems = True
+                    Else
+                        Me.m_EnableRecentItems = Boolean.Parse(settingsKey.GetValue("EnableRecentItems").ToString)
+                    End If
+
+                    Me.EnableSyntaxHighlight = settingsKey.GetValue("EnableSyntaxHighlight")
+                    Me.EnableVariableHighlight = settingsKey.GetValue("VariableHighlight")
+                    Me.EnableCommentHighlight = settingsKey.GetValue("CommentHighlight")
+                    Me.KeywordColor = settingsKey.GetValue("KeywordColor")
+                    Me.FunctionsColor = settingsKey.GetValue("FunctionsColor")
+                    Me.CommentsColor = settingsKey.GetValue("CommentsColor")
+                    Me.VariableColor = settingsKey.GetValue("VariableColor")
+
+                    settingsKey.Close()
+                End If
+                AppNameKey.Close()
             End If
-            AppNameKey.Close()
-        End If
-        rootKey.Close()
+            rootKey.Close()
+
+        Catch
+            'do nothing
+        End Try
     End Sub
 
 

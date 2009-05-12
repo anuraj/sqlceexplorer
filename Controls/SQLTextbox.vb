@@ -8,6 +8,7 @@ Public Class SQLTextbox
     Private m_Operators As List(Of String)
     Private m_HighlightComments As Boolean = True
     Private m_HighlightVariables As Boolean = True
+    Private m_EnableSyntaxHighlight As Boolean = False
 
     Private m_KeywordColor As Color = Color.Blue
     Private m_VariableColor As Color = Color.Red
@@ -17,6 +18,16 @@ Public Class SQLTextbox
     Private m_IsParsed As Boolean = False
     Private m_KeywordStrings As StringBuilder
     Private m_OperatorStrings As StringBuilder
+    <Category("Syntax Highlighting")> _
+    Public Property EnableSyntaxHighlighting() As Boolean
+        Get
+            Return m_EnableSyntaxHighlight
+        End Get
+        Set(ByVal value As Boolean)
+            m_EnableSyntaxHighlight = True
+        End Set
+    End Property
+
     <Category("Syntax Highlighting"), Description("Color of the Keyword")> _
     Public Property KeywordColor() As Color
         Get
@@ -98,82 +109,86 @@ Public Class SQLTextbox
     End Sub
 
     Private Sub ParseLists()
-        m_KeywordStrings = New StringBuilder
-        m_OperatorStrings = New StringBuilder
+        If m_EnableSyntaxHighlight Then
+            m_KeywordStrings = New StringBuilder
+            m_OperatorStrings = New StringBuilder
 
-        If m_Operators IsNot Nothing Then
-            For index As Integer = 0 To m_Operators.Count - 1
-                If index = m_Operators.Count - 1 Then
-                    m_OperatorStrings.Append(String.Format("\b{0}\b", m_Operators(index)))
-                Else
-                    m_OperatorStrings.Append(String.Format("\b{0}\b|", m_Operators(index)))
-                End If
-            Next
+            If m_Operators IsNot Nothing Then
+                For index As Integer = 0 To m_Operators.Count - 1
+                    If index = m_Operators.Count - 1 Then
+                        m_OperatorStrings.Append(String.Format("\b{0}\b", m_Operators(index)))
+                    Else
+                        m_OperatorStrings.Append(String.Format("\b{0}\b|", m_Operators(index)))
+                    End If
+                Next
+            End If
+            If m_Keywords IsNot Nothing Then
+                For index As Integer = 0 To m_Keywords.Count - 1
+                    If index = m_Keywords.Count - 1 Then
+                        m_KeywordStrings.Append(String.Format("\b{0}\b", m_Keywords(index)))
+                    Else
+                        m_KeywordStrings.Append(String.Format("\b{0}\b|", m_Keywords(index)))
+                    End If
+                Next
+            End If
+            m_IsParsed = True
         End If
-        If m_Keywords IsNot Nothing Then
-            For index As Integer = 0 To m_Keywords.Count - 1
-                If index = m_Keywords.Count - 1 Then
-                    m_KeywordStrings.Append(String.Format("\b{0}\b", m_Keywords(index)))
-                Else
-                    m_KeywordStrings.Append(String.Format("\b{0}\b|", m_Keywords(index)))
-                End If
-            Next
-        End If
-        m_IsParsed = True
     End Sub
     Protected Overrides Sub OnTextChanged(ByVal e As System.EventArgs)
         MyBase.OnTextChanged(e)
-        _Paint = False
-        If Not m_IsParsed Then
-            Me.ParseLists()
-        End If
+        If m_EnableSyntaxHighlight Then
+            _Paint = False
+            If Not m_IsParsed Then
+                Me.ParseLists()
+            End If
 
-        If m_IsParsed Then
-            Dim keywords As New Regex(m_KeywordStrings.ToString, RegexOptions.IgnoreCase)
-            Dim operators As New Regex(m_OperatorStrings.ToString, RegexOptions.IgnoreCase)
-            Dim comments As New Regex("--.*$", RegexOptions.IgnoreCase)
-            Dim variables As New Regex("'.*$*.'", RegexOptions.IgnoreCase)
-            Dim words As New Regex("\w", RegexOptions.IgnoreCase)
+            If m_IsParsed Then
+                Dim keywords As New Regex(m_KeywordStrings.ToString, RegexOptions.IgnoreCase)
+                Dim operators As New Regex(m_OperatorStrings.ToString, RegexOptions.IgnoreCase)
+                Dim comments As New Regex("--.*$", RegexOptions.IgnoreCase)
+                Dim variables As New Regex("'.*$*.'", RegexOptions.IgnoreCase)
+                Dim words As New Regex("\w", RegexOptions.IgnoreCase)
 
-            Dim selPos As Integer = Me.SelectionStart
-            For Each keywordMatch As Match In words.Matches(Me.Text)
-                Me.Select(keywordMatch.Index, keywordMatch.Length)
-                Me.SelectionColor = Color.Black
-                Me.SelectionStart = selPos
-                Me.SelectionColor = Color.Black
-            Next
-
-            For Each keywordMatch As Match In keywords.Matches(Me.Text)
-                Me.Select(keywordMatch.Index, keywordMatch.Length)
-                Me.SelectionColor = m_KeywordColor
-                Me.SelectionStart = selPos
-                Me.SelectionColor = Color.Black
-            Next
-
-            For Each keywordMatch As Match In operators.Matches(Me.Text)
-                Me.Select(keywordMatch.Index, keywordMatch.Length)
-                Me.SelectionColor = m_OperatorColor
-                Me.SelectionStart = selPos
-                Me.SelectionColor = Color.Black
-            Next
-
-            If m_HighlightComments Then
-                For Each keywordMatch As Match In comments.Matches(Me.Text)
+                Dim selPos As Integer = Me.SelectionStart
+                For Each keywordMatch As Match In words.Matches(Me.Text)
                     Me.Select(keywordMatch.Index, keywordMatch.Length)
-                    Me.SelectionColor = m_CommentsColor
+                    Me.SelectionColor = Color.Black
                     Me.SelectionStart = selPos
                     Me.SelectionColor = Color.Black
                 Next
-            End If
-            If m_HighlightVariables Then
-                For Each keywordMatch As Match In variables.Matches(Me.Text)
+
+                For Each keywordMatch As Match In keywords.Matches(Me.Text)
                     Me.Select(keywordMatch.Index, keywordMatch.Length)
-                    Me.SelectionColor = m_VariableColor
+                    Me.SelectionColor = m_KeywordColor
                     Me.SelectionStart = selPos
                     Me.SelectionColor = Color.Black
                 Next
+
+                For Each keywordMatch As Match In operators.Matches(Me.Text)
+                    Me.Select(keywordMatch.Index, keywordMatch.Length)
+                    Me.SelectionColor = m_OperatorColor
+                    Me.SelectionStart = selPos
+                    Me.SelectionColor = Color.Black
+                Next
+
+                If m_HighlightComments Then
+                    For Each keywordMatch As Match In comments.Matches(Me.Text)
+                        Me.Select(keywordMatch.Index, keywordMatch.Length)
+                        Me.SelectionColor = m_CommentsColor
+                        Me.SelectionStart = selPos
+                        Me.SelectionColor = Color.Black
+                    Next
+                End If
+                If m_HighlightVariables Then
+                    For Each keywordMatch As Match In variables.Matches(Me.Text)
+                        Me.Select(keywordMatch.Index, keywordMatch.Length)
+                        Me.SelectionColor = m_VariableColor
+                        Me.SelectionStart = selPos
+                        Me.SelectionColor = Color.Black
+                    Next
+                End If
+                _Paint = True
             End If
-            _Paint = True
         End If
     End Sub
     Const WM_PAINT As Short = &HF
