@@ -59,8 +59,8 @@ Partial Class frmAbout
         Me.lblDevelopedBy.Name = "lblDevelopedBy"
         Me.lblDevelopedBy.Size = New System.Drawing.Size(304, 60)
         Me.lblDevelopedBy.TabIndex = 2
-        Me.lblDevelopedBy.Text = "Copyright © 2009 Anuraj.P" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Version Beta 0.2 ( May 12, 2009)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "See gnu_licence.tx" & _
-            "t for copyright and redistribution info"
+        Me.lblDevelopedBy.Text = "Copyright © 2009 Anuraj.P" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Version Beta 0.4 (May 17, 2009)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "See gnu_licence.txt" & _
+            " for copyright and redistribution info"
         '
         'lblAppVersion
         '

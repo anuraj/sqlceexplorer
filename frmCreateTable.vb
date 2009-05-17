@@ -58,7 +58,7 @@ Public Class frmCreateTable
                 End If
 
                 'query.AppendFormat("[{0}] {1}({2}) {5} {3} {4} ", row.Cells(0).Value, row.Cells(1).Value, row.Cells(2).Value, uniqueKey, primaryKey, allowNull)
-                query.AppendFormat("[{0}] {1} {4} {2} {3} ", row.Cells(0).Value, GetDataLength(row.Cells(1).Value, row.Cells(2).Value), uniqueKey, primaryKey, allowNull)
+                query.AppendFormat("[{0}] {1} {4} {2} {3}", row.Cells(0).Value, GetDataLength(row.Cells(1).Value, row.Cells(2).Value), uniqueKey, primaryKey, allowNull)
                 query.Append(",")
             Else
                 Dim lastPos As Integer = query.ToString.LastIndexOf(",")
@@ -66,7 +66,6 @@ Public Class frmCreateTable
                     query.Remove(lastPos, 1)
                 End If
             End If
-            query.Append(Environment.NewLine)
         Next
         query.AppendFormat("){0}", Environment.NewLine)
         SqlCeMain.CurrentQuery(query.ToString)

@@ -8,9 +8,9 @@ Imports Microsoft.Win32
 <XmlRoot("SqlCeConfig")> _
 Public Class SqlCeConfig
 
-    Private m_FontName As String
-    Private m_FontSize As String
-    Private m_ShowConnectDialogAtStartUp As Boolean
+    Private m_FontName As String = "Courier New"
+    Private m_FontSize As String = "12"
+    Private m_ShowConnectDialogAtStartUp As Boolean = False
     Private m_RecentItems As String = "1"
     Private m_EnableRecentItems As Boolean = True
     Private m_FunctionsColor As String = "Grey"
@@ -61,7 +61,7 @@ Public Class SqlCeConfig
             m_EnableRecentItems = value
         End Set
     End Property
-    Private m_EnableSyntaxHighlight As Boolean
+    Private m_EnableSyntaxHighlight As Boolean = False
     Public Property EnableSyntaxHighlight() As Boolean
         Get
             Return m_EnableSyntaxHighlight

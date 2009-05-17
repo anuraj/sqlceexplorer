@@ -89,10 +89,19 @@
         Me.chkHighlightVariables.Checked = oSqlCeConfig.EnableVariableHighlight
         Me.plVariables.Enabled = Me.chkHighlightVariables.Checked
 
-        Me.txtCommentSample.ForeColor = Color.FromName(oSqlCeConfig.CommentsColor)
-        Me.txtFunctionSample.ForeColor = Color.FromName(oSqlCeConfig.FunctionsColor)
-        Me.txtKeywordSample.ForeColor = Color.FromName(oSqlCeConfig.KeywordColor)
-        Me.txtVariableSample.ForeColor = Color.FromName(oSqlCeConfig.VariableColor)
+        If oSqlCeConfig.CommentsColor IsNot Nothing Then
+            Me.txtCommentSample.ForeColor = Color.FromName(oSqlCeConfig.CommentsColor)
+        End If
+        If oSqlCeConfig.FunctionsColor IsNot Nothing Then
+            Me.txtFunctionSample.ForeColor = Color.FromName(oSqlCeConfig.FunctionsColor)
+        End If
+        If oSqlCeConfig.KeywordColor IsNot Nothing Then
+            Me.txtKeywordSample.ForeColor = Color.FromName(oSqlCeConfig.KeywordColor)
+        End If
+        If oSqlCeConfig.VariableColor IsNot Nothing Then
+            Me.txtVariableSample.ForeColor = Color.FromName(oSqlCeConfig.VariableColor)
+        End If
+
 
         Me.ToggleRecentItems()
         oSqlCeConfig = Nothing

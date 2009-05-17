@@ -24,7 +24,7 @@ Public Class SQLTextbox
             Return m_EnableSyntaxHighlight
         End Get
         Set(ByVal value As Boolean)
-            m_EnableSyntaxHighlight = True
+            m_EnableSyntaxHighlight = value
         End Set
     End Property
 

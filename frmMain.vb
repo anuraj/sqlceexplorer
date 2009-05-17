@@ -809,7 +809,11 @@ Public Class frmMain
     End Sub
 
     Private Sub ctxiSeGenerateSql_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiSeGenerateSql.Click, ctxiGenerateScript.Click
-
+        Dim ofrmGenerateScript As New frmGenerateScript
+        AddHandler ofrmGenerateScript.QueryFormed, AddressOf ofrmGenerateScript_QueryFormed
+        ofrmGenerateScript.ShowDialog(Me)
     End Sub
-
+    Private Sub ofrmGenerateScript_QueryFormed(ByVal sender As Object, ByVal e As EventArgs)
+        Me.txtQueryWindow.Text = SqlCeMain.GetCurrentQuery
+    End Sub
 End Class

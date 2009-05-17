@@ -30,8 +30,6 @@ Partial Class frmOptions
         Me.cmdBrowseFonts = New System.Windows.Forms.Button
         Me.txtFont = New System.Windows.Forms.TextBox
         Me.Label1 = New System.Windows.Forms.Label
-        Me.cmdCancel = New System.Windows.Forms.Button
-        Me.cmdOk = New System.Windows.Forms.Button
         Me.chkConneciondlg = New System.Windows.Forms.CheckBox
         Me.tpDBOptions = New System.Windows.Forms.TabPage
         Me.cmdRepair = New System.Windows.Forms.Button
@@ -57,6 +55,8 @@ Partial Class frmOptions
         Me.txtFunctionSample = New System.Windows.Forms.TextBox
         Me.txtKeywordSample = New System.Windows.Forms.TextBox
         Me.chkHighlightComments = New System.Windows.Forms.CheckBox
+        Me.cmdCancel = New System.Windows.Forms.Button
+        Me.cmdOk = New System.Windows.Forms.Button
         Me.tcOptions.SuspendLayout()
         Me.tpSettings.SuspendLayout()
         CType(Me.nuRecentFiles, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -152,25 +152,6 @@ Partial Class frmOptions
         Me.Label1.TabIndex = 10
         Me.Label1.Text = "Query Window Font"
         '
-        'cmdCancel
-        '
-        Me.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.cmdCancel.Location = New System.Drawing.Point(288, 262)
-        Me.cmdCancel.Name = "cmdCancel"
-        Me.cmdCancel.Size = New System.Drawing.Size(75, 23)
-        Me.cmdCancel.TabIndex = 9
-        Me.cmdCancel.Text = "&Cancel"
-        Me.cmdCancel.UseVisualStyleBackColor = True
-        '
-        'cmdOk
-        '
-        Me.cmdOk.Location = New System.Drawing.Point(205, 262)
-        Me.cmdOk.Name = "cmdOk"
-        Me.cmdOk.Size = New System.Drawing.Size(75, 23)
-        Me.cmdOk.TabIndex = 8
-        Me.cmdOk.Text = "&OK"
-        Me.cmdOk.UseVisualStyleBackColor = True
-        '
         'chkConneciondlg
         '
         Me.chkConneciondlg.AutoSize = True
@@ -190,7 +171,7 @@ Partial Class frmOptions
         Me.tpDBOptions.Location = New System.Drawing.Point(4, 24)
         Me.tpDBOptions.Name = "tpDBOptions"
         Me.tpDBOptions.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpDBOptions.Size = New System.Drawing.Size(369, 229)
+        Me.tpDBOptions.Size = New System.Drawing.Size(370, 229)
         Me.tpDBOptions.TabIndex = 1
         Me.tpDBOptions.Text = "Database options"
         Me.tpDBOptions.UseVisualStyleBackColor = True
@@ -239,7 +220,7 @@ Partial Class frmOptions
         Me.tpEditorSettings.Controls.Add(Me.plMain)
         Me.tpEditorSettings.Location = New System.Drawing.Point(4, 24)
         Me.tpEditorSettings.Name = "tpEditorSettings"
-        Me.tpEditorSettings.Size = New System.Drawing.Size(369, 229)
+        Me.tpEditorSettings.Size = New System.Drawing.Size(370, 229)
         Me.tpEditorSettings.TabIndex = 2
         Me.tpEditorSettings.Text = "Editor Settings"
         Me.tpEditorSettings.UseVisualStyleBackColor = True
@@ -249,9 +230,9 @@ Partial Class frmOptions
         Me.chkEnableSyntaxHighlighting.AutoSize = True
         Me.chkEnableSyntaxHighlighting.Location = New System.Drawing.Point(8, 8)
         Me.chkEnableSyntaxHighlighting.Name = "chkEnableSyntaxHighlighting"
-        Me.chkEnableSyntaxHighlighting.Size = New System.Drawing.Size(173, 19)
+        Me.chkEnableSyntaxHighlighting.Size = New System.Drawing.Size(257, 19)
         Me.chkEnableSyntaxHighlighting.TabIndex = 0
-        Me.chkEnableSyntaxHighlighting.Text = "Enable Syntax Highlighting"
+        Me.chkEnableSyntaxHighlighting.Text = "Enable Syntax Highlighting (Experimental)"
         Me.chkEnableSyntaxHighlighting.UseVisualStyleBackColor = True
         '
         'plMain
@@ -421,6 +402,25 @@ Partial Class frmOptions
         Me.chkHighlightComments.TabIndex = 0
         Me.chkHighlightComments.Text = "Highlight Comments"
         Me.chkHighlightComments.UseVisualStyleBackColor = True
+        '
+        'cmdCancel
+        '
+        Me.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.cmdCancel.Location = New System.Drawing.Point(288, 262)
+        Me.cmdCancel.Name = "cmdCancel"
+        Me.cmdCancel.Size = New System.Drawing.Size(75, 23)
+        Me.cmdCancel.TabIndex = 9
+        Me.cmdCancel.Text = "&Cancel"
+        Me.cmdCancel.UseVisualStyleBackColor = True
+        '
+        'cmdOk
+        '
+        Me.cmdOk.Location = New System.Drawing.Point(205, 262)
+        Me.cmdOk.Name = "cmdOk"
+        Me.cmdOk.Size = New System.Drawing.Size(75, 23)
+        Me.cmdOk.TabIndex = 8
+        Me.cmdOk.Text = "&OK"
+        Me.cmdOk.UseVisualStyleBackColor = True
         '
         'frmOptions
         '

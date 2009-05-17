@@ -20,8 +20,10 @@ Public Class SqlCeDatalayer
         End If
     End Sub
     Public Function ExecuteReader(ByVal Query As String) As SqlCeDataReader
+
         m_Command = New SqlCeCommand(Query, m_Connection)
         Return m_Command.ExecuteReader(CommandBehavior.CloseConnection)
+
     End Function
     Public Function ExecuteReader(ByVal Query As String, ByVal Transaction As SqlCeTransaction) As SqlCeDataReader
         m_Command = New SqlCeCommand(Query, m_Connection)

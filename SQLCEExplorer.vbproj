@@ -113,6 +113,12 @@
     <Compile Include="frmFind.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmGenerateScript.Designer.vb">
+      <DependentUpon>frmGenerateScript.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmGenerateScript.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmMain.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -226,6 +232,9 @@
     <Content Include="database.ico" />
     <EmbeddedResource Include="frmDeleteTable.resx">
       <DependentUpon>frmDeleteTable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGenerateScript.resx">
+      <DependentUpon>frmGenerateScript.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmModifyColumn.resx">
       <DependentUpon>frmModifyColumn.vb</DependentUpon>

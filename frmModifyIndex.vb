@@ -55,7 +55,7 @@ Public Class frmModifyIndex
         End If
     End Sub
     Private Sub LoadColumns(ByVal Tablename As String)
-        Me.cmbIndex.Items.Clear()
+        Me.cmbColumns.Items.Clear()
         Dim oSqlCeExplorerData As SqlCeExplorerData
         Dim oTablesReader As SqlCeDataReader
         oSqlCeExplorerData = New SqlCeExplorerData
