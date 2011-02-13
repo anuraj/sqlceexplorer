@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -19,45 +19,56 @@
     <OptionInfer>On</OptionInfer>
     <ApplicationIcon>database.ico</ApplicationIcon>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-    <TargetFrameworkSubset>
-    </TargetFrameworkSubset>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>SQLCEExplorer.snk</AssemblyOriginatorKeyFile>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>http://localhost/SQLCEExplorer/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>None</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>Output\</OutputPath>
     <DocumentationFile>SQLCEExplorer.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>None</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>Output\</OutputPath>
     <DocumentationFile>SQLCEExplorer.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -72,83 +83,144 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Classes\ConnectionInfo.vb" />
     <Compile Include="Classes\FindEventArgs.vb" />
     <Compile Include="Classes\SqlCeConfig.vb" />
     <Compile Include="Controls\SQLTextbox.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="frmAbout.Designer.vb">
+    <Compile Include="Extensions\CodeGenerationModules\BaseCodeGenerator.vb" />
+    <Compile Include="Extensions\CodeGenerationModules\VBCodeGenerator.vb" />
+    <Compile Include="Extensions\CodeGenerationModules\CSharpCodeGenerator.vb" />
+    <Compile Include="Extensions\ExportModules\XmlExporter.vb" />
+    <Compile Include="Extensions\ImportModules\CSVImporter.vb" />
+    <Compile Include="Extensions\ImportModules\Excel2003Importer.vb" />
+    <Compile Include="Extensions\ImportModules\Excel2007Importer.vb" />
+    <Compile Include="Framework\frmBaseUI.Designer.vb">
+      <DependentUpon>frmBaseUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Framework\frmBaseUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Framework\PluginHost.vb" />
+    <Compile Include="Interfaces\ICodeGenerator.vb" />
+    <Compile Include="Interfaces\IExportModule.vb" />
+    <Compile Include="UI\frmExport.Designer.vb">
+      <DependentUpon>frmExport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmExport.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmGenerateCode.Designer.vb">
+      <DependentUpon>frmGenerateCode.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmGenerateCode.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmEditTable.Designer.vb">
+      <DependentUpon>frmEditTable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmEditTable.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmImportFile.Designer.vb">
+      <DependentUpon>frmImportFile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmImportFile.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IImportModule.vb" />
+    <Compile Include="Extensions\ImportModules\XmlImporter.vb" />
+    <Compile Include="UI\frmAbout.Designer.vb">
       <DependentUpon>frmAbout.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmAbout.vb">
+    <Compile Include="UI\frmAbout.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmConnect.Designer.vb">
+    <Compile Include="UI\frmConnect.Designer.vb">
       <DependentUpon>frmConnect.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmConnect.vb">
+    <Compile Include="UI\frmConnect.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCreate.Designer.vb">
+    <Compile Include="UI\frmCreate.Designer.vb">
       <DependentUpon>frmCreate.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmCreate.vb">
+    <Compile Include="UI\frmCreate.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCreateTable.Designer.vb">
+    <Compile Include="UI\frmCreateTable.Designer.vb">
       <DependentUpon>frmCreateTable.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmCreateTable.vb">
+    <Compile Include="UI\frmCreateTable.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDeleteTable.Designer.vb">
+    <Compile Include="UI\frmDeleteRelation.Designer.vb">
+      <DependentUpon>frmDeleteRelation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmDeleteRelation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmDeleteTable.Designer.vb">
       <DependentUpon>frmDeleteTable.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmDeleteTable.vb">
+    <Compile Include="UI\frmDeleteTable.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmFind.Designer.vb">
+    <Compile Include="UI\frmFind.Designer.vb">
       <DependentUpon>frmFind.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmFind.vb">
+    <Compile Include="UI\frmFind.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmGenerateScript.Designer.vb">
+    <Compile Include="UI\frmGenerateScript.Designer.vb">
       <DependentUpon>frmGenerateScript.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmGenerateScript.vb">
+    <Compile Include="UI\frmGenerateScript.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMain.vb">
+    <Compile Include="UI\frmMain.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMain.Designer.vb">
+    <Compile Include="UI\frmMain.Designer.vb">
       <DependentUpon>frmMain.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Classes\SqlCeMain.vb" />
-    <Compile Include="frmModifyColumn.Designer.vb">
+    <Compile Include="UI\frmModifyColumn.Designer.vb">
       <DependentUpon>frmModifyColumn.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmModifyColumn.vb">
+    <Compile Include="UI\frmModifyColumn.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmModifyIndex.Designer.vb">
+    <Compile Include="UI\frmModifyIndex.Designer.vb">
       <DependentUpon>frmModifyIndex.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmModifyIndex.vb">
+    <Compile Include="UI\frmModifyIndex.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmOptions.Designer.vb">
+    <Compile Include="UI\frmOptions.Designer.vb">
       <DependentUpon>frmOptions.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmOptions.vb">
+    <Compile Include="UI\frmOptions.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSplash.Designer.vb">
+    <Compile Include="UI\frmQueryBuilder.Designer.vb">
+      <DependentUpon>frmQueryBuilder.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmQueryBuilder.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmRelationShips.Designer.vb">
+      <DependentUpon>frmRelationShips.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmRelationShips.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmSplash.Designer.vb">
       <DependentUpon>frmSplash.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmSplash.vb">
+    <Compile Include="UI\frmSplash.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -171,27 +243,43 @@
     <Compile Include="Classes\SqlCeExplorerDB.vb" />
     <Compile Include="Classes\SqlCeExplorerException.vb" />
     <Compile Include="Classes\SqlCeExplorerUtility.vb" />
+    <Compile Include="UIResources\Constants.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="frmAbout.resx">
+    <EmbeddedResource Include="Framework\frmBaseUI.resx">
+      <DependentUpon>frmBaseUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmExport.resx">
+      <DependentUpon>frmExport.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmGenerateCode.resx">
+      <DependentUpon>frmGenerateCode.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmAbout.resx">
       <DependentUpon>frmAbout.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmConnect.resx">
+    <EmbeddedResource Include="UI\frmConnect.resx">
       <DependentUpon>frmConnect.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCreate.resx">
+    <EmbeddedResource Include="UI\frmCreate.resx">
       <DependentUpon>frmCreate.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCreateTable.resx">
+    <EmbeddedResource Include="UI\frmCreateTable.resx">
       <DependentUpon>frmCreateTable.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmFind.resx">
+    <EmbeddedResource Include="UI\frmEditTable.resx">
+      <DependentUpon>frmEditTable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmFind.resx">
       <DependentUpon>frmFind.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMain.resx">
+    <EmbeddedResource Include="UI\frmImportFile.resx">
+      <DependentUpon>frmImportFile.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmOptions.resx">
+    <EmbeddedResource Include="UI\frmOptions.resx">
       <DependentUpon>frmOptions.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -230,25 +318,74 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="database.ico" />
-    <EmbeddedResource Include="frmDeleteTable.resx">
+    <None Include="Resources\ProjectTemplate.xml" />
+    <None Include="app.config" />
+    <None Include="Resources\tick.png" />
+    <None Include="Resources\page_white_find.png" />
+    <None Include="Resources\disk.png" />
+    <None Include="Resources\database_add.png" />
+    <None Include="Resources\database_connect.png" />
+    <EmbeddedResource Include="Controls\SQLTextbox.resx">
+      <DependentUpon>SQLTextbox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmDeleteRelation.resx">
+      <DependentUpon>frmDeleteRelation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmDeleteTable.resx">
       <DependentUpon>frmDeleteTable.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmGenerateScript.resx">
+    <EmbeddedResource Include="UI\frmGenerateScript.resx">
       <DependentUpon>frmGenerateScript.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmModifyColumn.resx">
+    <EmbeddedResource Include="UI\frmModifyColumn.resx">
       <DependentUpon>frmModifyColumn.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmModifyIndex.resx">
+    <EmbeddedResource Include="UI\frmModifyIndex.resx">
       <DependentUpon>frmModifyIndex.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSplash.resx">
+    <EmbeddedResource Include="UI\frmQueryBuilder.resx">
+      <DependentUpon>frmQueryBuilder.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmRelationShips.resx">
+      <DependentUpon>frmRelationShips.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmSplash.resx">
       <DependentUpon>frmSplash.vb</DependentUpon>
     </EmbeddedResource>
-    <None Include="My Project\app.manifest" />
+    <None Include="My Project\app.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\control_play.gif" />
     <None Include="SQLCEExplorer.snk" />
   </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

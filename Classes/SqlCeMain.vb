@@ -5,8 +5,8 @@
     Private m_Encrypted As Boolean
     Private m_ConnectionString As String
     Private m_Query As String
-
-    Private Const CONNECTION_STRING_TEMPLATE As String = "Data Source={0};Encrypt Database={2};Password={1};File Mode=Exclusive;Persist Security Info=False;"
+    'File Mode=Exclusive;
+    Private Const CONNECTION_STRING_TEMPLATE As String = "Data Source={0};Encrypt Database={2};Password={1};Persist Security Info=False;"
     Public Const APPLICATION_NAME As String = "SQL CE Explorer"
 
     Public Sub CreateConnectionString(ByVal DatabaseFile As String, ByVal Password As String, ByVal Encrypted As Boolean)
@@ -36,3 +36,4 @@
         Return m_Query
     End Function
 End Module
+

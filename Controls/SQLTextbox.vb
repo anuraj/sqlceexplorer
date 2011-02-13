@@ -1,9 +1,11 @@
 ﻿Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.ComponentModel
+Imports System.IO
 
 Public Class SQLTextbox
     Inherits System.Windows.Forms.RichTextBox
+
     Private m_Keywords As List(Of String)
     Private m_Operators As List(Of String)
     Private m_HighlightComments As Boolean = True
@@ -18,6 +20,10 @@ Public Class SQLTextbox
     Private m_IsParsed As Boolean = False
     Private m_KeywordStrings As StringBuilder
     Private m_OperatorStrings As StringBuilder
+
+    Const WM_PAINT As Short = &HF
+    Public Shared m_Paint As Boolean = True
+
     <Category("Syntax Highlighting")> _
     Public Property EnableSyntaxHighlighting() As Boolean
         Get
@@ -106,8 +112,9 @@ Public Class SQLTextbox
     Public Sub New()
         Me.m_Keywords = New List(Of String)
         Me.m_Operators = New List(Of String)
-    End Sub
+        InitializeComponent()
 
+    End Sub
     Private Sub ParseLists()
         If m_EnableSyntaxHighlight Then
             m_KeywordStrings = New StringBuilder
@@ -134,72 +141,102 @@ Public Class SQLTextbox
             m_IsParsed = True
         End If
     End Sub
-    Protected Overrides Sub OnTextChanged(ByVal e As System.EventArgs)
-        MyBase.OnTextChanged(e)
+    Protected Overrides Sub OnKeyUp(ByVal e As System.Windows.Forms.KeyEventArgs)
+        MyBase.OnKeyUp(e)
+        If e.KeyCode = Keys.Space Or e.KeyCode = Keys.Enter Then
+            Me.SyntaxHighlight()
+        End If
+    End Sub
+
+    Private Sub SyntaxHighlight()
         If m_EnableSyntaxHighlight Then
-            _Paint = False
+            m_Paint = False
             If Not m_IsParsed Then
                 Me.ParseLists()
             End If
 
             If m_IsParsed Then
-                Dim keywords As New Regex(m_KeywordStrings.ToString, RegexOptions.IgnoreCase)
-                Dim operators As New Regex(m_OperatorStrings.ToString, RegexOptions.IgnoreCase)
-                Dim comments As New Regex("--.*$", RegexOptions.IgnoreCase)
-                Dim variables As New Regex("'.*$*.'", RegexOptions.IgnoreCase)
-                Dim words As New Regex("\w", RegexOptions.IgnoreCase)
+                Dim currentPosition As Integer = Me.SelectionStart
 
-                Dim selPos As Integer = Me.SelectionStart
-                For Each keywordMatch As Match In words.Matches(Me.Text)
-                    Me.Select(keywordMatch.Index, keywordMatch.Length)
+                'Applying black color to all the words
+                Dim words As MatchCollection = Regex.Matches(Me.Text, "\w", RegexOptions.IgnoreCase Or RegexOptions.Multiline)
+                For Each word As Match In words
+                    Me.SelectionStart = word.Index
+                    Me.SelectionLength = word.Length
                     Me.SelectionColor = Color.Black
-                    Me.SelectionStart = selPos
+                    Me.SelectionLength = 0
+                    Me.SelectionStart = currentPosition
                     Me.SelectionColor = Color.Black
                 Next
 
-                For Each keywordMatch As Match In keywords.Matches(Me.Text)
-                    Me.Select(keywordMatch.Index, keywordMatch.Length)
+                Dim keywords As MatchCollection = Regex.Matches(Me.Text, m_KeywordStrings.ToString, RegexOptions.IgnoreCase Or RegexOptions.Multiline)
+                For Each keyword As Match In keywords
+                    Me.SelectionStart = keyword.Index
+                    Me.SelectionLength = keyword.Length
                     Me.SelectionColor = m_KeywordColor
-                    Me.SelectionStart = selPos
+                    Me.SelectionLength = 0
+                    Me.SelectionStart = currentPosition
                     Me.SelectionColor = Color.Black
                 Next
 
-                For Each keywordMatch As Match In operators.Matches(Me.Text)
-                    Me.Select(keywordMatch.Index, keywordMatch.Length)
+                Dim operators As MatchCollection = Regex.Matches(Me.Text, m_OperatorStrings.ToString, RegexOptions.IgnoreCase Or RegexOptions.Multiline)
+                For Each [operator] As Match In operators
+                    Me.SelectionStart = [operator].Index
+                    Me.SelectionLength = [operator].Length
                     Me.SelectionColor = m_OperatorColor
-                    Me.SelectionStart = selPos
+                    Me.SelectionLength = 0
+                    Me.SelectionStart = currentPosition
                     Me.SelectionColor = Color.Black
                 Next
 
                 If m_HighlightComments Then
-                    For Each keywordMatch As Match In comments.Matches(Me.Text)
-                        Me.Select(keywordMatch.Index, keywordMatch.Length)
+                    Dim comments As MatchCollection = Regex.Matches(Me.Text, "--.*$", RegexOptions.IgnoreCase Or RegexOptions.Multiline)
+                    For Each comment As Match In comments
+                        Me.SelectionStart = comment.Index
+                        Me.SelectionLength = comment.Length
                         Me.SelectionColor = m_CommentsColor
-                        Me.SelectionStart = selPos
+                        Me.SelectionLength = 0
+                        Me.SelectionStart = currentPosition
                         Me.SelectionColor = Color.Black
                     Next
                 End If
+
                 If m_HighlightVariables Then
-                    For Each keywordMatch As Match In variables.Matches(Me.Text)
-                        Me.Select(keywordMatch.Index, keywordMatch.Length)
+                    Dim variables As MatchCollection = Regex.Matches(Me.Text, "'.*$*.'", RegexOptions.IgnoreCase Or RegexOptions.Multiline)
+                    For Each variable As Match In variables
+                        Me.SelectionStart = variable.Index
+                        Me.SelectionLength = variable.Length
                         Me.SelectionColor = m_VariableColor
-                        Me.SelectionStart = selPos
+                        Me.SelectionLength = 0
+                        Me.SelectionStart = currentPosition
                         Me.SelectionColor = Color.Black
                     Next
                 End If
-                _Paint = True
+                m_Paint = True
             End If
         End If
     End Sub
-    Const WM_PAINT As Short = &HF
-    Public Shared _Paint As Boolean = True
+
     Protected Overloads Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
         If m.Msg = WM_PAINT Then
-            If _Paint Then
+            If m_Paint Then
                 MyBase.WndProc(m)
             End If
         Else
             MyBase.WndProc(m)
         End If
+    End Sub
+    Public Sub DoSyntaxHighlight()
+        'Me.SyntaxHighlight()
+    End Sub
+
+    Private Sub InitializeComponent()
+        Me.SuspendLayout()
+        '
+        'SQLTextbox
+        '
+        Me.AcceptsTab = True
+        Me.ResumeLayout(False)
+
     End Sub
 End Class

@@ -33,8 +33,21 @@ Public Class SqlCeExplorerDB
         Dim oSqlCeEngine As SqlCeEngine
         Try
             oSqlCeEngine = New SqlCeEngine(SqlCeMain.GetConnectionString())
-            oSqlCeEngine.Repair(SqlCeMain.GetConnectionString(), RepairOption.RecoverCorruptedRows)
+            oSqlCeEngine.Repair(SqlCeMain.GetConnectionString(), RepairOption.RecoverAllPossibleRows)
             oSqlCeEngine.Shrink()
+            Return True
+        Catch ex As Exception
+            SqlCeExplorerException.Show(ex)
+            Return False
+        Finally
+            oSqlCeEngine = Nothing
+        End Try
+    End Function
+    Public Function UpgradeDatabase() As Boolean
+        Dim oSqlCeEngine As SqlCeEngine
+        Try
+            oSqlCeEngine = New SqlCeEngine(SqlCeMain.GetConnectionString())
+            oSqlCeEngine.Upgrade()
             Return True
         Catch ex As Exception
             SqlCeExplorerException.Show(ex)

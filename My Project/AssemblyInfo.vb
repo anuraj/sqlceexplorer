@@ -12,10 +12,10 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("SQLCEExplorer")> 
 <Assembly: AssemblyDescription("A Simple utility to Explore SQL CE Database")> 
-<Assembly: AssemblyCompany("www.gayathrionline.com")> 
+<Assembly: AssemblyCompany("dotnetthoughts labs")> 
 <Assembly: AssemblyProduct("SQLCEExplorer")> 
-<Assembly: AssemblyCopyright("Copyright ©  2009 Anuraj.P. All rights reserved.")> 
-<Assembly: AssemblyTrademark("www.gayathrionline.com trademark of Gayathri Online Technologies")> 
+<Assembly: AssemblyCopyright("Copyright ©  2010 dotnetthoughts labs. All rights reserved.")> 
+<Assembly: AssemblyTrademark("dotnetthoughts trademark of dotnetthoughts labs")> 
 
 <Assembly: ComVisible(False)> 
 
@@ -33,7 +33,7 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.3.0.0")> 
-<Assembly: AssemblyFileVersion("1.3.0.0")> 
+<Assembly: AssemblyVersion("1.5.2.1")> 
+<Assembly: AssemblyFileVersion("1.5.2.1")> 
 
 <Assembly: NeutralResourcesLanguageAttribute("en-US")> 

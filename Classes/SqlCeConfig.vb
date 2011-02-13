@@ -4,6 +4,7 @@ Imports System.Xml.Serialization
 Imports System.Reflection
 Imports System.IO
 Imports Microsoft.Win32
+Imports System.Collections.Specialized
 
 <XmlRoot("SqlCeConfig")> _
 Public Class SqlCeConfig
@@ -11,13 +12,32 @@ Public Class SqlCeConfig
     Private m_FontName As String = "Courier New"
     Private m_FontSize As String = "12"
     Private m_ShowConnectDialogAtStartUp As Boolean = False
-    Private m_RecentItems As String = "1"
+    Private m_RecentItems As String = String.Empty
     Private m_EnableRecentItems As Boolean = True
-    Private m_FunctionsColor As String = "Grey"
-    Private m_VariableColor As String = "Red"
-    Private m_KeywordColor As String = "Blue"
-    Private m_CommentsColor As String = "Green"
+    Private m_FunctionsColor As String = "-8355712"
+    Private m_VariableColor As String = "-65536"
+    Private m_KeywordColor As String = "-16776961"
+    Private m_CommentsColor As String = "-16744448"
+    Private m_RecentItemsCount As String = "5"
+    Private m_EnableAutoComplete As Boolean = False
 
+    Public Property EnableAutoComplete As Boolean
+        Get
+            Return m_EnableAutoComplete
+        End Get
+        Set(ByVal value As Boolean)
+            m_EnableAutoComplete = value
+        End Set
+    End Property
+
+    Public Property RecentItemsCount() As String
+        Get
+            Return m_RecentItemsCount
+        End Get
+        Set(ByVal value As String)
+            m_RecentItemsCount = value
+        End Set
+    End Property
     <XmlElement("FontName")> _
     Public Property FontName() As String
         Get
@@ -130,71 +150,46 @@ Public Class SqlCeConfig
 
     Public Sub SaveConfig()
         Try
-            Dim rootKey As RegistryKey = Registry.CurrentUser.CreateSubKey("Software")
-            Dim AppNameKey As RegistryKey = rootKey.CreateSubKey(SqlCeMain.APPLICATION_NAME)
-            Dim settingsKey As RegistryKey = AppNameKey.CreateSubKey("Settings")
-            settingsKey.SetValue("CurrentUser", Environment.UserName)
-            settingsKey.SetValue("FontName", Me.FontName)
-            settingsKey.SetValue("FontSize", Me.FontSize)
-            settingsKey.SetValue("ShowConnectDialogAtStartUp", Me.ShowConnectDialogAtStartUp)
-            settingsKey.SetValue("EnableRecentItems", Me.EnableRecentItems)
-            settingsKey.SetValue("RecentItems", Me.RecentItems)
-
-            settingsKey.SetValue("EnableSyntaxHighlight", Me.EnableSyntaxHighlight)
-            settingsKey.SetValue("VariableHighlight", Me.EnableVariableHighlight)
-            settingsKey.SetValue("CommentHighlight", Me.EnableCommentHighlight)
-            settingsKey.SetValue("KeywordColor", Me.KeywordColor)
-            settingsKey.SetValue("FunctionsColor", Me.FunctionsColor)
-            settingsKey.SetValue("CommentsColor", Me.CommentsColor)
-            settingsKey.SetValue("VariableColor", Me.VariableColor)
-
-            settingsKey.Close()
-            AppNameKey.Close()
-            rootKey.Close()
+            With My.Settings
+                .CommentHighlight = Me.EnableCommentHighlight
+                .CommentsColor = Me.CommentsColor
+                .CurrentUser = Environment.UserName
+                .EnableRecentItems = Me.EnableRecentItems
+                .EnableSyntaxHighlight = Me.EnableSyntaxHighlight
+                .FontName = Me.FontName
+                .FontSize = Me.FontSize
+                .FunctionsColor = Me.FunctionsColor
+                .KeywordColor = Me.KeywordColor
+                .ShowConnectDialogAtStartUp = Me.ShowConnectDialogAtStartUp
+                .VariableColor = Me.VariableColor
+                .VariableHighlight = Me.EnableVariableHighlight
+                .RecentItemsCount = Me.RecentItemsCount
+                .EnableAutoComplete = Me.EnableAutoComplete
+                .Save()
+            End With
         Catch
 
         End Try
     End Sub
     Public Sub ReadConfig()
         Try
-            Dim rootKey As RegistryKey = Registry.CurrentUser.CreateSubKey("Software")
-            Dim AppNameKey As RegistryKey = rootKey.CreateSubKey(SqlCeMain.APPLICATION_NAME)
-            If AppNameKey IsNot Nothing AndAlso AppNameKey.SubKeyCount >= 1 Then
-                Dim settingsKey As RegistryKey = AppNameKey.CreateSubKey("Settings")
-                If settingsKey IsNot Nothing AndAlso settingsKey.ValueCount >= 1 Then
-                    Me.m_FontName = settingsKey.GetValue("FontName").ToString
-                    Me.m_FontSize = settingsKey.GetValue("FontSize").ToString
-                    Me.m_ShowConnectDialogAtStartUp = Boolean.Parse(settingsKey.GetValue("ShowConnectDialogAtStartUp").ToString)
-
-                    If settingsKey.GetValue("RecentItems") Is Nothing Then
-                        Me.m_RecentItems = "1"
-                    Else
-                        Me.m_RecentItems = settingsKey.GetValue("RecentItems")
-                    End If
-                    If settingsKey.GetValue("EnableRecentItems") Is Nothing Then
-                        Me.m_EnableRecentItems = True
-                    Else
-                        Me.m_EnableRecentItems = Boolean.Parse(settingsKey.GetValue("EnableRecentItems").ToString)
-                    End If
-
-                    Me.EnableSyntaxHighlight = settingsKey.GetValue("EnableSyntaxHighlight")
-                    Me.EnableVariableHighlight = settingsKey.GetValue("VariableHighlight")
-                    Me.EnableCommentHighlight = settingsKey.GetValue("CommentHighlight")
-                    Me.KeywordColor = settingsKey.GetValue("KeywordColor")
-                    Me.FunctionsColor = settingsKey.GetValue("FunctionsColor")
-                    Me.CommentsColor = settingsKey.GetValue("CommentsColor")
-                    Me.VariableColor = settingsKey.GetValue("VariableColor")
-
-                    settingsKey.Close()
-                End If
-                AppNameKey.Close()
-            End If
-            rootKey.Close()
-
+            With My.Settings
+                Me.EnableCommentHighlight = .CommentHighlight
+                Me.CommentsColor = .CommentsColor
+                Me.EnableRecentItems = .EnableRecentItems
+                Me.EnableSyntaxHighlight = .EnableSyntaxHighlight
+                Me.FontName = .FontName
+                Me.FontSize = .FontSize
+                Me.FunctionsColor = .FunctionsColor
+                Me.KeywordColor = .KeywordColor
+                Me.ShowConnectDialogAtStartUp = .ShowConnectDialogAtStartUp
+                Me.VariableColor = .VariableColor
+                Me.EnableVariableHighlight = .VariableHighlight
+                Me.RecentItemsCount = .RecentItemsCount
+                Me.EnableAutoComplete = .EnableAutoComplete
+            End With
         Catch
             'do nothing
         End Try
     End Sub
-
-
 End Class
