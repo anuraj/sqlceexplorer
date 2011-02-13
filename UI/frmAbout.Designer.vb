@@ -22,13 +22,13 @@ Partial Class frmAbout
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.picIcon = New System.Windows.Forms.PictureBox
-        Me.lblAppName = New System.Windows.Forms.Label
-        Me.lblDevelopedBy = New System.Windows.Forms.Label
-        Me.lblAppVersion = New System.Windows.Forms.Label
-        Me.cmdOk = New System.Windows.Forms.Button
-        Me.llLinkToCodePlex = New System.Windows.Forms.LinkLabel
-        Me.Label1 = New System.Windows.Forms.Label
+        Me.picIcon = New System.Windows.Forms.PictureBox()
+        Me.lblAppName = New System.Windows.Forms.Label()
+        Me.lblDevelopedBy = New System.Windows.Forms.Label()
+        Me.lblAppVersion = New System.Windows.Forms.Label()
+        Me.cmdOk = New System.Windows.Forms.Button()
+        Me.llLinkToCodePlex = New System.Windows.Forms.LinkLabel()
+        Me.Label1 = New System.Windows.Forms.Label()
         CType(Me.picIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -45,10 +45,10 @@ Partial Class frmAbout
         'lblAppName
         '
         Me.lblAppName.AutoSize = True
-        Me.lblAppName.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAppName.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblAppName.Location = New System.Drawing.Point(50, 12)
         Me.lblAppName.Name = "lblAppName"
-        Me.lblAppName.Size = New System.Drawing.Size(106, 17)
+        Me.lblAppName.Size = New System.Drawing.Size(123, 16)
         Me.lblAppName.TabIndex = 1
         Me.lblAppName.Text = "SQL CE Explorer"
         '
@@ -59,8 +59,8 @@ Partial Class frmAbout
         Me.lblDevelopedBy.Name = "lblDevelopedBy"
         Me.lblDevelopedBy.Size = New System.Drawing.Size(304, 60)
         Me.lblDevelopedBy.TabIndex = 2
-        Me.lblDevelopedBy.Text = "Copyright © 2009 Anuraj.P" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Version Beta 0.4 (May 17, 2009)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "See gnu_licence.txt" & _
-            " for copyright and redistribution info"
+        Me.lblDevelopedBy.Text = "Copyright © 2010 Anuraj.P" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Version Beta 1.1 (Feb13, 2011)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "See gnu_licence.txt " & _
+            "for copyright and redistribution info"
         '
         'lblAppVersion
         '

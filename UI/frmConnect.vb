@@ -67,10 +67,12 @@
 
     Private Sub frmConnect_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim files As List(Of String) = SqlCeExplorerUtility.GetRecentItems
-        For Each Item As String In files
-            If IO.File.Exists(Item) AndAlso Not Me.cmbFiles.Items.Contains(Item) Then
-                Me.cmbFiles.Items.Add(Item)
-            End If
-        Next
+        If files IsNot Nothing Then
+            For Each Item As String In files
+                If IO.File.Exists(Item) AndAlso Not Me.cmbFiles.Items.Contains(Item) Then
+                    Me.cmbFiles.Items.Add(Item)
+                End If
+            Next
+        End If
     End Sub
 End Class

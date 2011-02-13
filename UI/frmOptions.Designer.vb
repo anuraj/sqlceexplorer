@@ -22,41 +22,42 @@ Partial Class frmOptions
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.tcOptions = New System.Windows.Forms.TabControl
-        Me.tpSettings = New System.Windows.Forms.TabPage
-        Me.chkRecentItems = New System.Windows.Forms.CheckBox
-        Me.nuRecentFiles = New System.Windows.Forms.NumericUpDown
-        Me.lblRecentItems = New System.Windows.Forms.Label
-        Me.cmdBrowseFonts = New System.Windows.Forms.Button
-        Me.txtFont = New System.Windows.Forms.TextBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.chkConneciondlg = New System.Windows.Forms.CheckBox
-        Me.tpDBOptions = New System.Windows.Forms.TabPage
-        Me.cmdRepair = New System.Windows.Forms.Button
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.cmdCompact = New System.Windows.Forms.Button
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.tpEditorSettings = New System.Windows.Forms.TabPage
-        Me.chkEnableSyntaxHighlighting = New System.Windows.Forms.CheckBox
-        Me.plMain = New System.Windows.Forms.Panel
-        Me.plComments = New System.Windows.Forms.Panel
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.cmdBrowseComments = New System.Windows.Forms.Button
-        Me.txtCommentSample = New System.Windows.Forms.TextBox
-        Me.plVariables = New System.Windows.Forms.Panel
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.cmdBrowseVariable = New System.Windows.Forms.Button
-        Me.txtVariableSample = New System.Windows.Forms.TextBox
-        Me.chkHighlightVariables = New System.Windows.Forms.CheckBox
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.cmdBrowseFunctions = New System.Windows.Forms.Button
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.cmdBrowseKeyWords = New System.Windows.Forms.Button
-        Me.txtFunctionSample = New System.Windows.Forms.TextBox
-        Me.txtKeywordSample = New System.Windows.Forms.TextBox
-        Me.chkHighlightComments = New System.Windows.Forms.CheckBox
-        Me.cmdCancel = New System.Windows.Forms.Button
-        Me.cmdOk = New System.Windows.Forms.Button
+        Me.tcOptions = New System.Windows.Forms.TabControl()
+        Me.tpSettings = New System.Windows.Forms.TabPage()
+        Me.chkAutoComplete = New System.Windows.Forms.CheckBox()
+        Me.chkRecentItems = New System.Windows.Forms.CheckBox()
+        Me.nuRecentFiles = New System.Windows.Forms.NumericUpDown()
+        Me.lblRecentItems = New System.Windows.Forms.Label()
+        Me.cmdBrowseFonts = New System.Windows.Forms.Button()
+        Me.txtFont = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.chkConneciondlg = New System.Windows.Forms.CheckBox()
+        Me.tpDBOptions = New System.Windows.Forms.TabPage()
+        Me.cmdRepair = New System.Windows.Forms.Button()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.cmdCompact = New System.Windows.Forms.Button()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.tpEditorSettings = New System.Windows.Forms.TabPage()
+        Me.chkEnableSyntaxHighlighting = New System.Windows.Forms.CheckBox()
+        Me.plMain = New System.Windows.Forms.Panel()
+        Me.plComments = New System.Windows.Forms.Panel()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.cmdBrowseComments = New System.Windows.Forms.Button()
+        Me.txtCommentSample = New System.Windows.Forms.TextBox()
+        Me.plVariables = New System.Windows.Forms.Panel()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.cmdBrowseVariable = New System.Windows.Forms.Button()
+        Me.txtVariableSample = New System.Windows.Forms.TextBox()
+        Me.chkHighlightVariables = New System.Windows.Forms.CheckBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.cmdBrowseFunctions = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.cmdBrowseKeyWords = New System.Windows.Forms.Button()
+        Me.txtFunctionSample = New System.Windows.Forms.TextBox()
+        Me.txtKeywordSample = New System.Windows.Forms.TextBox()
+        Me.chkHighlightComments = New System.Windows.Forms.CheckBox()
+        Me.cmdCancel = New System.Windows.Forms.Button()
+        Me.cmdOk = New System.Windows.Forms.Button()
         Me.tcOptions.SuspendLayout()
         Me.tpSettings.SuspendLayout()
         CType(Me.nuRecentFiles, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -81,6 +82,7 @@ Partial Class frmOptions
         '
         'tpSettings
         '
+        Me.tpSettings.Controls.Add(Me.chkAutoComplete)
         Me.tpSettings.Controls.Add(Me.chkRecentItems)
         Me.tpSettings.Controls.Add(Me.nuRecentFiles)
         Me.tpSettings.Controls.Add(Me.lblRecentItems)
@@ -95,6 +97,16 @@ Partial Class frmOptions
         Me.tpSettings.TabIndex = 0
         Me.tpSettings.Text = "Settings"
         Me.tpSettings.UseVisualStyleBackColor = True
+        '
+        'chkAutoComplete
+        '
+        Me.chkAutoComplete.AutoSize = True
+        Me.chkAutoComplete.Location = New System.Drawing.Point(19, 163)
+        Me.chkAutoComplete.Name = "chkAutoComplete"
+        Me.chkAutoComplete.Size = New System.Drawing.Size(145, 19)
+        Me.chkAutoComplete.TabIndex = 17
+        Me.chkAutoComplete.Text = "Enable AutoComplete"
+        Me.chkAutoComplete.UseVisualStyleBackColor = True
         '
         'chkRecentItems
         '
@@ -230,7 +242,7 @@ Partial Class frmOptions
         Me.chkEnableSyntaxHighlighting.AutoSize = True
         Me.chkEnableSyntaxHighlighting.Location = New System.Drawing.Point(8, 8)
         Me.chkEnableSyntaxHighlighting.Name = "chkEnableSyntaxHighlighting"
-        Me.chkEnableSyntaxHighlighting.Size = New System.Drawing.Size(257, 19)
+        Me.chkEnableSyntaxHighlighting.Size = New System.Drawing.Size(221, 17)
         Me.chkEnableSyntaxHighlighting.TabIndex = 0
         Me.chkEnableSyntaxHighlighting.Text = "Enable Syntax Highlighting (Experimental)"
         Me.chkEnableSyntaxHighlighting.UseVisualStyleBackColor = True
@@ -334,7 +346,7 @@ Partial Class frmOptions
         Me.chkHighlightVariables.AutoSize = True
         Me.chkHighlightVariables.Location = New System.Drawing.Point(12, 66)
         Me.chkHighlightVariables.Name = "chkHighlightVariables"
-        Me.chkHighlightVariables.Size = New System.Drawing.Size(129, 19)
+        Me.chkHighlightVariables.Size = New System.Drawing.Size(113, 17)
         Me.chkHighlightVariables.TabIndex = 0
         Me.chkHighlightVariables.Text = "Highlight Variables"
         Me.chkHighlightVariables.UseVisualStyleBackColor = True
@@ -398,7 +410,7 @@ Partial Class frmOptions
         Me.chkHighlightComments.AutoSize = True
         Me.chkHighlightComments.Location = New System.Drawing.Point(12, 12)
         Me.chkHighlightComments.Name = "chkHighlightComments"
-        Me.chkHighlightComments.Size = New System.Drawing.Size(138, 19)
+        Me.chkHighlightComments.Size = New System.Drawing.Size(119, 17)
         Me.chkHighlightComments.TabIndex = 0
         Me.chkHighlightComments.Text = "Highlight Comments"
         Me.chkHighlightComments.UseVisualStyleBackColor = True
@@ -493,4 +505,5 @@ Partial Class frmOptions
     Friend WithEvents txtFunctionSample As System.Windows.Forms.TextBox
     Friend WithEvents plComments As System.Windows.Forms.Panel
     Friend WithEvents plVariables As System.Windows.Forms.Panel
+    Friend WithEvents chkAutoComplete As System.Windows.Forms.CheckBox
 End Class

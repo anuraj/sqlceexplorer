@@ -6,11 +6,11 @@ Public Class frmModifyColumn
         DropColumn = 2
         AlterColumn = 3
     End Enum
-    Private Const SELECTQUERYCOLUMNS As String = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE (TABLE_NAME = '{0}')"
+    Private Const SELECTQUERYCOLUMNS As String = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE (TABLE_NAME = '{0}')"
 
-    Private Const DROPQUERY As String = "ALTER TABLE {0} DROP COLUMN {1}"
-    Private Const CHANGECOLUMN As String = "ALTER TABLE {0} ALTER COLUMN {1} {2}"
-    Private Const ADDCOLUMN As String = "ALTER TABLE {0} ADD COLUMN {1} {2}"
+    Private Const DROPQUERY As String = "ALTER TABLE {0} DROP COLUMN [{1}]"
+    Private Const CHANGECOLUMN As String = "ALTER TABLE {0} ALTER COLUMN [{1}] {2}"
+    Private Const ADDCOLUMN As String = "ALTER TABLE {0} ADD COLUMN [{1}] {2}"
 
     Private m_ChangeMode As OperationMode
     Private m_DataLengths As Dictionary(Of String, String)

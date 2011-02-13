@@ -2,8 +2,8 @@
 Imports System.Text
 
 Public Class frmGenerateScript
-    Private Const SELECTQUERYTABLES As String = "SELECT * FROM INFORMATION_SCHEMA.TABLES"
-    Private Const SELECTQUERYCOLUMNS As String = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE (TABLE_NAME = '{0}')"
+    Private Const SELECTQUERYTABLES As String = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES"
+    Private Const SELECTQUERYCOLUMNS As String = "SELECT COLUMN_NAME,[DATA_TYPE] ,[IS_NULLABLE], [CHARACTER_MAXIMUM_LENGTH] FROM INFORMATION_SCHEMA.COLUMNS WHERE (TABLE_NAME = '{0}')"
 
     Public Event QueryFormed(ByVal sender As Object, ByVal e As EventArgs)
 
@@ -23,7 +23,7 @@ Public Class frmGenerateScript
             If oTablesReader("IS_NULLABLE") IsNot Nothing AndAlso oTablesReader("IS_NULLABLE").ToString.Equals("yes", StringComparison.CurrentCultureIgnoreCase) Then
                 nullable = "NULL"
             End If
-            tableScript.AppendFormat("[{0}] [{1}] ({2}) {3},", oTablesReader("COLUMN_NAME").ToString(), oTablesReader("DATA_TYPE").ToString(), oTablesReader("CHARACTER_MAXIMUM_LENGTH").ToString, nullable)
+            tableScript.AppendFormat("[{0}] [{1}] {2} {3},", oTablesReader("COLUMN_NAME").ToString(), oTablesReader("DATA_TYPE").ToString(), IIf(oTablesReader("CHARACTER_MAXIMUM_LENGTH").ToString.Length >= 1, "(" & oTablesReader("CHARACTER_MAXIMUM_LENGTH").ToString & ")", ""), nullable)
         End While
         tableScript.Replace(",", ")", tableScript.Length - 1, 1)
         tableScript.AppendLine()

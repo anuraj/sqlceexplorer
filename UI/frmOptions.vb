@@ -1,4 +1,7 @@
-﻿Public Class frmOptions
+﻿Imports Microsoft.Win32
+Imports System.Security.Permissions
+
+Public Class frmOptions
     Private m_CurrentFont As Font = Nothing
     Private m_IsConnected As Boolean = False
     Public Property IsConnected() As Boolean
@@ -42,17 +45,18 @@
             .FontName = m_CurrentFont.Name
             .FontSize = m_CurrentFont.Size
             .ShowConnectDialogAtStartUp = Me.chkConneciondlg.Checked
-            .RecentItems = Me.nuRecentFiles.Value
+            .RecentItemsCount = Me.nuRecentFiles.Value
             .EnableRecentItems = Me.chkRecentItems.Checked
+            .EnableAutoComplete = Me.chkAutoComplete.Checked
 
             .EnableSyntaxHighlight = Me.chkEnableSyntaxHighlighting.Checked
             If Me.chkEnableSyntaxHighlighting.Checked Then
                 .EnableCommentHighlight = Me.chkHighlightComments.Checked
                 .EnableVariableHighlight = Me.chkHighlightVariables.Checked
-                .KeywordColor = Me.txtKeywordSample.ForeColor.ToKnownColor.ToString
-                .CommentsColor = Me.txtCommentSample.ForeColor.ToKnownColor.ToString
-                .VariableColor = Me.txtVariableSample.ForeColor.ToKnownColor.ToString
-                .FunctionsColor = Me.txtFunctionSample.ForeColor.ToKnownColor.ToString
+                .KeywordColor = Me.txtKeywordSample.ForeColor.ToArgb.ToString
+                .CommentsColor = Me.txtCommentSample.ForeColor.ToArgb.ToString
+                .VariableColor = Me.txtVariableSample.ForeColor.ToArgb.ToString
+                .FunctionsColor = Me.txtFunctionSample.ForeColor.ToArgb.ToString
             Else
                 .EnableCommentHighlight = False
                 .EnableVariableHighlight = False
@@ -79,7 +83,7 @@
             Me.txtFont.Text = String.Format("{0} - {1}", m_CurrentFont.Name, m_CurrentFont.Size)
         End If
         Me.chkRecentItems.Checked = oSqlCeConfig.EnableRecentItems
-        Me.nuRecentFiles.Value = oSqlCeConfig.RecentItems
+        Me.nuRecentFiles.Value = oSqlCeConfig.RecentItemsCount
         Me.chkConneciondlg.Checked = oSqlCeConfig.ShowConnectDialogAtStartUp
 
         Me.chkEnableSyntaxHighlighting.Checked = oSqlCeConfig.EnableSyntaxHighlight
@@ -89,17 +93,19 @@
         Me.chkHighlightVariables.Checked = oSqlCeConfig.EnableVariableHighlight
         Me.plVariables.Enabled = Me.chkHighlightVariables.Checked
 
+        Me.chkAutoComplete.Checked = oSqlCeConfig.EnableAutoComplete
+
         If oSqlCeConfig.CommentsColor IsNot Nothing Then
-            Me.txtCommentSample.ForeColor = Color.FromName(oSqlCeConfig.CommentsColor)
+            Me.txtCommentSample.ForeColor = Color.FromArgb(oSqlCeConfig.CommentsColor)
         End If
         If oSqlCeConfig.FunctionsColor IsNot Nothing Then
-            Me.txtFunctionSample.ForeColor = Color.FromName(oSqlCeConfig.FunctionsColor)
+            Me.txtFunctionSample.ForeColor = Color.FromArgb(oSqlCeConfig.FunctionsColor)
         End If
         If oSqlCeConfig.KeywordColor IsNot Nothing Then
-            Me.txtKeywordSample.ForeColor = Color.FromName(oSqlCeConfig.KeywordColor)
+            Me.txtKeywordSample.ForeColor = Color.FromArgb(oSqlCeConfig.KeywordColor)
         End If
         If oSqlCeConfig.VariableColor IsNot Nothing Then
-            Me.txtVariableSample.ForeColor = Color.FromName(oSqlCeConfig.VariableColor)
+            Me.txtVariableSample.ForeColor = Color.FromArgb(oSqlCeConfig.VariableColor)
         End If
 
 
@@ -179,4 +185,6 @@
         End Using
         Return result
     End Function
+
+   
 End Class

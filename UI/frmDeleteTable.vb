@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlServerCe
 
 Public Class frmDeleteTable
-    Private Const SELECTQUERYTABLES As String = "SELECT * FROM INFORMATION_SCHEMA.TABLES"
+    Private Const SELECTQUERYTABLES As String = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES"
     Private m_Tablename As String = String.Empty
     Public Event DeleteTableQueryFormed(ByVal sender As Object, ByVal e As EventArgs)
     Public Sub New()

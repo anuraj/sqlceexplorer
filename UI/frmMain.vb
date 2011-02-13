@@ -1,10 +1,15 @@
 ﻿Imports System.IO
 Imports System.Data.SqlServerCe
+Imports System.Drawing.Printing
+Imports System.Text
+
 Public Class frmMain
 
-    Private Const SELECTQUERYTABLES As String = "SELECT * FROM INFORMATION_SCHEMA.TABLES"
-    Private Const SELECTQUERYCOLUMNS As String = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE (TABLE_NAME = '{0}')"
-    Private Const SELECTQUERYINDEXES As String = "SELECT * FROM INFORMATION_SCHEMA.INDEXES WHERE (TABLE_NAME = '{0}')"
+    Private Const SELECTQUERYTABLES As String = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES"
+    Private Const SELECTQUERYCOLUMNS As String = "SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE (TABLE_NAME = '{0}')"
+    Private Const SELECTQUERYINDEXES As String = "SELECT INDEX_NAME, [UNIQUE], [CLUSTERED] FROM INFORMATION_SCHEMA.INDEXES WHERE (TABLE_NAME = '{0}')"
+    Private Const SELECTQUERYRELATIONSHIPS As String = "SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = '{0}' AND " & _
+    "CONSTRAINT_NAME IN (SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS)"
 
     Private m_IsConnected As Boolean = False
     Private m_OldConnectionString As String
@@ -14,6 +19,10 @@ Public Class frmMain
     Private m_IsSaved As Boolean = True
     Private m_List As List(Of String)
     Private m_RecentItems As Integer
+    Private m_StartIndex As Integer = 0
+    Private m_Delimeter() As Char = {";"}
+    Private m_AutoCompleteEnabled = False
+
     Private Sub mniConnect_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniConnect.Click
         ShowConnectDialog()
     End Sub
@@ -30,15 +39,19 @@ Public Class frmMain
     Private Sub oFrmConnect_SqlCeDatabaseConnected(ByVal sender As System.Object, ByVal e As System.EventArgs)
         m_IsConnected = True
         PopulateUI()
-        SqlCeExplorerUtility.AddItem(SqlCeMain.GetFileName)
+        Me.UpdateStatusUI(Constants.DATABASE_CONNECTION_SUCCESSFULL)
+        SqlCeExplorerUtility.AddOrDeleteItem(SqlCeMain.GetFileName)
     End Sub
 
     Private Sub mnuFile_DropDownOpening(ByVal sender As Object, ByVal e As System.EventArgs) Handles mnuFile.DropDownOpening
         mniConnect.Enabled = Not m_IsConnected
         mniDisconnect.Enabled = m_IsConnected
-        mniSaveAs.Enabled = m_IsConnected AndAlso Not txtQueryWindow.TextLength >= 1
-        mniSave.Enabled = m_IsConnected AndAlso Not txtQueryWindow.TextLength >= 1
+        mniSaveAs.Enabled = m_IsConnected AndAlso txtQueryWindow.TextLength >= 1
+        mniSave.Enabled = m_IsConnected AndAlso txtQueryWindow.TextLength >= 1
         mniRecentFiles.Enabled = m_List IsNot Nothing AndAlso m_List.Count >= 1
+        mniPrint.Enabled = Me.txtQueryWindow.TextLength >= 1
+        mnuImport.Enabled = m_IsConnected
+        mnuExport.Enabled = m_IsConnected
     End Sub
 
     Private Sub mniQuit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniQuit.Click
@@ -54,6 +67,7 @@ Public Class frmMain
     Private Sub oFrmCreate_SqlCeDatabaseCreated(ByVal sender As System.Object, ByVal e As System.EventArgs)
         'TODO: Ask confirmation to switch to new database?
         'Now it is automatically switching to the new db.
+        Me.UpdateStatusUI(Constants.DATABASE_CREATION_SUCCESSFUL)
         PopulateUI()
     End Sub
     Private Sub PopulateUI()
@@ -63,7 +77,7 @@ Public Class frmMain
         Dim oSqlCeExplorerData As SqlCeExplorerData
         Dim oTablesReader As SqlCeDataReader
         Try
-           
+
             Me.tvDatabaseExplorer.Nodes.Clear()
 
             dbNode = New TreeNode(Path.GetFileNameWithoutExtension(SqlCeMain.GetFileName), 0, 0)
@@ -90,7 +104,7 @@ Public Class frmMain
             oTablesReader = Nothing
         End Try
     End Sub
-   
+
 
     Private Sub tvDatabaseExplorer_BeforeExpand(ByVal sender As System.Object, ByVal e As System.Windows.Forms.TreeViewCancelEventArgs) Handles tvDatabaseExplorer.BeforeExpand
         Select Case e.Node.Tag.ToString
@@ -98,6 +112,7 @@ Public Class frmMain
                 For Each node As TreeNode In e.Node.Nodes
                     Me.FillColumns(node.Text, node)
                     Me.FillIndexes(node.Text, node)
+                    Me.FillRelationShips(node.Text, node)
                 Next
         End Select
     End Sub
@@ -120,7 +135,8 @@ Public Class frmMain
             ctxiGenerateScript.Enabled = False
             ctxiRefersh.Enabled = m_IsConnected
             ctxiDatabaseOptions.Enabled = True
-
+            CtxiManageRelationships.Enabled = False
+            ctxiEditAllRows.Enabled = False
             Dim currentNode As TreeNode = tvDatabaseExplorer.GetNodeAt(e.Location)
             If currentNode IsNot Nothing Then
                 m_currentNode = currentNode
@@ -145,23 +161,27 @@ Public Class frmMain
                         CtxiManageIndexes.Enabled = True
                         ctxiCreateNewIndex.Enabled = True
                         ctxiDropAnIndex.Enabled = True
-                    Case 2, 5
-                        ctxiDatabaseOptions.Enabled = False
-                        ctxiManageColumns.Enabled = True
-                        CtxiAddNewColumn.Enabled = True
-                        ctxiDropaColumn.Enabled = True
-                        ctxiChangeColDataType.Enabled = True
-                    Case 3, 6
-                        ctxiDatabaseOptions.Enabled = False
-                        CtxiManageIndexes.Enabled = True
-                        ctxiCreateNewIndex.Enabled = True
-                        ctxiDropAnIndex.Enabled = True
+                        CtxiManageRelationships.Enabled = True
+                        ctxiEditAllRows.Enabled = True
+                        'Case 2, 5
+                        '    ctxiDatabaseOptions.Enabled = False
+                        '    ctxiManageColumns.Enabled = False
+                        '    CtxiAddNewColumn.Enabled = False
+                        '    ctxiDropaColumn.Enabled = False
+                        '    ctxiChangeColDataType.Enabled = True
+                        'Case 3, 6
+                        '    ctxiDatabaseOptions.Enabled = False
+                        '    CtxiManageIndexes.Enabled = False
+                        '    ctxiCreateNewIndex.Enabled = False
+                        '    ctxiDropAnIndex.Enabled = False
+                    Case 7
+
                 End Select
             End If
         End If
     End Sub
 
-    Private Sub ctxiRefersh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiRefersh.Click
+    Private Sub ctxiRefersh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiRefersh.Click, mnuRefresh.Click
         PopulateUI()
     End Sub
 
@@ -180,7 +200,7 @@ Public Class frmMain
         Me.GotoSqlCeExplorerHome()
     End Sub
 
-    Private Sub ctxiCreateTable_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiCreateTable.Click
+    Private Sub ctxiCreateTable_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiCreateTable.Click, mnuManageTableCreate.Click
         Dim oFrmCreateTable As New frmCreateTable
         AddHandler oFrmCreateTable.CreateTableQueryFormed, AddressOf oFrmCreateTable_CreateTableQueryFormed
         oFrmCreateTable.ShowDialog(Me)
@@ -190,6 +210,7 @@ Public Class frmMain
         Me.txtQueryWindow.SelectAll()
         Me.ExecuteQuery()
         Me.PopulateUI()
+        Me.UpdateStatusUI(Constants.TABLE_QUERY_CREATED)
     End Sub
     Private Sub frmMain_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         If Not m_IsSaved Then
@@ -204,21 +225,30 @@ Public Class frmMain
             End If
         End If
     End Sub
-
+    'AutoSuggest related
+    Private WordBuffer As List(Of String)
     Private Sub frmMain_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Me.Text = SqlCeMain.APPLICATION_NAME
-        Me.tcMain.TabPages.Remove(Me.tpGrid)
-        'TODO: Taking too much time to load the Config stuff.
+        Me.tcMain.SelectedTab = Me.tpText
+
         Dim CurrentConfig As New SqlCeConfig
         Try
             CurrentConfig.ReadConfig()
-            m_RecentItems = Integer.Parse(CurrentConfig.RecentItems)
+            m_RecentItems = Integer.Parse(CurrentConfig.RecentItemsCount)
             If CurrentConfig.EnableRecentItems Then
                 Me.LoadRecentItems()
             End If
             If CurrentConfig.ShowConnectDialogAtStartUp Then
                 Me.Show()
-                ShowConnectDialog()
+                If Me.IsCommandLineArgumentsExists Then
+                    ShowConnectDialog(My.Application.CommandLineArgs(0))
+                Else
+                    ShowConnectDialog()
+                End If
+            End If
+            If Me.IsCommandLineArgumentsExists Then
+                Me.Show()
+                ShowConnectDialog(My.Application.CommandLineArgs(0))
             End If
             If CurrentConfig.FontName IsNot Nothing Then
                 Me.txtQueryWindow.Font = New Font(CurrentConfig.FontName, Convert.ToSingle(CurrentConfig.FontSize))
@@ -228,10 +258,12 @@ Public Class frmMain
             Me.txtQueryWindow.HighlightComments = CurrentConfig.EnableCommentHighlight
             Me.txtQueryWindow.HighlightVariables = CurrentConfig.EnableVariableHighlight
 
-            Me.txtQueryWindow.KeywordColor = Color.FromName(CurrentConfig.KeywordColor)
-            Me.txtQueryWindow.CommentsColor = Color.FromName(CurrentConfig.CommentsColor)
-            Me.txtQueryWindow.VariableColor = Color.FromName(CurrentConfig.VariableColor)
-            Me.txtQueryWindow.OperatorColor = Color.FromName(CurrentConfig.FunctionsColor)
+            Me.txtQueryWindow.KeywordColor = Color.FromArgb(CurrentConfig.KeywordColor)
+            Me.txtQueryWindow.CommentsColor = Color.FromArgb(CurrentConfig.CommentsColor)
+            Me.txtQueryWindow.VariableColor = Color.FromArgb(CurrentConfig.VariableColor)
+            Me.txtQueryWindow.OperatorColor = Color.FromArgb(CurrentConfig.FunctionsColor)
+
+            Me.m_AutoCompleteEnabled = CurrentConfig.EnableAutoComplete
 
         Catch ex As Exception
             'Do nothing
@@ -242,23 +274,34 @@ Public Class frmMain
         Me.tvDatabaseExplorer.Focus()
         Me.txtQueryWindow.Focus()
 
+        'Auto Suggestion
+        If Me.m_AutoCompleteEnabled Then
+            Me.WordBuffer = New List(Of String)
+            Me.WordBuffer.AddRange(Me.txtQueryWindow.Keywords)
+            Me.WordBuffer.AddRange(Me.txtQueryWindow.Operators)
+        End If
     End Sub
+
+    Private Function IsCommandLineArgumentsExists() As Boolean
+        Return My.Application.CommandLineArgs.Count >= 1 AndAlso File.Exists(My.Application.CommandLineArgs(0))
+    End Function
 
     Private Sub LoadRecentItems()
         Dim recentFile As ToolStripMenuItem
-        If m_List Is Nothing Then
+        If m_List Is Nothing AndAlso SqlCeExplorerUtility.GetRecentItems IsNot Nothing Then
             m_List = SqlCeExplorerUtility.GetRecentItems
             If m_List.Count > m_RecentItems Then
                 m_List = m_List.GetRange(1, m_RecentItems)
             End If
         End If
-
-        For Each Item As String In m_List
-            recentFile = New ToolStripMenuItem(Item)
-            AddHandler recentFile.Click, AddressOf recentFile_Click
-            mniRecentFiles.DropDownItems.Add(recentFile)
-            recentFile = Nothing
-        Next
+        If m_List IsNot Nothing Then
+            For Each Item As String In m_List
+                recentFile = New ToolStripMenuItem(Item)
+                AddHandler recentFile.Click, AddressOf recentFile_Click
+                mniRecentFiles.DropDownItems.Add(recentFile)
+                recentFile = Nothing
+            Next
+        End If
     End Sub
 
     Private Sub recentFile_Click(ByVal sender As Object, ByVal e As EventArgs)
@@ -280,8 +323,9 @@ Public Class frmMain
         oFrmCreate.ShowDialog(Me)
     End Sub
 
-    Private Sub ctxiSelectAll_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiSelectAll.Click
+    Private Sub ctxiSelectAll_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiSelectAll.Click, mnuManageTableSelectAll.Click
         If m_currentNode IsNot Nothing Then
+            Me.txtQueryWindow.SelectAll()
             Me.txtQueryWindow.SelectedText = String.Format("SELECT * FROM [{0}]", m_currentNode.Text)
             Me.txtQueryWindow.SelectAll()
             Me.ExecuteQuery()
@@ -319,38 +363,92 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub mniParse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniParse.Click
-        Dim oSqlCeExplorerData As New SqlCeExplorerData
-        Dim query As String
-        If Me.txtQueryWindow.SelectionLength <= 0 Then
-            query = Me.txtQueryWindow.Text
-        Else
-            query = Me.txtQueryWindow.SelectedText
-        End If
-        Dim RecordsAffected As Integer = 0
-        Dim sqlResult As Boolean = oSqlCeExplorerData.ParseQuery(query)
+    Private Sub mniParse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniParse.Click, ctxiParse.Click
+        If m_IsConnected Then
+            Dim oSqlCeExplorerData As New SqlCeExplorerData
+            Dim query As String
+            If Me.txtQueryWindow.SelectionLength <= 0 Then
+                query = Me.txtQueryWindow.Text
+            Else
+                query = Me.txtQueryWindow.SelectedText
+            End If
+            Dim RecordsAffected As Integer = 0
+            Dim sqlResult As Boolean = oSqlCeExplorerData.ParseQuery(query)
 
-        tcMain.TabPages.Remove(Me.tpGrid)
-
-        If Not sqlResult Then
-            'Query failed
-            Me.tcMain.SelectedTab = Me.tpText
-            Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
-            Me.txtOutput.ForeColor = Color.Red
-            Me.txtOutput.SelectionLength = 0
-            Me.dgvResults.DataSource = Nothing
-        Else
-            'Insert, Update, or delete.
-            Me.tcMain.SelectedTab = Me.tpText
-            Me.txtOutput.ForeColor = Color.Black
-            Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
-            Me.dgvResults.DataSource = Nothing
-            Me.txtOutput.SelectionLength = 0
+            If Not sqlResult Then
+                'Query failed
+                Me.tcMain.SelectedTab = Me.tpText
+                Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
+                Me.txtOutput.ForeColor = Color.Red
+                Me.txtOutput.SelectionLength = 0
+                Me.dgvResults.DataSource = Nothing
+            Else
+                'Insert, Update, or delete.
+                Me.tcMain.SelectedTab = Me.tpText
+                Me.txtOutput.ForeColor = Color.Black
+                Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
+                Me.dgvResults.DataSource = Nothing
+                Me.txtOutput.SelectionLength = 0
+            End If
         End If
     End Sub
+    Private Function IsMultipleQuery() As Boolean
+        Dim tempQuery As String = IIf(Me.txtQueryWindow.SelectionLength >= 1, Me.txtQueryWindow.SelectedText, Me.txtQueryWindow.Text)
+        Return tempQuery.Split(Me.m_Delimeter, StringSplitOptions.RemoveEmptyEntries).Length >= 1
+    End Function
+    Private Sub mniExecute_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniExecute.Click, ctxiExecute.Click
+        If m_IsConnected Then
+            If IsMultipleQuery() Then
+                Me.ExecuteMultipleQuery()
+            Else
+                Me.ExecuteQuery()
+            End If
+        End If
+    End Sub
+    Private Sub ExecuteMultipleQuery()
+        Dim oSqlCeExplorerData As New SqlCeExplorerData
+        Dim dataReaders As List(Of SqlCeDataReader) =
+            oSqlCeExplorerData.ExecuteMultipleQueries(IIf(Me.txtQueryWindow.SelectionLength >= 1, Me.txtQueryWindow.SelectedText, Me.txtQueryWindow.Text).
+                                                      Split(Me.m_Delimeter, StringSplitOptions.RemoveEmptyEntries))
+        Dim dataTables As New List(Of DataTable)
+        Dim RecordsAffected As Integer = 0
+        For Each SqlCeReader As SqlCeDataReader In dataReaders
+            If SqlCeReader IsNot Nothing Then
+                RecordsAffected = SqlCeReader.RecordsAffected
+                Select Case RecordsAffected
+                    Case 0
+                        'Query failed
+                        Me.tcMain.SelectedTab = Me.tpText
+                        Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
+                        Me.txtOutput.ForeColor = Color.Red
+                        Me.txtOutput.SelectionLength = 0
+                    Case -1
+                        'Select statement
 
-    Private Sub mniExecute_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniExecute.Click
-        Me.ExecuteQuery()
+                        Me.txtOutput.ForeColor = Color.Black
+                        Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
+                        Dim results As DataTable = Nothing
+                        If SqlCeReader IsNot Nothing Then
+                            results = oSqlCeExplorerData.Fill(SqlCeReader)
+                        End If
+                        If results IsNot Nothing AndAlso results.Rows.Count >= 1 Then
+                            Me.dgvResults.DataSource = results
+                            Me.tcMain.SelectedTab = Me.tpGrid
+                        Else
+                            Me.tcMain.SelectedTab = Me.tpText
+                            Me.dgvResults.DataSource = Nothing
+                        End If
+
+                    Case Else
+                        'Insert, Update, or delete.
+                        Me.tcMain.SelectedTab = Me.tpText
+                        Me.txtOutput.ForeColor = Color.Black
+                        Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
+                        Me.dgvResults.DataSource = Nothing
+                        Me.txtOutput.SelectionLength = 0
+                End Select
+            End If
+        Next
     End Sub
     Private Sub ExecuteQuery()
         Dim oSqlCeExplorerData As New SqlCeExplorerData
@@ -372,15 +470,13 @@ Public Class frmMain
         Select Case RecordsAffected
             Case 0
                 'Query failed
-                tcMain.TabPages.Remove(Me.tpGrid)
                 Me.tcMain.SelectedTab = Me.tpText
                 Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
                 Me.txtOutput.ForeColor = Color.Red
                 Me.txtOutput.SelectionLength = 0
             Case -1
                 'Select statement
-                Me.tcMain.TabPages.Add(Me.tpGrid)
-                Me.tcMain.SelectedTab = Me.tpGrid
+
                 Me.txtOutput.ForeColor = Color.Black
                 Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
                 Dim results As DataTable = Nothing
@@ -389,20 +485,19 @@ Public Class frmMain
                 End If
                 If results IsNot Nothing AndAlso results.Rows.Count >= 1 Then
                     Me.dgvResults.DataSource = results
+                    Me.tcMain.SelectedTab = Me.tpGrid
                 Else
-                    Me.tcMain.TabPages.Remove(Me.tpGrid)
                     Me.tcMain.SelectedTab = Me.tpText
+                    Me.dgvResults.DataSource = Nothing
                 End If
 
             Case Else
                 'Insert, Update, or delete.
-                tcMain.TabPages.Remove(Me.tpGrid)
                 Me.tcMain.SelectedTab = Me.tpText
                 Me.txtOutput.ForeColor = Color.Black
                 Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
                 Me.dgvResults.DataSource = Nothing
                 Me.txtOutput.SelectionLength = 0
-
         End Select
     End Sub
     Private Sub mnuOptions_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuOptions.Click
@@ -438,6 +533,7 @@ Public Class frmMain
     Private Sub mniPaste_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniPaste.Click, ctxiPaste.Click
         If Clipboard.ContainsText() Then
             Me.txtQueryWindow.Paste()
+            Me.txtQueryWindow.DoSyntaxHighlight()
         End If
     End Sub
 
@@ -453,6 +549,13 @@ Public Class frmMain
         mniParse.Enabled = Me.txtQueryWindow.TextLength >= 1 AndAlso m_IsConnected
         mniExecute.Enabled = Me.txtQueryWindow.TextLength >= 1 AndAlso m_IsConnected
         mniClearResults.Enabled = Me.txtQueryWindow.TextLength >= 1 AndAlso m_IsConnected
+        mniQueryBuilder.Enabled = m_IsConnected
+
+        mnuManageTable.Enabled = m_IsConnected
+        mnuManageCols.Enabled = m_IsConnected
+        mnuManageIndexs.Enabled = m_IsConnected
+        mnuManageRelations.Enabled = m_IsConnected
+        mnuRefresh.Enabled = m_IsConnected
     End Sub
     Private Sub mniSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniSave.Click
         If m_SavedFileName.Length >= 1 Then
@@ -468,7 +571,9 @@ Public Class frmMain
                 .OverwritePrompt = True
                 .CheckPathExists = True
                 .DefaultExt = "SQL"
-                .Filter = "SQL Files(*.sql)|*.sql"
+                .FileName = "*.sql"
+                .AddExtension = True
+                .Filter = "SQL Files(*.sql)|*.sql|SQL CE Files|*.sqlce"
                 .SupportMultiDottedExtensions = True
                 .Title = String.Format("Save SQL File - {0}", SqlCeMain.APPLICATION_NAME)
                 .ValidateNames = True
@@ -517,7 +622,9 @@ Public Class frmMain
                 .AddExtension = True
                 .CheckFileExists = True
                 .DefaultExt = "SQL"
-                .Filter = "SQL Files(*.sql)|*.sql|All Files(*.*)|*.*"
+                .FileName = "*.sql"
+                .AddExtension = True
+                .Filter = "SQL Files(*.sql)|*.sql|SQLCE Files|*.sqlce|All Files(*.*)|*.*"
                 .Multiselect = False
                 .ReadOnlyChecked = False
                 .ShowReadOnly = False
@@ -579,7 +686,7 @@ Public Class frmMain
         ofrmAbout.ShowDialog(Me)
     End Sub
 
-    Private Sub ctxiDropTable_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDropTable.Click
+    Private Sub ctxiDropTable_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDropTable.Click, mnuManageTableDelete.Click
         Dim ofrmDeleteTable As frmDeleteTable
         If m_currentNode IsNot Nothing Then
             ofrmDeleteTable = New frmDeleteTable(m_currentNode.Text)
@@ -590,6 +697,7 @@ Public Class frmMain
         ofrmDeleteTable.ShowDialog(Me)
     End Sub
     Private Sub ofrmDeleteTable_DeleteTableQueryFormed(ByVal sender As Object, ByVal e As EventArgs)
+        Me.txtQueryWindow.SelectAll()
         Me.txtQueryWindow.SelectedText = SqlCeMain.GetCurrentQuery
         Me.txtQueryWindow.SelectAll()
         Me.ExecuteQuery()
@@ -653,33 +761,33 @@ Public Class frmMain
     End Sub
 
     Private Sub ExecuteCommand(ByVal sender As Object, ByVal e As EventArgs) _
-        Handles tsbConnect.Click, tsbDisconnect.Click, tsbOptions.Click, _
-        tsbCreateDb.Click, tsbWeb.Click, tsbFind.Click, tsbParse.Click, tsbExecute.Click, tsbSaveAs.Click
+        Handles tsbConnect.Click, tsbOptions.Click, _
+        tsbCreateDb.Click, tsbWeb.Click, tsbFind.Click, tsbParse.Click, tsbExecute.Click, tsbSaveAs.Click, tsbDisconnect.Click
 
         Me.ExecuteCommand(TryCast(sender, ToolStripButton))
 
     End Sub
-    
+
     Private Sub mniDeleteSelected_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDeleteSelected.Click
         Me.txtQueryWindow.SelectedText = String.Empty
     End Sub
 
-    Private Sub ctxiDeleteAllRows_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDeleteAllRows.Click
+    Private Sub ctxiDeleteAllRows_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDeleteAllRows.Click, mnuManageTableDeleteAll.Click
         If m_currentNode IsNot Nothing Then
             Me.txtQueryWindow.SelectedText = String.Format("DELETE FROM [{0}]", m_currentNode.Text)
             Me.txtQueryWindow.SelectAll()
             Me.ExecuteQuery()
         End If
     End Sub
-    Private Sub CtxiAddNewColumn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CtxiAddNewColumn.Click
+    Private Sub CtxiAddNewColumn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CtxiAddNewColumn.Click, mnuManageColsAdd.Click
         Me.ShowModifyColumnDialog(frmModifyColumn.OperationMode.CreateColumn)
     End Sub
 
-    Private Sub ctxiDropaColumn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDropaColumn.Click
+    Private Sub ctxiDropaColumn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDropaColumn.Click, mnuManageColsDelete.Click
         Me.ShowModifyColumnDialog(frmModifyColumn.OperationMode.DropColumn)
     End Sub
 
-    Private Sub ctxiChangeColDataType_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiChangeColDataType.Click
+    Private Sub ctxiChangeColDataType_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiChangeColDataType.Click, mnuManageColsChange.Click
         Me.ShowModifyColumnDialog(frmModifyColumn.OperationMode.AlterColumn)
     End Sub
     Private Sub ShowModifyColumnDialog(ByVal ModeOfOperation As frmModifyColumn.OperationMode)
@@ -711,6 +819,29 @@ Public Class frmMain
         Next
         Return False
     End Function
+    Private Sub FillRelationShips(ByVal TableName As String, ByVal Node As TreeNode)
+        If Not NodeExists("Relationships", Node) Then
+            Dim oTablesReader As SqlCeDataReader
+            Dim query As String = String.Format(SELECTQUERYRELATIONSHIPS, TableName)
+            Dim oSqlCeExplorerData As New SqlCeExplorerData
+            Dim columnsNode As New TreeNode("Relationships", 7, 7)
+            Dim nodeText As String
+            Dim columnNode As TreeNode
+
+            columnsNode.Tag = "#__RELATIONSHIPS__ROOT_NODE#"
+            oTablesReader = oSqlCeExplorerData.ExecuteQuery(query)
+            While oTablesReader.Read
+                nodeText = String.Format("{0}", oTablesReader("CONSTRAINT_NAME").ToString())
+                columnNode = New TreeNode(nodeText, 7, 7)
+                columnNode.Tag = columnNode.Text
+                columnsNode.Nodes.Add(columnNode)
+            End While
+            Node.Nodes.Add(columnsNode)
+            oTablesReader.Close()
+            oTablesReader = Nothing
+            oSqlCeExplorerData = Nothing
+        End If
+    End Sub
     Private Sub FillIndexes(ByVal TableName As String, ByVal Node As TreeNode)
         If Not NodeExists("Indexes", Node) Then
             Dim oTablesReader As SqlCeDataReader
@@ -759,7 +890,7 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub ctxiCreateNewIndex_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiCreateNewIndex.Click
+    Private Sub ctxiCreateNewIndex_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiCreateNewIndex.Click, mnuManageIndexAdd.Click
         Dim ofrmModifyIndex As New frmModifyIndex(frmModifyIndex.OperationMode.Create)
         AddHandler ofrmModifyIndex.ModifyIndexQueryFormed, AddressOf ofrmModifyIndex_ModifyIndexQueryFormed
         ofrmModifyIndex.ShowDialog(Me)
@@ -770,7 +901,7 @@ Public Class frmMain
         Me.ExecuteQuery()
         Me.PopulateUI()
     End Sub
-    Private Sub ctxiDropAnIndex_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDropAnIndex.Click
+    Private Sub ctxiDropAnIndex_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDropAnIndex.Click, mnuManageIndexDelete.Click
         Dim ofrmModifyIndex As New frmModifyIndex(frmModifyIndex.OperationMode.Drop)
         AddHandler ofrmModifyIndex.ModifyIndexQueryFormed, AddressOf ofrmModifyIndex_ModifyIndexQueryFormed
         ofrmModifyIndex.ShowDialog(Me)
@@ -782,6 +913,7 @@ Public Class frmMain
         Me.ctxiCompactSeDatabase.Enabled = m_IsConnected
         Me.ctxiSeRepairDatabase.Enabled = m_IsConnected
         Me.ctxiSeGenerateSql.Enabled = m_IsConnected
+        Me.ctxiGenerateCode.Enabled = m_IsConnected
     End Sub
 
     Private Sub ctxiDatabaseOptions_DropDownOpening(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDatabaseOptions.DropDownOpening
@@ -789,6 +921,7 @@ Public Class frmMain
         Me.ctxiCompactDB.Enabled = m_IsConnected
         Me.ctxiRepairDB.Enabled = m_IsConnected
         Me.ctxiGenerateScript.Enabled = m_IsConnected
+        Me.ctxiCtxtGenerateCode.Enabled = m_IsConnected
     End Sub
     Private Sub CompactDB(ByVal Sender As Object, ByVal e As EventArgs) Handles ctxiCompactSeDatabase.Click, ctxiCompactDB.Click
         Dim confirmMsg As String = "This option will compact your SQL CE Database, this will be useful if your database file size is in mega bytes."
@@ -802,7 +935,7 @@ Public Class frmMain
         Dim confirmMsg As String = "This option will Repair your SQL CE Database if it is corrupted. By default it will try to recover the corrupted rows."
         If MessageBox.Show(confirmMsg, APPLICATION_NAME, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
             Dim engine As New SqlCeEngine(SqlCeMain.GetConnectionString)
-            engine.Repair(SqlCeMain.GetConnectionString, RepairOption.RecoverCorruptedRows)
+            engine.Repair(SqlCeMain.GetConnectionString, RepairOption.RecoverAllPossibleRows)
             engine.Shrink()
             MessageBox.Show("Repair database - completed successfully", APPLICATION_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
@@ -815,5 +948,238 @@ Public Class frmMain
     End Sub
     Private Sub ofrmGenerateScript_QueryFormed(ByVal sender As Object, ByVal e As EventArgs)
         Me.txtQueryWindow.Text = SqlCeMain.GetCurrentQuery
+    End Sub
+
+    Private Sub frmMain_Activated(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Activated
+        Me.txtQueryWindow.DoSyntaxHighlight()
+    End Sub
+    Private Sub mniPrint_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniPrint.Click
+        Dim oPrintDocument As New PrintDocument
+
+        Using oPrintDialog As New PrintDialog
+            With oPrintDialog
+                .ShowHelp = False
+                .ShowNetwork = False
+                .Document = oPrintDocument
+                .AllowCurrentPage = False
+                .AllowSelection = False
+                .AllowSomePages = False
+                .AllowPrintToFile = True
+                .UseEXDialog = True
+                If .ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                    oPrintDocument.PrinterSettings = .PrinterSettings
+                    AddHandler oPrintDocument.PrintPage, AddressOf oPrintDocument_PrintPage
+
+                    For index As Integer = 1 To .PrinterSettings.Copies
+                        m_StartIndex = 0
+                        oPrintDocument.Print()
+                    Next
+
+                End If
+            End With
+        End Using
+    End Sub
+    Private Sub oPrintDocument_PrintPage(ByVal sender As Object, ByVal e As PrintPageEventArgs)
+        Dim lineCounter As Integer = 0
+        Dim lineTop As Double = 0
+
+        For lineIndex As Integer = m_StartIndex To Me.txtQueryWindow.Lines.Length - 1
+            Dim line As String = Me.txtQueryWindow.Lines(lineIndex)
+            lineCounter += 1
+            lineTop = e.MarginBounds.Top + lineCounter * Me.txtQueryWindow.Font.Size
+            e.Graphics.DrawString(line, Me.txtQueryWindow.Font, Brushes.Black, e.MarginBounds.Left, lineTop)
+            If lineTop > e.MarginBounds.Bottom Then
+                m_StartIndex = lineIndex
+                e.HasMorePages = True
+                Return
+            End If
+        Next
+
+    End Sub
+
+    Private Sub ctxiAddRelation_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiAddRelation.Click, mnuManageRelationAdd.Click
+        If m_currentNode IsNot Nothing Then
+            Using objFrmRelationShip As New frmRelationShips(m_currentNode.Text)
+                AddHandler objFrmRelationShip.RelationShipQueryFormed, AddressOf objFrmRelationShip_RelationShipQueryFormed
+                objFrmRelationShip.ShowDialog(Me)
+            End Using
+        End If
+    End Sub
+
+    Private Sub objFrmRelationShip_RelationShipQueryFormed(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        Me.txtQueryWindow.Text = SqlCeMain.GetCurrentQuery
+        Me.txtQueryWindow.SelectAll()
+        Me.ExecuteQuery()
+        Me.PopulateUI()
+        Me.UpdateStatusUI(Constants.TABLE_RELATIONSHIP_CREATED)
+    End Sub
+
+    Private Sub ctxiDeleteRelation_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDeleteRelation.Click, mnuManageRelationDelete.Click
+        Dim ofrmDeleteRelation As frmDeleteRelation
+        If m_currentNode IsNot Nothing Then
+            ofrmDeleteRelation = New frmDeleteRelation(m_currentNode.Text)
+        Else
+            ofrmDeleteRelation = New frmDeleteRelation()
+        End If
+        AddHandler ofrmDeleteRelation.DeleteRelationQueryFormed, AddressOf ofrmDeleteRelation_DeleteRelationQueryFormed
+        ofrmDeleteRelation.ShowDialog(Me)
+    End Sub
+    Public Sub ofrmDeleteRelation_DeleteRelationQueryFormed(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        Me.txtQueryWindow.Text = SqlCeMain.GetCurrentQuery
+        Me.txtQueryWindow.SelectAll()
+        Me.ExecuteQuery()
+        Me.PopulateUI()
+    End Sub
+
+    Private Sub ctxGridMenu_Opening(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles ctxGridMenu.Opening
+        Me.ctxiCopyGrid.Enabled = Me.dgvResults.SelectedCells IsNot Nothing AndAlso Me.dgvResults.SelectedCells.Count >= 1
+        Me.ctxiExport.Enabled = Me.dgvResults.SelectedCells IsNot Nothing AndAlso Me.dgvResults.SelectedCells.Count >= 1
+    End Sub
+
+    Private Sub ctxiCopyGrid_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiCopyGrid.Click
+        Dim oCells As New StringBuilder
+        For Each Item As DataGridViewCell In Me.dgvResults.SelectedCells
+
+        Next
+    End Sub
+
+    Private Sub mniQueryBuilder_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniQueryBuilder.Click
+        Using ofrmQueryBuilder As New frmQueryBuilder
+            AddHandler ofrmQueryBuilder.QueryBuildCompleted, AddressOf ofrmQueryBuilder_QueryBuildCompleted
+            ofrmQueryBuilder.ShowDialog(Me)
+        End Using
+    End Sub
+    Private Sub ofrmQueryBuilder_QueryBuildCompleted(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        Me.txtQueryWindow.Text = SqlCeMain.GetCurrentQuery()
+    End Sub
+    'Auto Suggestion
+    Private isAutoSuggested As Boolean = False
+    Private currentIndex As Integer = 0
+    Private isAutoCompletedSuggestion As Boolean = False
+    Private Sub txtQueryWindow_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtQueryWindow.KeyDown
+        If Not m_IsConnected Then
+            Return
+        End If
+        If Not Me.m_AutoCompleteEnabled Then
+            Return
+        End If
+
+        If e.Control AndAlso e.KeyCode = Keys.Space Then
+            Dim charIndex As Integer = Me.txtQueryWindow.SelectionStart
+            currentIndex = charIndex
+            Dim currentPoint As Point = Me.txtQueryWindow.GetPositionFromCharIndex(charIndex)
+            Dim c As Char = Me.txtQueryWindow.GetCharFromPosition(currentPoint)
+            If FillSimilarWords(c) Then
+                lstSuggestions.Show()
+                currentPoint.Y += Me.Font.GetHeight()
+                lstSuggestions.Location = currentPoint
+                Me.ActiveControl = lstSuggestions
+                isAutoSuggested = True
+            End If
+        Else
+            isAutoSuggested = False
+        End If
+    End Sub
+    Private Function FillSimilarWords(ByVal s As String) As Boolean
+
+    End Function
+    Private Function FillSimilarWords(ByVal startingletter As Char) As Boolean
+        Dim startChar As String = startingletter.ToString()
+        If startingletter = Nothing Then
+            startChar = String.Empty
+        End If
+
+        lstSuggestions.Items.Clear()
+
+        Dim result As Boolean = False
+        For Each Item As String In Me.WordBuffer
+            If startChar.Trim().Length >= 1 Then
+                If Item.StartsWith(startChar, StringComparison.CurrentCultureIgnoreCase) Then
+                    lstSuggestions.Items.Add(Item)
+                    isAutoCompletedSuggestion = True
+                    result = True
+                End If
+            Else
+                lstSuggestions.Items.Add(Item)
+                isAutoCompletedSuggestion = False
+                result = True
+            End If
+        Next
+        Return result
+    End Function
+    Private Sub txtQueryWindow_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtQueryWindow.KeyPress
+        If Me.isAutoSuggested Then
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub lstSuggestions_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles lstSuggestions.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If lstSuggestions.SelectedIndex <> -1 Then
+                If currentIndex >= 1 Then
+                    If isAutoCompletedSuggestion Then
+                        Me.txtQueryWindow.Select(currentIndex - 1, 1)
+                    Else
+                        Me.txtQueryWindow.Select(currentIndex, 1)
+                    End If
+                End If
+                Me.txtQueryWindow.SelectedText = lstSuggestions.SelectedItem.ToString()
+                Me.txtQueryWindow.Focus()
+                lstSuggestions.Visible = False
+            End If
+        ElseIf e.KeyCode = Keys.Escape OrElse e.KeyCode = Keys.Back Then
+            lstSuggestions.Visible = False
+            Me.txtQueryWindow.Focus()
+        End If
+
+    End Sub
+
+    Private Sub mnuImport_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuImport.Click
+        Using oFrmImportFile As New frmImportFile
+            oFrmImportFile.ShowDialog(Me)
+        End Using
+    End Sub
+    Private Sub UpdateStatusUI(ByVal status As String)
+        tslblStatus.Text = status
+    End Sub
+
+    Private Sub mniClearResults_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniClearResults.Click, ctxiClear.Click
+        Me.dgvResults.DataSource = Nothing
+    End Sub
+
+    Private Sub ctxiEditAllRows_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiEditAllRows.Click, mnuManageTableEditAll.Click
+        If m_currentNode IsNot Nothing Then
+            Using ofrmEditTable As New frmEditTable(m_currentNode.Text)
+                ofrmEditTable.ShowDialog(Me)
+            End Using
+        End If
+    End Sub
+
+    Private Sub frmMain_DragDrop(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles MyBase.DragDrop
+        Dim files As String() = e.Data.GetData(DataFormats.FileDrop)
+        If Path.GetExtension(files(0)).Equals(".sql", StringComparison.CurrentCultureIgnoreCase) OrElse
+            Path.GetExtension(files(0)).Equals(".sqlce", StringComparison.CurrentCultureIgnoreCase) Then
+            Me.OpenFile(files(0))
+        End If
+    End Sub
+
+    Private Sub frmMain_DragEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles MyBase.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
+        Else
+            e.Effect = DragDropEffects.None
+        End If
+    End Sub
+
+    Private Sub ctxiGenerateCode_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiGenerateCode.Click
+        Using ofrmGenerateCode As New frmGenerateCode(Path.GetFileNameWithoutExtension(SqlCeMain.GetFileName))
+            ofrmGenerateCode.ShowDialog(Me)
+        End Using
+    End Sub
+
+    Private Sub mnuExport_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuExport.Click
+        Using ofrmExport As New frmExport
+            ofrmExport.ShowDialog(Me)
+        End Using
     End Sub
 End Class
