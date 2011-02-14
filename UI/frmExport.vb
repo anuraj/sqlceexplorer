@@ -100,5 +100,10 @@ Public Class frmExport
         Dim oSqlCeExplorerData As New SqlCeExplorerData
         Dim table As String = cmbTables.Items(cmbTables.SelectedIndex).ToString()
         exportModule.ExportFile(oSqlCeExplorerData.Fill(oSqlCeExplorerData.ExecuteQuery(String.Format(SELECTALL, table))), m_fileName)
+        Me.Close()
+    End Sub
+
+    Private Sub CmdCancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdCancel.Click
+        Me.Close()
     End Sub
 End Class

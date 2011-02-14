@@ -20,7 +20,7 @@ Public Class frmMain
     Private m_List As List(Of String)
     Private m_RecentItems As Integer
     Private m_StartIndex As Integer = 0
-    Private m_Delimeter() As Char = {";"}
+    Private m_Delimeter() As String = {";", "GO"}
     Private m_AutoCompleteEnabled = False
 
     Private Sub mniConnect_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniConnect.Click
@@ -1038,9 +1038,15 @@ Public Class frmMain
 
     Private Sub ctxiCopyGrid_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiCopyGrid.Click
         Dim oCells As New StringBuilder
-        For Each Item As DataGridViewCell In Me.dgvResults.SelectedCells
-
+        For Each row As DataGridViewRow In dgvResults.Rows
+            For Each cell As DataGridViewCell In row.Cells
+                If cell.Selected AndAlso TypeOf (cell) Is DataGridViewTextBoxCell Then
+                    oCells.AppendFormat("{0}|", cell.Value.ToString().Trim())
+                End If
+            Next
+            oCells.AppendLine()
         Next
+        Clipboard.SetText(oCells.ToString())
     End Sub
 
     Private Sub mniQueryBuilder_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniQueryBuilder.Click
@@ -1180,6 +1186,35 @@ Public Class frmMain
     Private Sub mnuExport_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuExport.Click
         Using ofrmExport As New frmExport
             ofrmExport.ShowDialog(Me)
+        End Using
+    End Sub
+
+    Private Sub ctxiExport_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiExport.Click
+        Dim oCells As New StringBuilder
+        For Each row As DataGridViewRow In dgvResults.Rows
+            For Each cell As DataGridViewCell In row.Cells
+                If cell.Selected AndAlso TypeOf (cell) Is DataGridViewTextBoxCell Then
+                    oCells.AppendFormat("{0}|", cell.Value.ToString().Trim())
+                End If
+            Next
+            oCells.AppendLine()
+        Next
+        Using oFileDialog As New SaveFileDialog
+            With oFileDialog
+                .Filter = "CSV File(*.csv)|*.csv"
+                .AutoUpgradeEnabled = False
+                .FilterIndex = 0
+                .OverwritePrompt = True
+                .AddExtension = True
+                .ShowHelp = False
+                .SupportMultiDottedExtensions = True
+                .Title = String.Format("Import - {0}", APPLICATION_NAME)
+                If .ShowDialog(Me) = DialogResult.OK Then
+                    Using sw As New StreamWriter(.FileName)
+                        sw.Write(oCells.ToString())
+                    End Using
+                End If
+            End With
         End Using
     End Sub
 End Class

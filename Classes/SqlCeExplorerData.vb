@@ -7,7 +7,7 @@ Public Class SqlCeExplorerData
     Private Const EXECUTE_SUCCESS As String = "Query executed successfully"
     Private Const EXECUTE_FAILED As String = "Query execution failed."
     Private m_ParseMessage As String
-    Private m_Delimeter As String = ";"
+    Private m_Delimeter() As String = {";", "GO"}
     Public ReadOnly Property ParseMessage() As String
         Get
             Return m_ParseMessage
@@ -22,8 +22,8 @@ Public Class SqlCeExplorerData
             oSqlCeDataLayer.Connect()
             oTrans = oSqlCeDataLayer.Connection.BeginTransaction(IsolationLevel.Serializable)
 
-            If Query.Contains(m_Delimeter) Then
-                Dim queries() As String = Query.Split(m_Delimeter)
+            Dim queries() As String = Query.Split(m_Delimeter, StringSplitOptions.RemoveEmptyEntries)
+            If queries.Length > 1 Then
                 For Each _query As String In queries
                     oSqlCeDataLayer.ExecuteNonQuery(_query, oTrans)
                 Next

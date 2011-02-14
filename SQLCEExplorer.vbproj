@@ -47,7 +47,7 @@
     <DebugType>Full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>Output\</OutputPath>
     <DocumentationFile>SQLCEExplorer.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -92,6 +92,7 @@
     <Compile Include="Extensions\CodeGenerationModules\BaseCodeGenerator.vb" />
     <Compile Include="Extensions\CodeGenerationModules\VBCodeGenerator.vb" />
     <Compile Include="Extensions\CodeGenerationModules\CSharpCodeGenerator.vb" />
+    <Compile Include="Extensions\ExportModules\CSVExporter.vb" />
     <Compile Include="Extensions\ExportModules\XmlExporter.vb" />
     <Compile Include="Extensions\ImportModules\CSVImporter.vb" />
     <Compile Include="Extensions\ImportModules\Excel2003Importer.vb" />

@@ -229,7 +229,7 @@ Partial Class frmMain
         'tslblStatus
         '
         Me.tslblStatus.Name = "tslblStatus"
-        Me.tslblStatus.Size = New System.Drawing.Size(144, 17)
+        Me.tslblStatus.Size = New System.Drawing.Size(157, 17)
         Me.tslblStatus.Text = "Welcome to SQL CE Explorer"
         '
         'msMain
@@ -246,228 +246,228 @@ Partial Class frmMain
         '
         Me.mnuFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mniConnect, Me.mniDisconnect, Me.mniSep1, Me.mniCreatSqlCeDatabase, Me.mniSep8, Me.mniOpenFile, Me.mnuImport, Me.mniSep9, Me.mnuExport, Me.ToolStripSeparator3, Me.mniSave, Me.mniSaveAs, Me.mniSep2, Me.mniPrint, Me.ToolStripSeparator2, Me.mniRecentFiles, Me.mniSep10, Me.mniQuit})
         Me.mnuFile.Name = "mnuFile"
-        Me.mnuFile.Size = New System.Drawing.Size(35, 20)
+        Me.mnuFile.Size = New System.Drawing.Size(37, 20)
         Me.mnuFile.Text = "&File"
         '
         'mniConnect
         '
         Me.mniConnect.Image = Global.SQLCEExplorer.My.Resources.Resources.connect
         Me.mniConnect.Name = "mniConnect"
-        Me.mniConnect.Size = New System.Drawing.Size(229, 22)
+        Me.mniConnect.Size = New System.Drawing.Size(237, 22)
         Me.mniConnect.Text = "&Connect to SQL CE Database ..."
         '
         'mniDisconnect
         '
         Me.mniDisconnect.Image = Global.SQLCEExplorer.My.Resources.Resources.disconnect
         Me.mniDisconnect.Name = "mniDisconnect"
-        Me.mniDisconnect.Size = New System.Drawing.Size(229, 22)
+        Me.mniDisconnect.Size = New System.Drawing.Size(237, 22)
         Me.mniDisconnect.Text = "&Disconnect"
         '
         'mniSep1
         '
         Me.mniSep1.Name = "mniSep1"
-        Me.mniSep1.Size = New System.Drawing.Size(226, 6)
+        Me.mniSep1.Size = New System.Drawing.Size(234, 6)
         '
         'mniCreatSqlCeDatabase
         '
         Me.mniCreatSqlCeDatabase.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCreateSeDatabase, Me.ctxiSep12, Me.ctxiCompactSeDatabase, Me.ctxiSeRepairDatabase, Me.ctxiSep13, Me.ctxiSeGenerateSql, Me.ctxisep15, Me.ctxiGenerateCode})
         Me.mniCreatSqlCeDatabase.Image = Global.SQLCEExplorer.My.Resources.Resources.database_add
         Me.mniCreatSqlCeDatabase.Name = "mniCreatSqlCeDatabase"
-        Me.mniCreatSqlCeDatabase.Size = New System.Drawing.Size(229, 22)
+        Me.mniCreatSqlCeDatabase.Size = New System.Drawing.Size(237, 22)
         Me.mniCreatSqlCeDatabase.Text = "Database"
         '
         'ctxiCreateSeDatabase
         '
         Me.ctxiCreateSeDatabase.Name = "ctxiCreateSeDatabase"
-        Me.ctxiCreateSeDatabase.Size = New System.Drawing.Size(206, 22)
+        Me.ctxiCreateSeDatabase.Size = New System.Drawing.Size(209, 22)
         Me.ctxiCreateSeDatabase.Text = "Create SQL CE &Database..."
         '
         'ctxiSep12
         '
         Me.ctxiSep12.Name = "ctxiSep12"
-        Me.ctxiSep12.Size = New System.Drawing.Size(203, 6)
+        Me.ctxiSep12.Size = New System.Drawing.Size(206, 6)
         '
         'ctxiCompactSeDatabase
         '
         Me.ctxiCompactSeDatabase.Name = "ctxiCompactSeDatabase"
-        Me.ctxiCompactSeDatabase.Size = New System.Drawing.Size(206, 22)
+        Me.ctxiCompactSeDatabase.Size = New System.Drawing.Size(209, 22)
         Me.ctxiCompactSeDatabase.Text = "&Compact Database..."
         '
         'ctxiSeRepairDatabase
         '
         Me.ctxiSeRepairDatabase.Name = "ctxiSeRepairDatabase"
-        Me.ctxiSeRepairDatabase.Size = New System.Drawing.Size(206, 22)
+        Me.ctxiSeRepairDatabase.Size = New System.Drawing.Size(209, 22)
         Me.ctxiSeRepairDatabase.Text = "&Repair Database..."
         '
         'ctxiSep13
         '
         Me.ctxiSep13.Name = "ctxiSep13"
-        Me.ctxiSep13.Size = New System.Drawing.Size(203, 6)
+        Me.ctxiSep13.Size = New System.Drawing.Size(206, 6)
         '
         'ctxiSeGenerateSql
         '
         Me.ctxiSeGenerateSql.Name = "ctxiSeGenerateSql"
-        Me.ctxiSeGenerateSql.Size = New System.Drawing.Size(206, 22)
+        Me.ctxiSeGenerateSql.Size = New System.Drawing.Size(209, 22)
         Me.ctxiSeGenerateSql.Text = "&Generate SQL Script..."
         '
         'ctxisep15
         '
         Me.ctxisep15.Name = "ctxisep15"
-        Me.ctxisep15.Size = New System.Drawing.Size(203, 6)
+        Me.ctxisep15.Size = New System.Drawing.Size(206, 6)
         '
         'ctxiGenerateCode
         '
         Me.ctxiGenerateCode.Name = "ctxiGenerateCode"
-        Me.ctxiGenerateCode.Size = New System.Drawing.Size(206, 22)
+        Me.ctxiGenerateCode.Size = New System.Drawing.Size(209, 22)
         Me.ctxiGenerateCode.Text = "Generate Code..."
         '
         'mniSep8
         '
         Me.mniSep8.Name = "mniSep8"
-        Me.mniSep8.Size = New System.Drawing.Size(226, 6)
+        Me.mniSep8.Size = New System.Drawing.Size(234, 6)
         '
         'mniOpenFile
         '
         Me.mniOpenFile.Name = "mniOpenFile"
         Me.mniOpenFile.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.mniOpenFile.Size = New System.Drawing.Size(229, 22)
+        Me.mniOpenFile.Size = New System.Drawing.Size(237, 22)
         Me.mniOpenFile.Text = "&Open ..."
         '
         'mnuImport
         '
         Me.mnuImport.Name = "mnuImport"
-        Me.mnuImport.Size = New System.Drawing.Size(229, 22)
+        Me.mnuImport.Size = New System.Drawing.Size(237, 22)
         Me.mnuImport.Text = "Import..."
         '
         'mniSep9
         '
         Me.mniSep9.Name = "mniSep9"
-        Me.mniSep9.Size = New System.Drawing.Size(226, 6)
+        Me.mniSep9.Size = New System.Drawing.Size(234, 6)
         '
         'mnuExport
         '
         Me.mnuExport.Name = "mnuExport"
-        Me.mnuExport.Size = New System.Drawing.Size(229, 22)
+        Me.mnuExport.Size = New System.Drawing.Size(237, 22)
         Me.mnuExport.Text = "&Export..."
         '
         'ToolStripSeparator3
         '
         Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.ToolStripSeparator3.Size = New System.Drawing.Size(226, 6)
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(234, 6)
         '
         'mniSave
         '
         Me.mniSave.Image = Global.SQLCEExplorer.My.Resources.Resources.floppy
         Me.mniSave.Name = "mniSave"
         Me.mniSave.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.mniSave.Size = New System.Drawing.Size(229, 22)
+        Me.mniSave.Size = New System.Drawing.Size(237, 22)
         Me.mniSave.Text = "&Save"
         '
         'mniSaveAs
         '
         Me.mniSaveAs.Image = Global.SQLCEExplorer.My.Resources.Resources.floppy
         Me.mniSaveAs.Name = "mniSaveAs"
-        Me.mniSaveAs.Size = New System.Drawing.Size(229, 22)
+        Me.mniSaveAs.Size = New System.Drawing.Size(237, 22)
         Me.mniSaveAs.Text = "Save &As ..."
         '
         'mniSep2
         '
         Me.mniSep2.Name = "mniSep2"
-        Me.mniSep2.Size = New System.Drawing.Size(226, 6)
+        Me.mniSep2.Size = New System.Drawing.Size(234, 6)
         '
         'mniPrint
         '
         Me.mniPrint.Name = "mniPrint"
         Me.mniPrint.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
-        Me.mniPrint.Size = New System.Drawing.Size(229, 22)
+        Me.mniPrint.Size = New System.Drawing.Size(237, 22)
         Me.mniPrint.Text = "&Print..."
         '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(226, 6)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(234, 6)
         '
         'mniRecentFiles
         '
         Me.mniRecentFiles.Name = "mniRecentFiles"
-        Me.mniRecentFiles.Size = New System.Drawing.Size(229, 22)
+        Me.mniRecentFiles.Size = New System.Drawing.Size(237, 22)
         Me.mniRecentFiles.Text = "Re&cent Files"
         '
         'mniSep10
         '
         Me.mniSep10.Name = "mniSep10"
-        Me.mniSep10.Size = New System.Drawing.Size(226, 6)
+        Me.mniSep10.Size = New System.Drawing.Size(234, 6)
         '
         'mniQuit
         '
         Me.mniQuit.Name = "mniQuit"
         Me.mniQuit.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.F4), System.Windows.Forms.Keys)
-        Me.mniQuit.Size = New System.Drawing.Size(229, 22)
+        Me.mniQuit.Size = New System.Drawing.Size(237, 22)
         Me.mniQuit.Text = "&Exit ..."
         '
         'mnuEdit
         '
         Me.mnuEdit.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mniUndo, Me.mniSep3, Me.mniCopy, Me.mniCut, Me.mniPaste, Me.mniSep5, Me.mniFind, Me.mniSep4, Me.mniSelectAll, Me.mniClearAll})
         Me.mnuEdit.Name = "mnuEdit"
-        Me.mnuEdit.Size = New System.Drawing.Size(37, 20)
+        Me.mnuEdit.Size = New System.Drawing.Size(39, 20)
         Me.mnuEdit.Text = "&Edit"
         '
         'mniUndo
         '
         Me.mniUndo.Name = "mniUndo"
         Me.mniUndo.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Z), System.Windows.Forms.Keys)
-        Me.mniUndo.Size = New System.Drawing.Size(156, 22)
+        Me.mniUndo.Size = New System.Drawing.Size(164, 22)
         Me.mniUndo.Text = "&Undo"
         '
         'mniSep3
         '
         Me.mniSep3.Name = "mniSep3"
-        Me.mniSep3.Size = New System.Drawing.Size(153, 6)
+        Me.mniSep3.Size = New System.Drawing.Size(161, 6)
         '
         'mniCopy
         '
         Me.mniCopy.Name = "mniCopy"
         Me.mniCopy.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
-        Me.mniCopy.Size = New System.Drawing.Size(156, 22)
+        Me.mniCopy.Size = New System.Drawing.Size(164, 22)
         Me.mniCopy.Text = "&Copy"
         '
         'mniCut
         '
         Me.mniCut.Name = "mniCut"
         Me.mniCut.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.X), System.Windows.Forms.Keys)
-        Me.mniCut.Size = New System.Drawing.Size(156, 22)
+        Me.mniCut.Size = New System.Drawing.Size(164, 22)
         Me.mniCut.Text = "C&ut"
         '
         'mniPaste
         '
         Me.mniPaste.Name = "mniPaste"
         Me.mniPaste.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
-        Me.mniPaste.Size = New System.Drawing.Size(156, 22)
+        Me.mniPaste.Size = New System.Drawing.Size(164, 22)
         Me.mniPaste.Text = "&Paste"
         '
         'mniSep5
         '
         Me.mniSep5.Name = "mniSep5"
-        Me.mniSep5.Size = New System.Drawing.Size(153, 6)
+        Me.mniSep5.Size = New System.Drawing.Size(161, 6)
         '
         'mniFind
         '
         Me.mniFind.Image = Global.SQLCEExplorer.My.Resources.Resources.search
         Me.mniFind.Name = "mniFind"
         Me.mniFind.ShortcutKeys = System.Windows.Forms.Keys.F3
-        Me.mniFind.Size = New System.Drawing.Size(156, 22)
+        Me.mniFind.Size = New System.Drawing.Size(164, 22)
         Me.mniFind.Text = "&Find ..."
         '
         'mniSep4
         '
         Me.mniSep4.Name = "mniSep4"
-        Me.mniSep4.Size = New System.Drawing.Size(153, 6)
+        Me.mniSep4.Size = New System.Drawing.Size(161, 6)
         '
         'mniSelectAll
         '
         Me.mniSelectAll.Name = "mniSelectAll"
         Me.mniSelectAll.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.A), System.Windows.Forms.Keys)
-        Me.mniSelectAll.Size = New System.Drawing.Size(156, 22)
+        Me.mniSelectAll.Size = New System.Drawing.Size(164, 22)
         Me.mniSelectAll.Text = "&Select All"
         '
         'mniClearAll
@@ -475,14 +475,14 @@ Partial Class frmMain
         Me.mniClearAll.Image = Global.SQLCEExplorer.My.Resources.Resources.trash
         Me.mniClearAll.Name = "mniClearAll"
         Me.mniClearAll.ShortcutKeys = System.Windows.Forms.Keys.Delete
-        Me.mniClearAll.Size = New System.Drawing.Size(156, 22)
+        Me.mniClearAll.Size = New System.Drawing.Size(164, 22)
         Me.mniClearAll.Text = "&Delete"
         '
         'mnuQuery
         '
         Me.mnuQuery.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mniParse, Me.mniExecute, Me.mniSep6, Me.mniClearResults, Me.mniSep12, Me.mniQueryBuilder, Me.ctxiSep17, Me.mnuManageTable, Me.ctxiSep19, Me.mnuManageCols, Me.ctxiSep20, Me.mnuManageIndexs, Me.ctxiSep21, Me.mnuManageRelations, Me.ctxiSep22, Me.mnuRefresh})
         Me.mnuQuery.Name = "mnuQuery"
-        Me.mnuQuery.Size = New System.Drawing.Size(49, 20)
+        Me.mnuQuery.Size = New System.Drawing.Size(51, 20)
         Me.mnuQuery.Text = "&Query"
         '
         'mniParse
@@ -490,7 +490,7 @@ Partial Class frmMain
         Me.mniParse.Image = Global.SQLCEExplorer.My.Resources.Resources.symbol_check
         Me.mniParse.Name = "mniParse"
         Me.mniParse.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.F5), System.Windows.Forms.Keys)
-        Me.mniParse.Size = New System.Drawing.Size(216, 22)
+        Me.mniParse.Size = New System.Drawing.Size(226, 22)
         Me.mniParse.Text = "&Parse"
         '
         'mniExecute
@@ -498,443 +498,443 @@ Partial Class frmMain
         Me.mniExecute.Image = Global.SQLCEExplorer.My.Resources.Resources.control_play
         Me.mniExecute.Name = "mniExecute"
         Me.mniExecute.ShortcutKeys = System.Windows.Forms.Keys.F5
-        Me.mniExecute.Size = New System.Drawing.Size(216, 22)
+        Me.mniExecute.Size = New System.Drawing.Size(226, 22)
         Me.mniExecute.Text = "&Execute"
         '
         'mniSep6
         '
         Me.mniSep6.Name = "mniSep6"
-        Me.mniSep6.Size = New System.Drawing.Size(213, 6)
+        Me.mniSep6.Size = New System.Drawing.Size(223, 6)
         '
         'mniClearResults
         '
         Me.mniClearResults.Image = Global.SQLCEExplorer.My.Resources.Resources.trash
         Me.mniClearResults.Name = "mniClearResults"
         Me.mniClearResults.ShortcutKeys = CType((System.Windows.Forms.Keys.Shift Or System.Windows.Forms.Keys.Delete), System.Windows.Forms.Keys)
-        Me.mniClearResults.Size = New System.Drawing.Size(216, 22)
+        Me.mniClearResults.Size = New System.Drawing.Size(226, 22)
         Me.mniClearResults.Text = "&Clear Results Pane"
         '
         'mniSep12
         '
         Me.mniSep12.Name = "mniSep12"
-        Me.mniSep12.Size = New System.Drawing.Size(213, 6)
+        Me.mniSep12.Size = New System.Drawing.Size(223, 6)
         '
         'mniQueryBuilder
         '
         Me.mniQueryBuilder.Name = "mniQueryBuilder"
-        Me.mniQueryBuilder.Size = New System.Drawing.Size(216, 22)
+        Me.mniQueryBuilder.Size = New System.Drawing.Size(226, 22)
         Me.mniQueryBuilder.Text = "&Query Builder"
         '
         'ctxiSep17
         '
         Me.ctxiSep17.Name = "ctxiSep17"
-        Me.ctxiSep17.Size = New System.Drawing.Size(213, 6)
+        Me.ctxiSep17.Size = New System.Drawing.Size(223, 6)
         '
         'mnuManageTable
         '
         Me.mnuManageTable.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuManageTableCreate, Me.mnuManageTableDelete, Me.mnuManageTableSep1, Me.mnuManageTableSelectAll, Me.mnuManageTableEditAll, Me.mnuManageTableSep2, Me.mnuManageTableDeleteAll})
         Me.mnuManageTable.Name = "mnuManageTable"
-        Me.mnuManageTable.Size = New System.Drawing.Size(216, 22)
+        Me.mnuManageTable.Size = New System.Drawing.Size(226, 22)
         Me.mnuManageTable.Text = "Manage Table"
         '
         'mnuManageTableCreate
         '
         Me.mnuManageTableCreate.Image = Global.SQLCEExplorer.My.Resources.Resources.theme
         Me.mnuManageTableCreate.Name = "mnuManageTableCreate"
-        Me.mnuManageTableCreate.Size = New System.Drawing.Size(151, 22)
+        Me.mnuManageTableCreate.Size = New System.Drawing.Size(155, 22)
         Me.mnuManageTableCreate.Text = "Create Table ..."
         '
         'mnuManageTableDelete
         '
         Me.mnuManageTableDelete.Image = Global.SQLCEExplorer.My.Resources.Resources.trash
         Me.mnuManageTableDelete.Name = "mnuManageTableDelete"
-        Me.mnuManageTableDelete.Size = New System.Drawing.Size(151, 22)
+        Me.mnuManageTableDelete.Size = New System.Drawing.Size(155, 22)
         Me.mnuManageTableDelete.Text = "Delete Table ..."
         '
         'mnuManageTableSep1
         '
         Me.mnuManageTableSep1.Name = "mnuManageTableSep1"
-        Me.mnuManageTableSep1.Size = New System.Drawing.Size(148, 6)
+        Me.mnuManageTableSep1.Size = New System.Drawing.Size(152, 6)
         '
         'mnuManageTableSelectAll
         '
         Me.mnuManageTableSelectAll.Name = "mnuManageTableSelectAll"
-        Me.mnuManageTableSelectAll.Size = New System.Drawing.Size(151, 22)
+        Me.mnuManageTableSelectAll.Size = New System.Drawing.Size(155, 22)
         Me.mnuManageTableSelectAll.Text = "Select All Rows"
         '
         'mnuManageTableEditAll
         '
         Me.mnuManageTableEditAll.Name = "mnuManageTableEditAll"
-        Me.mnuManageTableEditAll.Size = New System.Drawing.Size(151, 22)
+        Me.mnuManageTableEditAll.Size = New System.Drawing.Size(155, 22)
         Me.mnuManageTableEditAll.Text = "&Edit All Rows"
         '
         'mnuManageTableSep2
         '
         Me.mnuManageTableSep2.Name = "mnuManageTableSep2"
-        Me.mnuManageTableSep2.Size = New System.Drawing.Size(148, 6)
+        Me.mnuManageTableSep2.Size = New System.Drawing.Size(152, 6)
         '
         'mnuManageTableDeleteAll
         '
         Me.mnuManageTableDeleteAll.Name = "mnuManageTableDeleteAll"
-        Me.mnuManageTableDeleteAll.Size = New System.Drawing.Size(151, 22)
+        Me.mnuManageTableDeleteAll.Size = New System.Drawing.Size(155, 22)
         Me.mnuManageTableDeleteAll.Text = "Delete All Rows"
         '
         'ctxiSep19
         '
         Me.ctxiSep19.Name = "ctxiSep19"
-        Me.ctxiSep19.Size = New System.Drawing.Size(213, 6)
+        Me.ctxiSep19.Size = New System.Drawing.Size(223, 6)
         '
         'mnuManageCols
         '
         Me.mnuManageCols.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuManageColsAdd, Me.mnuManageColsDelete, Me.mnuManageColsSep1, Me.mnuManageColsChange})
         Me.mnuManageCols.Name = "mnuManageCols"
-        Me.mnuManageCols.Size = New System.Drawing.Size(216, 22)
+        Me.mnuManageCols.Size = New System.Drawing.Size(226, 22)
         Me.mnuManageCols.Text = "Manage Columns"
         '
         'mnuManageColsAdd
         '
         Me.mnuManageColsAdd.Name = "mnuManageColsAdd"
-        Me.mnuManageColsAdd.Size = New System.Drawing.Size(196, 22)
+        Me.mnuManageColsAdd.Size = New System.Drawing.Size(210, 22)
         Me.mnuManageColsAdd.Text = "Add Column"
         '
         'mnuManageColsDelete
         '
         Me.mnuManageColsDelete.Name = "mnuManageColsDelete"
-        Me.mnuManageColsDelete.Size = New System.Drawing.Size(196, 22)
+        Me.mnuManageColsDelete.Size = New System.Drawing.Size(210, 22)
         Me.mnuManageColsDelete.Text = "Delete Column"
         '
         'mnuManageColsSep1
         '
         Me.mnuManageColsSep1.Name = "mnuManageColsSep1"
-        Me.mnuManageColsSep1.Size = New System.Drawing.Size(193, 6)
+        Me.mnuManageColsSep1.Size = New System.Drawing.Size(207, 6)
         '
         'mnuManageColsChange
         '
         Me.mnuManageColsChange.Name = "mnuManageColsChange"
-        Me.mnuManageColsChange.Size = New System.Drawing.Size(196, 22)
+        Me.mnuManageColsChange.Size = New System.Drawing.Size(210, 22)
         Me.mnuManageColsChange.Text = "Change Column datatype"
         '
         'ctxiSep20
         '
         Me.ctxiSep20.Name = "ctxiSep20"
-        Me.ctxiSep20.Size = New System.Drawing.Size(213, 6)
+        Me.ctxiSep20.Size = New System.Drawing.Size(223, 6)
         '
         'mnuManageIndexs
         '
         Me.mnuManageIndexs.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuManageIndexAdd, Me.mnuManageIndexSep1, Me.mnuManageIndexDelete})
         Me.mnuManageIndexs.Name = "mnuManageIndexs"
-        Me.mnuManageIndexs.Size = New System.Drawing.Size(216, 22)
+        Me.mnuManageIndexs.Size = New System.Drawing.Size(226, 22)
         Me.mnuManageIndexs.Text = "Manage Indexes"
         '
         'mnuManageIndexAdd
         '
         Me.mnuManageIndexAdd.Name = "mnuManageIndexAdd"
-        Me.mnuManageIndexAdd.Size = New System.Drawing.Size(136, 22)
+        Me.mnuManageIndexAdd.Size = New System.Drawing.Size(138, 22)
         Me.mnuManageIndexAdd.Text = "Add Index"
         '
         'mnuManageIndexSep1
         '
         Me.mnuManageIndexSep1.Name = "mnuManageIndexSep1"
-        Me.mnuManageIndexSep1.Size = New System.Drawing.Size(133, 6)
+        Me.mnuManageIndexSep1.Size = New System.Drawing.Size(135, 6)
         '
         'mnuManageIndexDelete
         '
         Me.mnuManageIndexDelete.Name = "mnuManageIndexDelete"
-        Me.mnuManageIndexDelete.Size = New System.Drawing.Size(136, 22)
+        Me.mnuManageIndexDelete.Size = New System.Drawing.Size(138, 22)
         Me.mnuManageIndexDelete.Text = "Delete Index"
         '
         'ctxiSep21
         '
         Me.ctxiSep21.Name = "ctxiSep21"
-        Me.ctxiSep21.Size = New System.Drawing.Size(213, 6)
+        Me.ctxiSep21.Size = New System.Drawing.Size(223, 6)
         '
         'mnuManageRelations
         '
         Me.mnuManageRelations.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuManageRelationAdd, Me.mnuManageRelationSep1, Me.mnuManageRelationDelete})
         Me.mnuManageRelations.Name = "mnuManageRelations"
-        Me.mnuManageRelations.Size = New System.Drawing.Size(216, 22)
+        Me.mnuManageRelations.Size = New System.Drawing.Size(226, 22)
         Me.mnuManageRelations.Text = "Manage &Relationships"
         '
         'mnuManageRelationAdd
         '
         Me.mnuManageRelationAdd.Name = "mnuManageRelationAdd"
-        Me.mnuManageRelationAdd.Size = New System.Drawing.Size(166, 22)
+        Me.mnuManageRelationAdd.Size = New System.Drawing.Size(175, 22)
         Me.mnuManageRelationAdd.Text = "&Add Relationship"
         '
         'mnuManageRelationSep1
         '
         Me.mnuManageRelationSep1.Name = "mnuManageRelationSep1"
-        Me.mnuManageRelationSep1.Size = New System.Drawing.Size(163, 6)
+        Me.mnuManageRelationSep1.Size = New System.Drawing.Size(172, 6)
         '
         'mnuManageRelationDelete
         '
         Me.mnuManageRelationDelete.Name = "mnuManageRelationDelete"
-        Me.mnuManageRelationDelete.Size = New System.Drawing.Size(166, 22)
+        Me.mnuManageRelationDelete.Size = New System.Drawing.Size(175, 22)
         Me.mnuManageRelationDelete.Text = "&Delete Relationship"
         '
         'ctxiSep22
         '
         Me.ctxiSep22.Name = "ctxiSep22"
-        Me.ctxiSep22.Size = New System.Drawing.Size(213, 6)
+        Me.ctxiSep22.Size = New System.Drawing.Size(223, 6)
         '
         'mnuRefresh
         '
         Me.mnuRefresh.Image = Global.SQLCEExplorer.My.Resources.Resources.arrows_circle
         Me.mnuRefresh.Name = "mnuRefresh"
         Me.mnuRefresh.ShortcutKeys = System.Windows.Forms.Keys.F5
-        Me.mnuRefresh.Size = New System.Drawing.Size(216, 22)
+        Me.mnuRefresh.Size = New System.Drawing.Size(226, 22)
         Me.mnuRefresh.Text = "Refresh"
         '
         'mnuTools
         '
         Me.mnuTools.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuOptions})
         Me.mnuTools.Name = "mnuTools"
-        Me.mnuTools.Size = New System.Drawing.Size(44, 20)
+        Me.mnuTools.Size = New System.Drawing.Size(48, 20)
         Me.mnuTools.Text = "&Tools"
         '
         'mnuOptions
         '
         Me.mnuOptions.Image = Global.SQLCEExplorer.My.Resources.Resources.wrench
         Me.mnuOptions.Name = "mnuOptions"
-        Me.mnuOptions.Size = New System.Drawing.Size(126, 22)
+        Me.mnuOptions.Size = New System.Drawing.Size(128, 22)
         Me.mnuOptions.Text = "&Options ..."
         '
         'mnuHelp
         '
         Me.mnuHelp.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mniHomePage, Me.mniSep7, Me.mniAbout})
         Me.mnuHelp.Name = "mnuHelp"
-        Me.mnuHelp.Size = New System.Drawing.Size(40, 20)
+        Me.mnuHelp.Size = New System.Drawing.Size(44, 20)
         Me.mnuHelp.Text = "&Help"
         '
         'mniHomePage
         '
         Me.mniHomePage.Image = Global.SQLCEExplorer.My.Resources.Resources.world
         Me.mniHomePage.Name = "mniHomePage"
-        Me.mniHomePage.Size = New System.Drawing.Size(235, 22)
+        Me.mniHomePage.Size = New System.Drawing.Size(251, 22)
         Me.mniHomePage.Text = "&Goto SQL CE Explorer Home page"
         '
         'mniSep7
         '
         Me.mniSep7.Name = "mniSep7"
-        Me.mniSep7.Size = New System.Drawing.Size(232, 6)
+        Me.mniSep7.Size = New System.Drawing.Size(248, 6)
         '
         'mniAbout
         '
         Me.mniAbout.Image = Global.SQLCEExplorer.My.Resources.Resources.symbol_question
         Me.mniAbout.Name = "mniAbout"
-        Me.mniAbout.Size = New System.Drawing.Size(235, 22)
+        Me.mniAbout.Size = New System.Drawing.Size(251, 22)
         Me.mniAbout.Text = "&About SQL CE Explorer ..."
         '
         'ctxTreeMenu
         '
         Me.ctxTreeMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiDatabaseOptions, Me.ctxiSep11, Me.ctxiCreateTable, Me.ctxiDropTable, Me.ctxisep2, Me.ctxiSelectAll, Me.ctxiEditAllRows, Me.ctxiSep16, Me.ctxiDeleteAllRows, Me.ctxiSep3, Me.ctxiManageColumns, Me.ctxiSep8, Me.CtxiManageIndexes, Me.ctxiSep7, Me.CtxiManageRelationships, Me.ToolStripSeparator1, Me.ctxiRefersh})
         Me.ctxTreeMenu.Name = "ctxTreeMenu"
-        Me.ctxTreeMenu.Size = New System.Drawing.Size(179, 266)
+        Me.ctxTreeMenu.Size = New System.Drawing.Size(191, 266)
         '
         'ctxiDatabaseOptions
         '
         Me.ctxiDatabaseOptions.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCreateDatabase, Me.ctxiSep10, Me.ctxiCompactDB, Me.ctxiRepairDB, Me.ctxiSep9, Me.ctxiGenerateScript, Me.ctxiGenerateCodesep1, Me.ctxiCtxtGenerateCode})
         Me.ctxiDatabaseOptions.Image = Global.SQLCEExplorer.My.Resources.Resources.database_add
         Me.ctxiDatabaseOptions.Name = "ctxiDatabaseOptions"
-        Me.ctxiDatabaseOptions.Size = New System.Drawing.Size(178, 22)
+        Me.ctxiDatabaseOptions.Size = New System.Drawing.Size(190, 22)
         Me.ctxiDatabaseOptions.Text = "Manage Database"
         '
         'ctxiCreateDatabase
         '
         Me.ctxiCreateDatabase.Name = "ctxiCreateDatabase"
-        Me.ctxiCreateDatabase.Size = New System.Drawing.Size(206, 22)
+        Me.ctxiCreateDatabase.Size = New System.Drawing.Size(209, 22)
         Me.ctxiCreateDatabase.Text = "Create SQL CE Database..."
         '
         'ctxiSep10
         '
         Me.ctxiSep10.Name = "ctxiSep10"
-        Me.ctxiSep10.Size = New System.Drawing.Size(203, 6)
+        Me.ctxiSep10.Size = New System.Drawing.Size(206, 6)
         '
         'ctxiCompactDB
         '
         Me.ctxiCompactDB.Name = "ctxiCompactDB"
-        Me.ctxiCompactDB.Size = New System.Drawing.Size(206, 22)
+        Me.ctxiCompactDB.Size = New System.Drawing.Size(209, 22)
         Me.ctxiCompactDB.Text = "Compact Database..."
         '
         'ctxiRepairDB
         '
         Me.ctxiRepairDB.Name = "ctxiRepairDB"
-        Me.ctxiRepairDB.Size = New System.Drawing.Size(206, 22)
+        Me.ctxiRepairDB.Size = New System.Drawing.Size(209, 22)
         Me.ctxiRepairDB.Text = "Repair Database..."
         '
         'ctxiSep9
         '
         Me.ctxiSep9.Name = "ctxiSep9"
-        Me.ctxiSep9.Size = New System.Drawing.Size(203, 6)
+        Me.ctxiSep9.Size = New System.Drawing.Size(206, 6)
         '
         'ctxiGenerateScript
         '
         Me.ctxiGenerateScript.Name = "ctxiGenerateScript"
-        Me.ctxiGenerateScript.Size = New System.Drawing.Size(206, 22)
+        Me.ctxiGenerateScript.Size = New System.Drawing.Size(209, 22)
         Me.ctxiGenerateScript.Text = "&Generate Script..."
         '
         'ctxiGenerateCodesep1
         '
         Me.ctxiGenerateCodesep1.Name = "ctxiGenerateCodesep1"
-        Me.ctxiGenerateCodesep1.Size = New System.Drawing.Size(203, 6)
+        Me.ctxiGenerateCodesep1.Size = New System.Drawing.Size(206, 6)
         '
         'ctxiCtxtGenerateCode
         '
         Me.ctxiCtxtGenerateCode.Name = "ctxiCtxtGenerateCode"
-        Me.ctxiCtxtGenerateCode.Size = New System.Drawing.Size(206, 22)
+        Me.ctxiCtxtGenerateCode.Size = New System.Drawing.Size(209, 22)
         Me.ctxiCtxtGenerateCode.Text = "Generate Code..."
         '
         'ctxiSep11
         '
         Me.ctxiSep11.Name = "ctxiSep11"
-        Me.ctxiSep11.Size = New System.Drawing.Size(175, 6)
+        Me.ctxiSep11.Size = New System.Drawing.Size(187, 6)
         '
         'ctxiCreateTable
         '
         Me.ctxiCreateTable.Image = Global.SQLCEExplorer.My.Resources.Resources.theme
         Me.ctxiCreateTable.Name = "ctxiCreateTable"
-        Me.ctxiCreateTable.Size = New System.Drawing.Size(178, 22)
+        Me.ctxiCreateTable.Size = New System.Drawing.Size(190, 22)
         Me.ctxiCreateTable.Text = "Create Table ..."
         '
         'ctxiDropTable
         '
         Me.ctxiDropTable.Image = Global.SQLCEExplorer.My.Resources.Resources.trash
         Me.ctxiDropTable.Name = "ctxiDropTable"
-        Me.ctxiDropTable.Size = New System.Drawing.Size(178, 22)
+        Me.ctxiDropTable.Size = New System.Drawing.Size(190, 22)
         Me.ctxiDropTable.Text = "Delete Table ..."
         '
         'ctxisep2
         '
         Me.ctxisep2.Name = "ctxisep2"
-        Me.ctxisep2.Size = New System.Drawing.Size(175, 6)
+        Me.ctxisep2.Size = New System.Drawing.Size(187, 6)
         '
         'ctxiSelectAll
         '
         Me.ctxiSelectAll.Name = "ctxiSelectAll"
-        Me.ctxiSelectAll.Size = New System.Drawing.Size(178, 22)
+        Me.ctxiSelectAll.Size = New System.Drawing.Size(190, 22)
         Me.ctxiSelectAll.Text = "Select All Rows"
         '
         'ctxiEditAllRows
         '
         Me.ctxiEditAllRows.Name = "ctxiEditAllRows"
-        Me.ctxiEditAllRows.Size = New System.Drawing.Size(178, 22)
+        Me.ctxiEditAllRows.Size = New System.Drawing.Size(190, 22)
         Me.ctxiEditAllRows.Text = "&Edit All Rows"
         '
         'ctxiSep16
         '
         Me.ctxiSep16.Name = "ctxiSep16"
-        Me.ctxiSep16.Size = New System.Drawing.Size(175, 6)
+        Me.ctxiSep16.Size = New System.Drawing.Size(187, 6)
         '
         'ctxiDeleteAllRows
         '
         Me.ctxiDeleteAllRows.Name = "ctxiDeleteAllRows"
-        Me.ctxiDeleteAllRows.Size = New System.Drawing.Size(178, 22)
+        Me.ctxiDeleteAllRows.Size = New System.Drawing.Size(190, 22)
         Me.ctxiDeleteAllRows.Text = "Delete All Rows"
         '
         'ctxiSep3
         '
         Me.ctxiSep3.Name = "ctxiSep3"
-        Me.ctxiSep3.Size = New System.Drawing.Size(175, 6)
+        Me.ctxiSep3.Size = New System.Drawing.Size(187, 6)
         '
         'ctxiManageColumns
         '
         Me.ctxiManageColumns.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CtxiAddNewColumn, Me.ctxiDropaColumn, Me.ctxiSep6, Me.ctxiChangeColDataType})
         Me.ctxiManageColumns.Name = "ctxiManageColumns"
-        Me.ctxiManageColumns.Size = New System.Drawing.Size(178, 22)
+        Me.ctxiManageColumns.Size = New System.Drawing.Size(190, 22)
         Me.ctxiManageColumns.Text = "Manage Columns"
         '
         'CtxiAddNewColumn
         '
         Me.CtxiAddNewColumn.Name = "CtxiAddNewColumn"
-        Me.CtxiAddNewColumn.Size = New System.Drawing.Size(196, 22)
+        Me.CtxiAddNewColumn.Size = New System.Drawing.Size(210, 22)
         Me.CtxiAddNewColumn.Text = "Add Column"
         '
         'ctxiDropaColumn
         '
         Me.ctxiDropaColumn.Name = "ctxiDropaColumn"
-        Me.ctxiDropaColumn.Size = New System.Drawing.Size(196, 22)
+        Me.ctxiDropaColumn.Size = New System.Drawing.Size(210, 22)
         Me.ctxiDropaColumn.Text = "Delete Column"
         '
         'ctxiSep6
         '
         Me.ctxiSep6.Name = "ctxiSep6"
-        Me.ctxiSep6.Size = New System.Drawing.Size(193, 6)
+        Me.ctxiSep6.Size = New System.Drawing.Size(207, 6)
         '
         'ctxiChangeColDataType
         '
         Me.ctxiChangeColDataType.Name = "ctxiChangeColDataType"
-        Me.ctxiChangeColDataType.Size = New System.Drawing.Size(196, 22)
+        Me.ctxiChangeColDataType.Size = New System.Drawing.Size(210, 22)
         Me.ctxiChangeColDataType.Text = "Change Column datatype"
         '
         'ctxiSep8
         '
         Me.ctxiSep8.Name = "ctxiSep8"
-        Me.ctxiSep8.Size = New System.Drawing.Size(175, 6)
+        Me.ctxiSep8.Size = New System.Drawing.Size(187, 6)
         '
         'CtxiManageIndexes
         '
         Me.CtxiManageIndexes.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCreateNewIndex, Me.ctxiSep5, Me.ctxiDropAnIndex})
         Me.CtxiManageIndexes.Name = "CtxiManageIndexes"
-        Me.CtxiManageIndexes.Size = New System.Drawing.Size(178, 22)
+        Me.CtxiManageIndexes.Size = New System.Drawing.Size(190, 22)
         Me.CtxiManageIndexes.Text = "Manage Indexes"
         '
         'ctxiCreateNewIndex
         '
         Me.ctxiCreateNewIndex.Name = "ctxiCreateNewIndex"
-        Me.ctxiCreateNewIndex.Size = New System.Drawing.Size(136, 22)
+        Me.ctxiCreateNewIndex.Size = New System.Drawing.Size(138, 22)
         Me.ctxiCreateNewIndex.Text = "Add Index"
         '
         'ctxiSep5
         '
         Me.ctxiSep5.Name = "ctxiSep5"
-        Me.ctxiSep5.Size = New System.Drawing.Size(133, 6)
+        Me.ctxiSep5.Size = New System.Drawing.Size(135, 6)
         '
         'ctxiDropAnIndex
         '
         Me.ctxiDropAnIndex.Name = "ctxiDropAnIndex"
-        Me.ctxiDropAnIndex.Size = New System.Drawing.Size(136, 22)
+        Me.ctxiDropAnIndex.Size = New System.Drawing.Size(138, 22)
         Me.ctxiDropAnIndex.Text = "Delete Index"
         '
         'ctxiSep7
         '
         Me.ctxiSep7.Name = "ctxiSep7"
-        Me.ctxiSep7.Size = New System.Drawing.Size(175, 6)
+        Me.ctxiSep7.Size = New System.Drawing.Size(187, 6)
         '
         'CtxiManageRelationships
         '
         Me.CtxiManageRelationships.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiAddRelation, Me.ctxiSep14, Me.ctxiDeleteRelation})
         Me.CtxiManageRelationships.Name = "CtxiManageRelationships"
-        Me.CtxiManageRelationships.Size = New System.Drawing.Size(178, 22)
+        Me.CtxiManageRelationships.Size = New System.Drawing.Size(190, 22)
         Me.CtxiManageRelationships.Text = "Manage &Relationships"
         '
         'ctxiAddRelation
         '
         Me.ctxiAddRelation.Name = "ctxiAddRelation"
-        Me.ctxiAddRelation.Size = New System.Drawing.Size(166, 22)
+        Me.ctxiAddRelation.Size = New System.Drawing.Size(175, 22)
         Me.ctxiAddRelation.Text = "&Add Relationship"
         '
         'ctxiSep14
         '
         Me.ctxiSep14.Name = "ctxiSep14"
-        Me.ctxiSep14.Size = New System.Drawing.Size(163, 6)
+        Me.ctxiSep14.Size = New System.Drawing.Size(172, 6)
         '
         'ctxiDeleteRelation
         '
         Me.ctxiDeleteRelation.Name = "ctxiDeleteRelation"
-        Me.ctxiDeleteRelation.Size = New System.Drawing.Size(166, 22)
+        Me.ctxiDeleteRelation.Size = New System.Drawing.Size(175, 22)
         Me.ctxiDeleteRelation.Text = "&Delete Relationship"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(175, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(187, 6)
         '
         'ctxiRefersh
         '
         Me.ctxiRefersh.Image = Global.SQLCEExplorer.My.Resources.Resources.arrows_circle
         Me.ctxiRefersh.Name = "ctxiRefersh"
         Me.ctxiRefersh.ShortcutKeys = System.Windows.Forms.Keys.F5
-        Me.ctxiRefersh.Size = New System.Drawing.Size(178, 22)
+        Me.ctxiRefersh.Size = New System.Drawing.Size(190, 22)
         Me.ctxiRefersh.Text = "Refresh"
         '
         'iltvExplorer
@@ -954,64 +954,64 @@ Partial Class frmMain
         '
         Me.ctxEditor.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCopy, Me.ctxiCut, Me.ctxiPaste, Me.tspSep7, Me.ctxiSelectAllEditor, Me.tspSep5, Me.ctxiDeleteSelected, Me.tspSep6, Me.ctxiParse, Me.ctxiExecute, Me.ctxiSep4, Me.ctxiClear})
         Me.ctxEditor.Name = "ctxEditor"
-        Me.ctxEditor.Size = New System.Drawing.Size(165, 204)
+        Me.ctxEditor.Size = New System.Drawing.Size(171, 204)
         '
         'ctxiCopy
         '
         Me.ctxiCopy.Name = "ctxiCopy"
         Me.ctxiCopy.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.C), System.Windows.Forms.Keys)
-        Me.ctxiCopy.Size = New System.Drawing.Size(164, 22)
+        Me.ctxiCopy.Size = New System.Drawing.Size(170, 22)
         Me.ctxiCopy.Text = "&Copy"
         '
         'ctxiCut
         '
         Me.ctxiCut.Name = "ctxiCut"
         Me.ctxiCut.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.X), System.Windows.Forms.Keys)
-        Me.ctxiCut.Size = New System.Drawing.Size(164, 22)
+        Me.ctxiCut.Size = New System.Drawing.Size(170, 22)
         Me.ctxiCut.Text = "C&ut"
         '
         'ctxiPaste
         '
         Me.ctxiPaste.Name = "ctxiPaste"
         Me.ctxiPaste.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
-        Me.ctxiPaste.Size = New System.Drawing.Size(164, 22)
+        Me.ctxiPaste.Size = New System.Drawing.Size(170, 22)
         Me.ctxiPaste.Text = "&Paste"
         '
         'tspSep7
         '
         Me.tspSep7.Name = "tspSep7"
-        Me.tspSep7.Size = New System.Drawing.Size(161, 6)
+        Me.tspSep7.Size = New System.Drawing.Size(167, 6)
         '
         'ctxiSelectAllEditor
         '
         Me.ctxiSelectAllEditor.Name = "ctxiSelectAllEditor"
         Me.ctxiSelectAllEditor.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.A), System.Windows.Forms.Keys)
-        Me.ctxiSelectAllEditor.Size = New System.Drawing.Size(164, 22)
+        Me.ctxiSelectAllEditor.Size = New System.Drawing.Size(170, 22)
         Me.ctxiSelectAllEditor.Text = "&Select All"
         '
         'tspSep5
         '
         Me.tspSep5.Name = "tspSep5"
-        Me.tspSep5.Size = New System.Drawing.Size(161, 6)
+        Me.tspSep5.Size = New System.Drawing.Size(167, 6)
         '
         'ctxiDeleteSelected
         '
         Me.ctxiDeleteSelected.Name = "ctxiDeleteSelected"
         Me.ctxiDeleteSelected.ShortcutKeys = System.Windows.Forms.Keys.Delete
-        Me.ctxiDeleteSelected.Size = New System.Drawing.Size(164, 22)
+        Me.ctxiDeleteSelected.Size = New System.Drawing.Size(170, 22)
         Me.ctxiDeleteSelected.Text = "&Delete"
         '
         'tspSep6
         '
         Me.tspSep6.Name = "tspSep6"
-        Me.tspSep6.Size = New System.Drawing.Size(161, 6)
+        Me.tspSep6.Size = New System.Drawing.Size(167, 6)
         '
         'ctxiParse
         '
         Me.ctxiParse.Image = Global.SQLCEExplorer.My.Resources.Resources.symbol_check
         Me.ctxiParse.Name = "ctxiParse"
         Me.ctxiParse.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.F5), System.Windows.Forms.Keys)
-        Me.ctxiParse.Size = New System.Drawing.Size(164, 22)
+        Me.ctxiParse.Size = New System.Drawing.Size(170, 22)
         Me.ctxiParse.Text = "&Parse"
         '
         'ctxiExecute
@@ -1019,19 +1019,19 @@ Partial Class frmMain
         Me.ctxiExecute.Image = Global.SQLCEExplorer.My.Resources.Resources.control_play
         Me.ctxiExecute.Name = "ctxiExecute"
         Me.ctxiExecute.ShortcutKeys = System.Windows.Forms.Keys.F5
-        Me.ctxiExecute.Size = New System.Drawing.Size(164, 22)
+        Me.ctxiExecute.Size = New System.Drawing.Size(170, 22)
         Me.ctxiExecute.Text = "&Execute"
         '
         'ctxiSep4
         '
         Me.ctxiSep4.Name = "ctxiSep4"
-        Me.ctxiSep4.Size = New System.Drawing.Size(161, 6)
+        Me.ctxiSep4.Size = New System.Drawing.Size(167, 6)
         '
         'ctxiClear
         '
         Me.ctxiClear.Image = Global.SQLCEExplorer.My.Resources.Resources.trash
         Me.ctxiClear.Name = "ctxiClear"
-        Me.ctxiClear.Size = New System.Drawing.Size(164, 22)
+        Me.ctxiClear.Size = New System.Drawing.Size(170, 22)
         Me.ctxiClear.Text = "Clear Results pane"
         '
         'tsMain
@@ -1040,7 +1040,7 @@ Partial Class frmMain
         Me.tsMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbConnect, Me.tsbDisconnect, Me.tsbSep1, Me.tsbCreateDb, Me.tsbSep2, Me.tsbSaveAs, Me.tsbSep3, Me.tsbFind, Me.tsbSep5, Me.tsbParse, Me.tsbExecute, Me.tsbSep6, Me.tsbOptions, Me.tsbSep8, Me.tsbWeb})
         Me.tsMain.Location = New System.Drawing.Point(3, 0)
         Me.tsMain.Name = "tsMain"
-        Me.tsMain.Size = New System.Drawing.Size(253, 25)
+        Me.tsMain.Size = New System.Drawing.Size(286, 25)
         Me.tsMain.TabIndex = 0
         Me.tsMain.Text = "ToolStrip1"
         Me.tsMain.Visible = False
@@ -1297,23 +1297,23 @@ Partial Class frmMain
         '
         Me.ctxGridMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCopyGrid, Me.ctxigridsep1, Me.ctxiExport})
         Me.ctxGridMenu.Name = "ctxGridMenu"
-        Me.ctxGridMenu.Size = New System.Drawing.Size(119, 54)
+        Me.ctxGridMenu.Size = New System.Drawing.Size(153, 76)
         '
         'ctxiCopyGrid
         '
         Me.ctxiCopyGrid.Name = "ctxiCopyGrid"
-        Me.ctxiCopyGrid.Size = New System.Drawing.Size(118, 22)
+        Me.ctxiCopyGrid.Size = New System.Drawing.Size(152, 22)
         Me.ctxiCopyGrid.Text = "&Copy"
         '
         'ctxigridsep1
         '
         Me.ctxigridsep1.Name = "ctxigridsep1"
-        Me.ctxigridsep1.Size = New System.Drawing.Size(115, 6)
+        Me.ctxigridsep1.Size = New System.Drawing.Size(149, 6)
         '
         'ctxiExport
         '
         Me.ctxiExport.Name = "ctxiExport"
-        Me.ctxiExport.Size = New System.Drawing.Size(118, 22)
+        Me.ctxiExport.Size = New System.Drawing.Size(152, 22)
         Me.ctxiExport.Text = "&Export..."
         '
         'tpText
@@ -1345,29 +1345,29 @@ Partial Class frmMain
         '
         Me.ctxOutputWindow.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiOutputCopy, Me.ctxiOutputCut, Me.ctxiOutputSep1, Me.ctxiOutputSelectAll})
         Me.ctxOutputWindow.Name = "ctxEditor"
-        Me.ctxOutputWindow.Size = New System.Drawing.Size(118, 76)
+        Me.ctxOutputWindow.Size = New System.Drawing.Size(123, 76)
         '
         'ctxiOutputCopy
         '
         Me.ctxiOutputCopy.Name = "ctxiOutputCopy"
-        Me.ctxiOutputCopy.Size = New System.Drawing.Size(117, 22)
+        Me.ctxiOutputCopy.Size = New System.Drawing.Size(122, 22)
         Me.ctxiOutputCopy.Text = "&Copy"
         '
         'ctxiOutputCut
         '
         Me.ctxiOutputCut.Name = "ctxiOutputCut"
-        Me.ctxiOutputCut.Size = New System.Drawing.Size(117, 22)
+        Me.ctxiOutputCut.Size = New System.Drawing.Size(122, 22)
         Me.ctxiOutputCut.Text = "C&ut"
         '
         'ctxiOutputSep1
         '
         Me.ctxiOutputSep1.Name = "ctxiOutputSep1"
-        Me.ctxiOutputSep1.Size = New System.Drawing.Size(114, 6)
+        Me.ctxiOutputSep1.Size = New System.Drawing.Size(119, 6)
         '
         'ctxiOutputSelectAll
         '
         Me.ctxiOutputSelectAll.Name = "ctxiOutputSelectAll"
-        Me.ctxiOutputSelectAll.Size = New System.Drawing.Size(117, 22)
+        Me.ctxiOutputSelectAll.Size = New System.Drawing.Size(122, 22)
         Me.ctxiOutputSelectAll.Text = "&Select All"
         '
         'ToolStripContainer1
