@@ -35,7 +35,7 @@ Partial Class frmAbout
         'picIcon
         '
         Me.picIcon.Image = Global.SQLCEExplorer.My.Resources.Resources.database_add
-        Me.picIcon.Location = New System.Drawing.Point(15, 11)
+        Me.picIcon.Location = New System.Drawing.Point(7, 8)
         Me.picIcon.Name = "picIcon"
         Me.picIcon.Size = New System.Drawing.Size(18, 18)
         Me.picIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
@@ -46,7 +46,7 @@ Partial Class frmAbout
         '
         Me.lblAppName.AutoSize = True
         Me.lblAppName.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAppName.Location = New System.Drawing.Point(50, 12)
+        Me.lblAppName.Location = New System.Drawing.Point(42, 9)
         Me.lblAppName.Name = "lblAppName"
         Me.lblAppName.Size = New System.Drawing.Size(123, 16)
         Me.lblAppName.TabIndex = 1
@@ -55,7 +55,7 @@ Partial Class frmAbout
         'lblDevelopedBy
         '
         Me.lblDevelopedBy.AutoSize = True
-        Me.lblDevelopedBy.Location = New System.Drawing.Point(50, 67)
+        Me.lblDevelopedBy.Location = New System.Drawing.Point(42, 51)
         Me.lblDevelopedBy.Name = "lblDevelopedBy"
         Me.lblDevelopedBy.Size = New System.Drawing.Size(304, 60)
         Me.lblDevelopedBy.TabIndex = 2
@@ -65,7 +65,7 @@ Partial Class frmAbout
         'lblAppVersion
         '
         Me.lblAppVersion.AutoSize = True
-        Me.lblAppVersion.Location = New System.Drawing.Point(50, 167)
+        Me.lblAppVersion.Location = New System.Drawing.Point(42, 147)
         Me.lblAppVersion.Name = "lblAppVersion"
         Me.lblAppVersion.Size = New System.Drawing.Size(103, 15)
         Me.lblAppVersion.TabIndex = 3
@@ -74,7 +74,7 @@ Partial Class frmAbout
         'cmdOk
         '
         Me.cmdOk.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.cmdOk.Location = New System.Drawing.Point(140, 201)
+        Me.cmdOk.Location = New System.Drawing.Point(45, 173)
         Me.cmdOk.Name = "cmdOk"
         Me.cmdOk.Size = New System.Drawing.Size(95, 23)
         Me.cmdOk.TabIndex = 5
@@ -85,7 +85,7 @@ Partial Class frmAbout
         '
         Me.llLinkToCodePlex.ActiveLinkColor = System.Drawing.Color.Blue
         Me.llLinkToCodePlex.AutoSize = True
-        Me.llLinkToCodePlex.Location = New System.Drawing.Point(50, 144)
+        Me.llLinkToCodePlex.Location = New System.Drawing.Point(42, 124)
         Me.llLinkToCodePlex.Name = "llLinkToCodePlex"
         Me.llLinkToCodePlex.Size = New System.Drawing.Size(171, 15)
         Me.llLinkToCodePlex.TabIndex = 6
@@ -96,7 +96,7 @@ Partial Class frmAbout
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(50, 38)
+        Me.Label1.Location = New System.Drawing.Point(42, 25)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(243, 15)
         Me.Label1.TabIndex = 7
@@ -108,7 +108,7 @@ Partial Class frmAbout
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.cmdOk
-        Me.ClientSize = New System.Drawing.Size(374, 236)
+        Me.ClientSize = New System.Drawing.Size(374, 208)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.llLinkToCodePlex)
         Me.Controls.Add(Me.cmdOk)

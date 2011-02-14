@@ -227,7 +227,7 @@ Public Class SQLTextbox
         End If
     End Sub
     Public Sub DoSyntaxHighlight()
-        'Me.SyntaxHighlight()
+        Me.SyntaxHighlight()
     End Sub
 
     Private Sub InitializeComponent()

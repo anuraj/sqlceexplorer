@@ -8,7 +8,11 @@
     'File Mode=Exclusive;
     Private Const CONNECTION_STRING_TEMPLATE As String = "Data Source={0};Encrypt Database={2};Password={1};Persist Security Info=False;"
     Public Const APPLICATION_NAME As String = "SQL CE Explorer"
-
+    Public Function GetAppInfo() As String
+        Return "Copyright © 2011 Anuraj.P" & vbCrLf & _
+            "Version Beta 1.1 (Feb13, 2011)." & vbCrLf & vbCrLf & _
+            "See gnu_licence.txt for copyright and redistribution info."
+    End Function
     Public Sub CreateConnectionString(ByVal DatabaseFile As String, ByVal Password As String, ByVal Encrypted As Boolean)
         m_Database = DatabaseFile
         m_Password = Password

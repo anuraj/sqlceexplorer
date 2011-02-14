@@ -32,6 +32,7 @@ Public Class frmDeleteRelation
         Dim oSqlCeExplorerData As SqlCeExplorerData
         Dim oTablesReader As SqlCeDataReader
         oSqlCeExplorerData = New SqlCeExplorerData
+        Me.cmbRelations.Items.Clear()
         oTablesReader = oSqlCeExplorerData.ExecuteQuery(String.Format(SELECTQUERYRELATIONSHIPS, TableName))
         If oTablesReader IsNot Nothing Then
             While oTablesReader.Read

@@ -532,7 +532,7 @@ Public Class frmMain
 
     Private Sub mniPaste_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniPaste.Click, ctxiPaste.Click
         If Clipboard.ContainsText() Then
-            Me.txtQueryWindow.Paste()
+            Me.txtQueryWindow.SelectedText = Clipboard.GetText()
             Me.txtQueryWindow.DoSyntaxHighlight()
         End If
     End Sub

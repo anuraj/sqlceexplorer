@@ -31,18 +31,23 @@ Public Class frmEditTable
 
     Private Sub cmdOk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOk.Click
         If m_CurrentAdapter IsNot Nothing Then
-            m_CurrentAdapter.ContinueUpdateOnError = True
-            m_CurrentAdapter.Update(m_DataTable)
+            m_CurrentAdapter.AcceptChangesDuringUpdate = True
+            Try
+                m_CurrentAdapter.Update(m_DataTable)
+            Catch ex As SqlCeException
+                SqlCeExplorerUtility.ShowMessage(String.Format("An exception occured. Update failed.{0}{1}", Environment.NewLine, ex.Message), Nothing)
+            End Try
             Me.Close()
         End If
     End Sub
 
     Private Sub cmdCancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCancel.Click
-
+        Me.Close()
     End Sub
 
-    Private Sub dgvEditRows_CellClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvEditRows.CellContentClick
+    Private Sub dgvEditRows_CellClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvEditRows.CellClick
         Dim cell As DataGridViewCell = Me.dgvEditRows.Rows(e.RowIndex).Cells(e.ColumnIndex)
+
         If TypeOf (cell) Is DataGridViewImageCell Then
             Using oFileDlg As New OpenFileDialog
                 With oFileDlg
@@ -61,13 +66,12 @@ Public Class frmEditTable
                     End If
                 End With
             End Using
-
         End If
     End Sub
 
     Private Sub dgvEditRows_DataError(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewDataErrorEventArgs)
         If e.Exception IsNot Nothing Then
-            MessageBox.Show(String.Format("{0}", e.Exception.Message), APPLICATION_NAME, MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            SqlCeExplorerUtility.ShowMessage(String.Format("Data Error occured.{0}{1}", Environment.NewLine, e.Exception.Message), Nothing)
         End If
     End Sub
 End Class

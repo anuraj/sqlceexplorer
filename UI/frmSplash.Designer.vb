@@ -34,7 +34,7 @@ Partial Class frmSplash
         Me.Label2.AutoSize = True
         Me.Label2.BackColor = System.Drawing.Color.Transparent
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(293, 82)
+        Me.Label2.Location = New System.Drawing.Point(155, 84)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(114, 37)
         Me.Label2.TabIndex = 7
@@ -44,7 +44,7 @@ Partial Class frmSplash
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 48.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(149, 8)
+        Me.Label1.Location = New System.Drawing.Point(11, 10)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(224, 86)
         Me.Label1.TabIndex = 6
@@ -60,13 +60,13 @@ Partial Class frmSplash
         Me.plMain.Dock = System.Windows.Forms.DockStyle.Fill
         Me.plMain.Location = New System.Drawing.Point(0, 0)
         Me.plMain.Name = "plMain"
-        Me.plMain.Size = New System.Drawing.Size(486, 197)
+        Me.plMain.Size = New System.Drawing.Size(351, 225)
         Me.plMain.TabIndex = 11
         '
         'lblDevelopedBy
         '
         Me.lblDevelopedBy.AutoSize = True
-        Me.lblDevelopedBy.Location = New System.Drawing.Point(161, 131)
+        Me.lblDevelopedBy.Location = New System.Drawing.Point(23, 133)
         Me.lblDevelopedBy.Name = "lblDevelopedBy"
         Me.lblDevelopedBy.Size = New System.Drawing.Size(304, 45)
         Me.lblDevelopedBy.TabIndex = 10
@@ -78,7 +78,7 @@ Partial Class frmSplash
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(486, 197)
+        Me.ClientSize = New System.Drawing.Size(351, 225)
         Me.Controls.Add(Me.plMain)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
