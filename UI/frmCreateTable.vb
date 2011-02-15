@@ -74,7 +74,7 @@ Public Class frmCreateTable
         Dim result As String = ""
 
         Select Case dataType
-            Case "bigint", "bit", "datetime", "float", "image", "int", "money", "numeric", "real", "smallint", "uniqueidentifier", "tinyint"
+            Case "bigint", "bit", "datetime", "float", "image", "int", "money", "numeric", "real", "smallint", "uniqueidentifier", "tinyint", "ntext"
                 result = String.Format(" {0}", dataType)
             Case Else
                 result = String.Format(" {0}({1})", dataType, length)
@@ -120,12 +120,13 @@ Public Class frmCreateTable
         Me.m_DataLengths.Add("bit", "1")
         Me.m_DataLengths.Add("datetime", "8")
         Me.m_DataLengths.Add("float", "8")
+        'Doesn't require a length.
         Me.m_DataLengths.Add("image", "")
+        Me.m_DataLengths.Add("ntext", "")
         Me.m_DataLengths.Add("int", "4")
         Me.m_DataLengths.Add("money", "19")
         Me.m_DataLengths.Add("nchar", "100")
         Me.m_DataLengths.Add("nvarchar", "16")
-        Me.m_DataLengths.Add("ntext", "5")
         Me.m_DataLengths.Add("numeric", "100")
         Me.m_DataLengths.Add("real", "4")
         Me.m_DataLengths.Add("smallint", "2")

@@ -71,7 +71,7 @@ Public Class frmModifyColumn
         Dim result As String = ""
 
         Select Case dataType
-            Case "bigint", "bit", "datetime", "float", "image", "int", "money", "numeric", "real", "smallint", "uniqueidentifier", "tinyint"
+            Case "bigint", "bit", "datetime", "float", "image", "int", "money", "numeric", "real", "smallint", "uniqueidentifier", "tinyint", "ntext"
                 result = String.Format(" {0}", dataType)
             Case Else
                 result = String.Format(" {0}({1})", dataType, length)
@@ -87,14 +87,16 @@ Public Class frmModifyColumn
                     If cmbDataType.SelectedIndex = -1 Then
                         SqlCeExplorerUtility.ShowMessage("Please select a datatype", Me.cmbDataType)
                         Return False
-                    ElseIf Me.txtDataTypeLength.Text.Length <= 0 OrElse Not IsNumeric(Me.txtDataTypeLength.Text) Then
-                        SqlCeExplorerUtility.ShowMessage("Please enter a valid length", Me.txtDataTypeLength)
-                        Return False
+                    ElseIf IsLengthRequired() Then
+                        If Me.txtDataTypeLength.Text.Length <= 0 OrElse Not IsNumeric(Me.txtDataTypeLength.Text) Then
+                            SqlCeExplorerUtility.ShowMessage("Please enter a valid length", Me.txtDataTypeLength)
+                            Return False
+                        Else
+                            Return True
+                        End If
                     Else
                         Return True
                     End If
-                Else
-                    Return True
                 End If
             Case OperationMode.CreateColumn
                 If Me.cmbColumnNames.Text.Length <= 0 Then
@@ -119,6 +121,14 @@ Public Class frmModifyColumn
                     End If
                 End If
         End Select
+    End Function
+
+    Private Function IsLengthRequired() As Boolean
+        If Me.cmbDataType.SelectedItem.ToString().Equals("image", StringComparison.CurrentCultureIgnoreCase) OrElse _
+                Me.cmbDataType.SelectedItem.ToString().Equals("ntext", StringComparison.CurrentCultureIgnoreCase) Then
+            Return False
+        End If
+        Return True
     End Function
 
     Private Sub cmdOk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOk.Click
@@ -153,12 +163,12 @@ Public Class frmModifyColumn
         Me.m_DataLengths.Add("bit", "1")
         Me.m_DataLengths.Add("datetime", "8")
         Me.m_DataLengths.Add("float", "8")
-        Me.m_DataLengths.Add("image", "16")
+        Me.m_DataLengths.Add("image", "")
         Me.m_DataLengths.Add("int", "4")
         Me.m_DataLengths.Add("money", "19")
         Me.m_DataLengths.Add("nchar", "100")
         Me.m_DataLengths.Add("nvarchar", "16")
-        Me.m_DataLengths.Add("ntext", "5")
+        Me.m_DataLengths.Add("ntext", "")
         Me.m_DataLengths.Add("numeric", "100")
         Me.m_DataLengths.Add("real", "4")
         Me.m_DataLengths.Add("smallint", "2")

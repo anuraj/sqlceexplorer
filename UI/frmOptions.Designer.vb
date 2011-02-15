@@ -24,6 +24,7 @@ Partial Class frmOptions
     Private Sub InitializeComponent()
         Me.tcOptions = New System.Windows.Forms.TabControl()
         Me.tpSettings = New System.Windows.Forms.TabPage()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.chkAssociate = New System.Windows.Forms.CheckBox()
         Me.chkAutoComplete = New System.Windows.Forms.CheckBox()
         Me.chkRecentItems = New System.Windows.Forms.CheckBox()
@@ -83,6 +84,7 @@ Partial Class frmOptions
         '
         'tpSettings
         '
+        Me.tpSettings.Controls.Add(Me.Label8)
         Me.tpSettings.Controls.Add(Me.chkAssociate)
         Me.tpSettings.Controls.Add(Me.chkAutoComplete)
         Me.tpSettings.Controls.Add(Me.chkRecentItems)
@@ -100,10 +102,19 @@ Partial Class frmOptions
         Me.tpSettings.Text = "Settings"
         Me.tpSettings.UseVisualStyleBackColor = True
         '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(19, 195)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(311, 15)
+        Me.Label8.TabIndex = 19
+        Me.Label8.Text = "You require administrator permissions to associate files."
+        '
         'chkAssociate
         '
         Me.chkAssociate.AutoSize = True
-        Me.chkAssociate.Location = New System.Drawing.Point(19, 189)
+        Me.chkAssociate.Location = New System.Drawing.Point(19, 169)
         Me.chkAssociate.Name = "chkAssociate"
         Me.chkAssociate.Size = New System.Drawing.Size(237, 19)
         Me.chkAssociate.TabIndex = 18
@@ -113,7 +124,7 @@ Partial Class frmOptions
         'chkAutoComplete
         '
         Me.chkAutoComplete.AutoSize = True
-        Me.chkAutoComplete.Location = New System.Drawing.Point(19, 163)
+        Me.chkAutoComplete.Location = New System.Drawing.Point(19, 147)
         Me.chkAutoComplete.Name = "chkAutoComplete"
         Me.chkAutoComplete.Size = New System.Drawing.Size(145, 19)
         Me.chkAutoComplete.TabIndex = 17
@@ -123,7 +134,7 @@ Partial Class frmOptions
         'chkRecentItems
         '
         Me.chkRecentItems.AutoSize = True
-        Me.chkRecentItems.Location = New System.Drawing.Point(16, 94)
+        Me.chkRecentItems.Location = New System.Drawing.Point(15, 89)
         Me.chkRecentItems.Name = "chkRecentItems"
         Me.chkRecentItems.Size = New System.Drawing.Size(127, 19)
         Me.chkRecentItems.TabIndex = 16
@@ -132,7 +143,7 @@ Partial Class frmOptions
         '
         'nuRecentFiles
         '
-        Me.nuRecentFiles.Location = New System.Drawing.Point(15, 124)
+        Me.nuRecentFiles.Location = New System.Drawing.Point(15, 114)
         Me.nuRecentFiles.Maximum = New Decimal(New Integer() {20, 0, 0, 0})
         Me.nuRecentFiles.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.nuRecentFiles.Name = "nuRecentFiles"
@@ -143,7 +154,7 @@ Partial Class frmOptions
         'lblRecentItems
         '
         Me.lblRecentItems.AutoSize = True
-        Me.lblRecentItems.Location = New System.Drawing.Point(70, 128)
+        Me.lblRecentItems.Location = New System.Drawing.Point(70, 118)
         Me.lblRecentItems.Name = "lblRecentItems"
         Me.lblRecentItems.Size = New System.Drawing.Size(174, 15)
         Me.lblRecentItems.TabIndex = 14
@@ -519,4 +530,5 @@ Partial Class frmOptions
     Friend WithEvents plVariables As System.Windows.Forms.Panel
     Friend WithEvents chkAutoComplete As System.Windows.Forms.CheckBox
     Friend WithEvents chkAssociate As System.Windows.Forms.CheckBox
+    Friend WithEvents Label8 As System.Windows.Forms.Label
 End Class

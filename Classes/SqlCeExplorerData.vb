@@ -114,7 +114,7 @@ Public Class SqlCeExplorerData
         End Try
     End Function
     Public Shared Function ConfirmUpgrade() As Boolean
-        Dim confirmMsg As String = "The database file has been created by an earlier version of SQL Server Compact{0}" & _
+        Dim confirmMsg As String = "The database file has been created by an earlier version of SQL Server Compact." & _
         "Would you like to upgrade it to the latest version?{0}{0}Please take backup of your database before continuing."
         If MessageBox.Show(String.Format(confirmMsg, Environment.NewLine), APPLICATION_NAME, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.Yes Then
             Dim oSqlCeExplorerDB As New SqlCeExplorerDB()

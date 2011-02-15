@@ -24,7 +24,9 @@ Public Class frmGenerateScript
                 nullable = "NULL"
             End If
             Dim DataLength As String
-            If oTablesReader("DATA_TYPE").ToString().Equals("image", StringComparison.CurrentCultureIgnoreCase) Then
+            'Doesn't require a length.
+            If oTablesReader("DATA_TYPE").ToString().Equals("image", StringComparison.CurrentCultureIgnoreCase) OrElse _
+                oTablesReader("DATA_TYPE").ToString().Equals("ntext", StringComparison.CurrentCultureIgnoreCase) Then
                 DataLength = String.Empty
             Else
                 DataLength = IIf(oTablesReader("CHARACTER_MAXIMUM_LENGTH").ToString.Length >= 1, "(" & oTablesReader("CHARACTER_MAXIMUM_LENGTH").ToString & ")", "")

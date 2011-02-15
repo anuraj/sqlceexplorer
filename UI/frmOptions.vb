@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.Win32
 Imports System.Security.Permissions
 Imports System.Security.AccessControl
+Imports System.Security.Principal
 
 Public Class frmOptions
     Private m_CurrentFont As Font = Nothing
@@ -62,9 +63,11 @@ Public Class frmOptions
                 .EnableCommentHighlight = False
                 .EnableVariableHighlight = False
             End If
-            .IsAssociatedToSdf = Me.chkAssociate.Checked
 
-            AssociateToSDFFile(Me.chkAssociate.Checked, Application.ExecutablePath)
+            If Me.chkAssociate.Enabled Then
+                .IsAssociatedToSdf = Me.chkAssociate.Checked
+                AssociateToSDFFile(Me.chkAssociate.Checked, Application.ExecutablePath)
+            End If
 
             .SaveConfig()
         End With
@@ -76,6 +79,8 @@ Public Class frmOptions
     End Sub
 
     Private Sub frmOptions_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        Me.chkAssociate.Enabled = IsCurrentlyRunningAsAdmin()
 
         tcOptions.TabPages.Remove(tpDBOptions)
 
@@ -207,4 +212,17 @@ Public Class frmOptions
             My.Computer.Registry.ClassesRoot.DeleteSubKeyTree("SQLCEExplorer")
         End If
     End Sub
+    Private Function IsCurrentlyRunningAsAdmin() As Boolean
+        Dim isAdmin As Boolean = False
+        Dim currentIdentity As WindowsIdentity = WindowsIdentity.GetCurrent()
+        If currentIdentity IsNot Nothing Then
+            Dim pricipal As New WindowsPrincipal(currentIdentity)
+            isAdmin = pricipal.IsInRole(WindowsBuiltInRole.Administrator)
+            pricipal = Nothing
+        End If
+        Return isAdmin
+    End Function
+
+
+
 End Class
