@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.Win32
 Imports System.Security.Permissions
+Imports System.Security.AccessControl
 
 Public Class frmOptions
     Private m_CurrentFont As Font = Nothing
@@ -61,6 +62,9 @@ Public Class frmOptions
                 .EnableCommentHighlight = False
                 .EnableVariableHighlight = False
             End If
+            .IsAssociatedToSdf = Me.chkAssociate.Checked
+
+            AssociateToSDFFile(Me.chkAssociate.Checked, Application.ExecutablePath)
 
             .SaveConfig()
         End With
@@ -107,7 +111,7 @@ Public Class frmOptions
         If oSqlCeConfig.VariableColor IsNot Nothing Then
             Me.txtVariableSample.ForeColor = Color.FromArgb(oSqlCeConfig.VariableColor)
         End If
-
+        Me.chkAssociate.Checked = oSqlCeConfig.IsAssociatedToSdf
 
         Me.ToggleRecentItems()
         oSqlCeConfig = Nothing
@@ -186,5 +190,21 @@ Public Class frmOptions
         Return result
     End Function
 
-   
+    Private Sub AssociateToSDFFile(ByVal associate As Boolean, ByVal appPath As String)
+        Dim sdfFileAssoc As RegistryKey = My.Computer.Registry.ClassesRoot.OpenSubKey(".sdf", True)
+        If associate Then
+            If sdfFileAssoc Is Nothing Then
+                sdfFileAssoc = My.Computer.Registry.ClassesRoot.CreateSubKey(".sdf")
+            End If
+            sdfFileAssoc.SetValue("", "SQLCEExplorer", RegistryValueKind.String)
+            My.Computer.Registry.ClassesRoot.CreateSubKey("SQLCEExplorer\Shell\Explore with SQLCE Explorer\Command").SetValue("", _
+                        String.Format("{0} ""%1""", appPath), Microsoft.Win32.RegistryValueKind.String)
+        Else
+            If sdfFileAssoc Is Nothing Then
+                Return
+            End If
+            sdfFileAssoc.SetValue("", "Microsoft SQL Server Compact Edition Database File", RegistryValueKind.String)
+            My.Computer.Registry.ClassesRoot.DeleteSubKeyTree("SQLCEExplorer")
+        End If
+    End Sub
 End Class

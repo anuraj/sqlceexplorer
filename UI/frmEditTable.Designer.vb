@@ -57,6 +57,7 @@ Partial Class frmEditTable
                     Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.plMain.AutoScroll = True
+        Me.plMain.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.plMain.Controls.Add(Me.dgvEditRows)
         Me.plMain.Location = New System.Drawing.Point(8, 5)
         Me.plMain.Name = "plMain"
@@ -65,15 +66,14 @@ Partial Class frmEditTable
         '
         'dgvEditRows
         '
-        Me.dgvEditRows.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dgvEditRows.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.dgvEditRows.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvEditRows.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvEditRows.Location = New System.Drawing.Point(0, 0)
         Me.dgvEditRows.Margin = New System.Windows.Forms.Padding(5)
         Me.dgvEditRows.Name = "dgvEditRows"
         Me.dgvEditRows.RowHeadersVisible = False
-        Me.dgvEditRows.Size = New System.Drawing.Size(658, 337)
+        Me.dgvEditRows.Size = New System.Drawing.Size(654, 333)
         Me.dgvEditRows.TabIndex = 10
         '
         'Panel1

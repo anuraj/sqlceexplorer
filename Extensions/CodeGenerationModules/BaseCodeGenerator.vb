@@ -26,6 +26,10 @@ Namespace Framework
         Public MustOverride ReadOnly Property Language As String Implements Framework.Interfaces.ICodeGenerator.Language
         Public MustOverride Sub ShowAbout() Implements Framework.Interfaces.ICodeGenerator.ShowAbout
 
+        Protected Sub AssociateFramework(ByVal connectionString As String)
+            Throw New NotImplementedException
+        End Sub
+
         Protected Sub GenerateProjectXml(ByVal databaseName As String, ByVal targetType As String, ByVal ClassFiles As IEnumerable(Of String))
             If Me.m_ListOfTables Is Nothing Then
                 Throw New ArgumentNullException()

@@ -49,7 +49,6 @@ Public Class SqlCeExplorerUtility
         If isDelete Then
             listItems.Remove(item)
         End If
-        listItems.Reverse()
         Using sw As New StreamWriter(settingsFile, False)
             For Each listItem As String In listItems
                 sw.WriteLine(listItem)

@@ -43,8 +43,8 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>Full</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>None</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>Output\</OutputPath>
@@ -97,6 +97,12 @@
     <Compile Include="Extensions\ImportModules\CSVImporter.vb" />
     <Compile Include="Extensions\ImportModules\Excel2003Importer.vb" />
     <Compile Include="Extensions\ImportModules\Excel2007Importer.vb" />
+    <Compile Include="Extensions\SQLServerImportExport\frmSqlImportExportWizard.Designer.vb">
+      <DependentUpon>frmSqlImportExportWizard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\SQLServerImportExport\frmSqlImportExportWizard.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Framework\frmBaseUI.Designer.vb">
       <DependentUpon>frmBaseUI.vb</DependentUpon>
     </Compile>
@@ -247,6 +253,9 @@
     <Compile Include="UIResources\Constants.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Extensions\SQLServerImportExport\frmSqlImportExportWizard.resx">
+      <DependentUpon>frmSqlImportExportWizard.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Framework\frmBaseUI.resx">
       <DependentUpon>frmBaseUI.vb</DependentUpon>
     </EmbeddedResource>

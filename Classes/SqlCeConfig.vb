@@ -20,7 +20,15 @@ Public Class SqlCeConfig
     Private m_CommentsColor As String = "-16744448"
     Private m_RecentItemsCount As String = "5"
     Private m_EnableAutoComplete As Boolean = False
-
+    Private m_IsAssociatedToSdf As Boolean = False
+    Public Property IsAssociatedToSdf As Boolean
+        Get
+            Return m_IsAssociatedToSdf
+        End Get
+        Set(ByVal value As Boolean)
+            m_IsAssociatedToSdf = value
+        End Set
+    End Property
     Public Property EnableAutoComplete As Boolean
         Get
             Return m_EnableAutoComplete
@@ -165,6 +173,7 @@ Public Class SqlCeConfig
                 .VariableHighlight = Me.EnableVariableHighlight
                 .RecentItemsCount = Me.RecentItemsCount
                 .EnableAutoComplete = Me.EnableAutoComplete
+                .IsAssociatedToSDF = Me.IsAssociatedToSdf
                 .Save()
             End With
         Catch
@@ -187,6 +196,7 @@ Public Class SqlCeConfig
                 Me.EnableVariableHighlight = .VariableHighlight
                 Me.RecentItemsCount = .RecentItemsCount
                 Me.EnableAutoComplete = .EnableAutoComplete
+                Me.IsAssociatedToSdf = .IsAssociatedToSDF
             End With
         Catch
             'do nothing

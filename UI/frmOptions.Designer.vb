@@ -24,6 +24,7 @@ Partial Class frmOptions
     Private Sub InitializeComponent()
         Me.tcOptions = New System.Windows.Forms.TabControl()
         Me.tpSettings = New System.Windows.Forms.TabPage()
+        Me.chkAssociate = New System.Windows.Forms.CheckBox()
         Me.chkAutoComplete = New System.Windows.Forms.CheckBox()
         Me.chkRecentItems = New System.Windows.Forms.CheckBox()
         Me.nuRecentFiles = New System.Windows.Forms.NumericUpDown()
@@ -82,6 +83,7 @@ Partial Class frmOptions
         '
         'tpSettings
         '
+        Me.tpSettings.Controls.Add(Me.chkAssociate)
         Me.tpSettings.Controls.Add(Me.chkAutoComplete)
         Me.tpSettings.Controls.Add(Me.chkRecentItems)
         Me.tpSettings.Controls.Add(Me.nuRecentFiles)
@@ -97,6 +99,16 @@ Partial Class frmOptions
         Me.tpSettings.TabIndex = 0
         Me.tpSettings.Text = "Settings"
         Me.tpSettings.UseVisualStyleBackColor = True
+        '
+        'chkAssociate
+        '
+        Me.chkAssociate.AutoSize = True
+        Me.chkAssociate.Location = New System.Drawing.Point(19, 189)
+        Me.chkAssociate.Name = "chkAssociate"
+        Me.chkAssociate.Size = New System.Drawing.Size(237, 19)
+        Me.chkAssociate.TabIndex = 18
+        Me.chkAssociate.Text = "Associate *.SDF file to SQLCE Explorer"
+        Me.chkAssociate.UseVisualStyleBackColor = True
         '
         'chkAutoComplete
         '
@@ -506,4 +518,5 @@ Partial Class frmOptions
     Friend WithEvents plComments As System.Windows.Forms.Panel
     Friend WithEvents plVariables As System.Windows.Forms.Panel
     Friend WithEvents chkAutoComplete As System.Windows.Forms.CheckBox
+    Friend WithEvents chkAssociate As System.Windows.Forms.CheckBox
 End Class

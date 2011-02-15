@@ -66,14 +66,16 @@ Public Class SqlCeExplorerData
     End Function
     Public Function ExecuteMultipleQueries(ByVal Queries() As String) As List(Of SqlCeDataReader)
         Dim oSqlCeDataLayer As SqlCeDatalayer = Nothing
-        Dim resuls As New List(Of SqlCeDataReader)(Queries.Length)
+        Dim results As New List(Of SqlCeDataReader)(Queries.Length)
         Dim result As Boolean = False
         Try
             oSqlCeDataLayer = New SqlCeDatalayer(SqlCeMain.GetConnectionString())
             oSqlCeDataLayer.Connect()
             m_ParseMessage = EXECUTE_SUCCESS
             For Each query As String In Queries
-                resuls.Add(oSqlCeDataLayer.ExecuteReader(query))
+                If query.Trim().Length >= 1 Then
+                    results.Add(oSqlCeDataLayer.ExecuteReader(query))
+                End If
             Next
         Catch ex As Exception
             m_ParseMessage = String.Format("{0}{1}Error: {2}", EXECUTE_FAILED, Environment.NewLine, ex.Message)
@@ -82,14 +84,12 @@ Public Class SqlCeExplorerData
         Finally
             oSqlCeDataLayer = Nothing
         End Try
-        Return resuls
+        Return results
     End Function
-    Public Function Fill(ByVal Reader As SqlCeDataReader) As DataTable
-        Dim oDataset As New DataSet
-        oDataset.EnforceConstraints = False
-        oDataset.Tables.Add(New DataTable)
-        oDataset.Tables(0).Load(Reader)
-        Return oDataset.Tables(0)
+    Public Function Fill(ByVal reader As SqlCeDataReader) As DataTable
+        Dim dt As New DataTable()
+        dt.Load(reader)
+        Return dt
     End Function
 
     Public Shared Function CheckConnection() As Boolean

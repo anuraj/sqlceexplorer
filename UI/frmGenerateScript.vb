@@ -23,7 +23,13 @@ Public Class frmGenerateScript
             If oTablesReader("IS_NULLABLE") IsNot Nothing AndAlso oTablesReader("IS_NULLABLE").ToString.Equals("yes", StringComparison.CurrentCultureIgnoreCase) Then
                 nullable = "NULL"
             End If
-            tableScript.AppendFormat("[{0}] [{1}] {2} {3},", oTablesReader("COLUMN_NAME").ToString(), oTablesReader("DATA_TYPE").ToString(), IIf(oTablesReader("CHARACTER_MAXIMUM_LENGTH").ToString.Length >= 1, "(" & oTablesReader("CHARACTER_MAXIMUM_LENGTH").ToString & ")", ""), nullable)
+            Dim DataLength As String
+            If oTablesReader("DATA_TYPE").ToString().Equals("image", StringComparison.CurrentCultureIgnoreCase) Then
+                DataLength = String.Empty
+            Else
+                DataLength = IIf(oTablesReader("CHARACTER_MAXIMUM_LENGTH").ToString.Length >= 1, "(" & oTablesReader("CHARACTER_MAXIMUM_LENGTH").ToString & ")", "")
+            End If
+            tableScript.AppendFormat("[{0}] [{1}] {2} {3},", oTablesReader("COLUMN_NAME").ToString(), oTablesReader("DATA_TYPE").ToString(), DataLength, nullable)
         End While
         tableScript.Replace(",", ")", tableScript.Length - 1, 1)
         tableScript.AppendLine()

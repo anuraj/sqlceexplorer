@@ -27,8 +27,8 @@ Namespace Framework.Extentions
 
                 Dim _entity As New CodeTypeDeclaration(tableName)
                 _entity.IsClass = True
-                _entity.Attributes = MemberAttributes.Public
 
+                _entity.Attributes = MemberAttributes.Public
                 Dim _codeCompileUnit As New CodeCompileUnit()
                 _codeCompileUnit.Namespaces.Add(_datalayerNamespace)
 

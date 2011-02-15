@@ -120,7 +120,7 @@ Public Class frmCreateTable
         Me.m_DataLengths.Add("bit", "1")
         Me.m_DataLengths.Add("datetime", "8")
         Me.m_DataLengths.Add("float", "8")
-        Me.m_DataLengths.Add("image", "16")
+        Me.m_DataLengths.Add("image", "")
         Me.m_DataLengths.Add("int", "4")
         Me.m_DataLengths.Add("money", "19")
         Me.m_DataLengths.Add("nchar", "100")

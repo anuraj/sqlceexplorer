@@ -179,11 +179,15 @@ Partial Class frmMain
         Me.txtQueryWindow = New SQLCEExplorer.SQLTextbox()
         Me.tcMain = New System.Windows.Forms.TabControl()
         Me.tpGrid = New System.Windows.Forms.TabPage()
+        Me.Panel2 = New System.Windows.Forms.Panel()
         Me.dgvResults = New System.Windows.Forms.DataGridView()
         Me.ctxGridMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ctxiCopyGrid = New System.Windows.Forms.ToolStripMenuItem()
         Me.ctxigridsep1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ctxiExport = New System.Windows.Forms.ToolStripMenuItem()
+        Me.plNavControls = New System.Windows.Forms.Panel()
+        Me.llNext = New System.Windows.Forms.LinkLabel()
+        Me.llPrev = New System.Windows.Forms.LinkLabel()
         Me.tpText = New System.Windows.Forms.TabPage()
         Me.txtOutput = New System.Windows.Forms.TextBox()
         Me.ctxOutputWindow = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -207,8 +211,10 @@ Partial Class frmMain
         Me.scRightSide.SuspendLayout()
         Me.tcMain.SuspendLayout()
         Me.tpGrid.SuspendLayout()
+        Me.Panel2.SuspendLayout()
         CType(Me.dgvResults, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ctxGridMenu.SuspendLayout()
+        Me.plNavControls.SuspendLayout()
         Me.tpText.SuspendLayout()
         Me.ctxOutputWindow.SuspendLayout()
         Me.ToolStripContainer1.ContentPanel.SuspendLayout()
@@ -681,7 +687,7 @@ Partial Class frmMain
         '
         Me.mnuRefresh.Image = Global.SQLCEExplorer.My.Resources.Resources.arrows_circle
         Me.mnuRefresh.Name = "mnuRefresh"
-        Me.mnuRefresh.ShortcutKeys = System.Windows.Forms.Keys.F5
+        Me.mnuRefresh.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
         Me.mnuRefresh.Size = New System.Drawing.Size(226, 22)
         Me.mnuRefresh.Text = "Refresh"
         '
@@ -954,7 +960,7 @@ Partial Class frmMain
         '
         Me.ctxEditor.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCopy, Me.ctxiCut, Me.ctxiPaste, Me.tspSep7, Me.ctxiSelectAllEditor, Me.tspSep5, Me.ctxiDeleteSelected, Me.tspSep6, Me.ctxiParse, Me.ctxiExecute, Me.ctxiSep4, Me.ctxiClear})
         Me.ctxEditor.Name = "ctxEditor"
-        Me.ctxEditor.Size = New System.Drawing.Size(171, 204)
+        Me.ctxEditor.Size = New System.Drawing.Size(171, 226)
         '
         'ctxiCopy
         '
@@ -1040,7 +1046,7 @@ Partial Class frmMain
         Me.tsMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbConnect, Me.tsbDisconnect, Me.tsbSep1, Me.tsbCreateDb, Me.tsbSep2, Me.tsbSaveAs, Me.tsbSep3, Me.tsbFind, Me.tsbSep5, Me.tsbParse, Me.tsbExecute, Me.tsbSep6, Me.tsbOptions, Me.tsbSep8, Me.tsbWeb})
         Me.tsMain.Location = New System.Drawing.Point(3, 0)
         Me.tsMain.Name = "tsMain"
-        Me.tsMain.Size = New System.Drawing.Size(286, 25)
+        Me.tsMain.Size = New System.Drawing.Size(255, 25)
         Me.tsMain.TabIndex = 0
         Me.tsMain.Text = "ToolStrip1"
         Me.tsMain.Visible = False
@@ -1247,7 +1253,6 @@ Partial Class frmMain
         Me.txtQueryWindow.OperatorColor = System.Drawing.Color.Gray
         Me.txtQueryWindow.Operators = CType(resources.GetObject("txtQueryWindow.Operators"), System.Collections.Generic.List(Of String))
         Me.txtQueryWindow.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical
-        Me.txtQueryWindow.ShortcutsEnabled = False
         Me.txtQueryWindow.Size = New System.Drawing.Size(517, 172)
         Me.txtQueryWindow.TabIndex = 0
         Me.txtQueryWindow.Text = ""
@@ -1266,55 +1271,96 @@ Partial Class frmMain
         '
         'tpGrid
         '
-        Me.tpGrid.Controls.Add(Me.dgvResults)
+        Me.tpGrid.BackColor = System.Drawing.Color.Transparent
+        Me.tpGrid.Controls.Add(Me.Panel2)
+        Me.tpGrid.Controls.Add(Me.plNavControls)
         Me.tpGrid.Location = New System.Drawing.Point(4, 24)
         Me.tpGrid.Name = "tpGrid"
         Me.tpGrid.Padding = New System.Windows.Forms.Padding(3)
         Me.tpGrid.Size = New System.Drawing.Size(509, 301)
         Me.tpGrid.TabIndex = 0
         Me.tpGrid.Text = "Results"
-        Me.tpGrid.UseVisualStyleBackColor = True
+        '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.dgvResults)
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel2.Location = New System.Drawing.Point(3, 3)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(503, 268)
+        Me.Panel2.TabIndex = 2
         '
         'dgvResults
         '
         Me.dgvResults.AllowUserToAddRows = False
         Me.dgvResults.AllowUserToDeleteRows = False
         Me.dgvResults.AllowUserToOrderColumns = True
-        Me.dgvResults.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.dgvResults.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvResults.ContextMenuStrip = Me.ctxGridMenu
         Me.dgvResults.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvResults.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dgvResults.Location = New System.Drawing.Point(3, 3)
+        Me.dgvResults.Location = New System.Drawing.Point(0, 0)
         Me.dgvResults.Name = "dgvResults"
         Me.dgvResults.RowHeadersVisible = False
         Me.dgvResults.ShowEditingIcon = False
         Me.dgvResults.ShowRowErrors = False
-        Me.dgvResults.Size = New System.Drawing.Size(503, 295)
-        Me.dgvResults.TabIndex = 0
+        Me.dgvResults.Size = New System.Drawing.Size(503, 268)
+        Me.dgvResults.TabIndex = 3
         '
         'ctxGridMenu
         '
         Me.ctxGridMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ctxiCopyGrid, Me.ctxigridsep1, Me.ctxiExport})
         Me.ctxGridMenu.Name = "ctxGridMenu"
-        Me.ctxGridMenu.Size = New System.Drawing.Size(153, 76)
+        Me.ctxGridMenu.Size = New System.Drawing.Size(117, 54)
         '
         'ctxiCopyGrid
         '
         Me.ctxiCopyGrid.Name = "ctxiCopyGrid"
-        Me.ctxiCopyGrid.Size = New System.Drawing.Size(152, 22)
+        Me.ctxiCopyGrid.Size = New System.Drawing.Size(116, 22)
         Me.ctxiCopyGrid.Text = "&Copy"
         '
         'ctxigridsep1
         '
         Me.ctxigridsep1.Name = "ctxigridsep1"
-        Me.ctxigridsep1.Size = New System.Drawing.Size(149, 6)
+        Me.ctxigridsep1.Size = New System.Drawing.Size(113, 6)
         '
         'ctxiExport
         '
         Me.ctxiExport.Name = "ctxiExport"
-        Me.ctxiExport.Size = New System.Drawing.Size(152, 22)
+        Me.ctxiExport.Size = New System.Drawing.Size(116, 22)
         Me.ctxiExport.Text = "&Export..."
+        '
+        'plNavControls
+        '
+        Me.plNavControls.BackColor = System.Drawing.Color.Transparent
+        Me.plNavControls.Controls.Add(Me.llNext)
+        Me.plNavControls.Controls.Add(Me.llPrev)
+        Me.plNavControls.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.plNavControls.Location = New System.Drawing.Point(3, 271)
+        Me.plNavControls.Name = "plNavControls"
+        Me.plNavControls.Size = New System.Drawing.Size(503, 27)
+        Me.plNavControls.TabIndex = 1
+        '
+        'llNext
+        '
+        Me.llNext.AutoSize = True
+        Me.llNext.Location = New System.Drawing.Point(81, 7)
+        Me.llNext.Name = "llNext"
+        Me.llNext.Size = New System.Drawing.Size(49, 15)
+        Me.llNext.TabIndex = 0
+        Me.llNext.TabStop = True
+        Me.llNext.Text = "Next >>"
+        '
+        'llPrev
+        '
+        Me.llPrev.AutoSize = True
+        Me.llPrev.Location = New System.Drawing.Point(4, 7)
+        Me.llPrev.Name = "llPrev"
+        Me.llPrev.Size = New System.Drawing.Size(71, 15)
+        Me.llPrev.TabIndex = 0
+        Me.llPrev.TabStop = True
+        Me.llPrev.Text = "<< Previous"
         '
         'tpText
         '
@@ -1337,7 +1383,7 @@ Partial Class frmMain
         Me.txtOutput.Name = "txtOutput"
         Me.txtOutput.ReadOnly = True
         Me.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.txtOutput.Size = New System.Drawing.Size(503, 297)
+        Me.txtOutput.Size = New System.Drawing.Size(503, 295)
         Me.txtOutput.TabIndex = 100
         Me.txtOutput.TabStop = False
         '
@@ -1428,8 +1474,11 @@ Partial Class frmMain
         Me.scRightSide.ResumeLayout(False)
         Me.tcMain.ResumeLayout(False)
         Me.tpGrid.ResumeLayout(False)
+        Me.Panel2.ResumeLayout(False)
         CType(Me.dgvResults, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ctxGridMenu.ResumeLayout(False)
+        Me.plNavControls.ResumeLayout(False)
+        Me.plNavControls.PerformLayout()
         Me.tpText.ResumeLayout(False)
         Me.tpText.PerformLayout()
         Me.ctxOutputWindow.ResumeLayout(False)
@@ -1511,7 +1560,6 @@ Partial Class frmMain
     Friend WithEvents txtQueryWindow As SQLCEExplorer.SQLTextbox
     Friend WithEvents tcMain As System.Windows.Forms.TabControl
     Friend WithEvents tpGrid As System.Windows.Forms.TabPage
-    Friend WithEvents dgvResults As System.Windows.Forms.DataGridView
     Friend WithEvents tpText As System.Windows.Forms.TabPage
     Friend WithEvents txtOutput As System.Windows.Forms.TextBox
     Friend WithEvents mniOpenFile As System.Windows.Forms.ToolStripMenuItem
@@ -1611,5 +1659,10 @@ Partial Class frmMain
     Friend WithEvents mnuManageTableDeleteAll As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuExport As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents plNavControls As System.Windows.Forms.Panel
+    Friend WithEvents Panel2 As System.Windows.Forms.Panel
+    Friend WithEvents dgvResults As System.Windows.Forms.DataGridView
+    Friend WithEvents llNext As System.Windows.Forms.LinkLabel
+    Friend WithEvents llPrev As System.Windows.Forms.LinkLabel
 
 End Class

@@ -246,10 +246,7 @@ Public Class frmMain
                     ShowConnectDialog()
                 End If
             End If
-            If Me.IsCommandLineArgumentsExists Then
-                Me.Show()
-                ShowConnectDialog(My.Application.CommandLineArgs(0))
-            End If
+
             If CurrentConfig.FontName IsNot Nothing Then
                 Me.txtQueryWindow.Font = New Font(CurrentConfig.FontName, Convert.ToSingle(CurrentConfig.FontSize))
             End If
@@ -337,12 +334,7 @@ Public Class frmMain
     End Sub
 
     Private Sub mniFind_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniFind.Click
-        Dim ofrmFind As New frmFind
-        m_StartPos = 0
-        ofrmFind.StartPosition = FormStartPosition.Manual
-        ofrmFind.Location = New Point(Me.Left + 200, Me.Top + 100)
-        AddHandler ofrmFind.FindText, AddressOf ofrmFind_FindText
-        ofrmFind.Show(Me)
+        DoFind()
     End Sub
     Private Sub ofrmFind_FindText(ByVal sender As Object, ByVal e As FindEventArgs)
         Dim txtFind As String = e.Text
@@ -364,53 +356,24 @@ Public Class frmMain
     End Sub
 
     Private Sub mniParse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniParse.Click, ctxiParse.Click
-        If m_IsConnected Then
-            Dim oSqlCeExplorerData As New SqlCeExplorerData
-            Dim query As String
-            If Me.txtQueryWindow.SelectionLength <= 0 Then
-                query = Me.txtQueryWindow.Text
-            Else
-                query = Me.txtQueryWindow.SelectedText
-            End If
-            Dim RecordsAffected As Integer = 0
-            Dim sqlResult As Boolean = oSqlCeExplorerData.ParseQuery(query)
-
-            If Not sqlResult Then
-                'Query failed
-                Me.tcMain.SelectedTab = Me.tpText
-                Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
-                Me.txtOutput.ForeColor = Color.Red
-                Me.txtOutput.SelectionLength = 0
-                Me.dgvResults.DataSource = Nothing
-            Else
-                'Insert, Update, or delete.
-                Me.tcMain.SelectedTab = Me.tpText
-                Me.txtOutput.ForeColor = Color.Black
-                Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
-                Me.dgvResults.DataSource = Nothing
-                Me.txtOutput.SelectionLength = 0
-            End If
-        End If
+        DoParseQuery()
     End Sub
     Private Function IsMultipleQuery() As Boolean
         Dim tempQuery As String = IIf(Me.txtQueryWindow.SelectionLength >= 1, Me.txtQueryWindow.SelectedText, Me.txtQueryWindow.Text)
-        Return tempQuery.Split(Me.m_Delimeter, StringSplitOptions.RemoveEmptyEntries).Length >= 1
+        Return tempQuery.Split(Me.m_Delimeter, StringSplitOptions.RemoveEmptyEntries).Length > 1
     End Function
     Private Sub mniExecute_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniExecute.Click, ctxiExecute.Click
-        If m_IsConnected Then
-            If IsMultipleQuery() Then
-                Me.ExecuteMultipleQuery()
-            Else
-                Me.ExecuteQuery()
-            End If
-        End If
+        DoExecuteQuery()
     End Sub
+    Private listOfTables As List(Of DataTable)
     Private Sub ExecuteMultipleQuery()
+
         Dim oSqlCeExplorerData As New SqlCeExplorerData
         Dim dataReaders As List(Of SqlCeDataReader) =
             oSqlCeExplorerData.ExecuteMultipleQueries(IIf(Me.txtQueryWindow.SelectionLength >= 1, Me.txtQueryWindow.SelectedText, Me.txtQueryWindow.Text).
                                                       Split(Me.m_Delimeter, StringSplitOptions.RemoveEmptyEntries))
-        Dim dataTables As New List(Of DataTable)
+
+        listOfTables = New List(Of DataTable)
         Dim RecordsAffected As Integer = 0
         For Each SqlCeReader As SqlCeDataReader In dataReaders
             If SqlCeReader IsNot Nothing Then
@@ -430,10 +393,11 @@ Public Class frmMain
                         Dim results As DataTable = Nothing
                         If SqlCeReader IsNot Nothing Then
                             results = oSqlCeExplorerData.Fill(SqlCeReader)
+                            listOfTables.Add(results)
                         End If
+
                         If results IsNot Nothing AndAlso results.Rows.Count >= 1 Then
-                            Me.dgvResults.DataSource = results
-                            Me.tcMain.SelectedTab = Me.tpGrid
+                            BindToGrid(Nothing)
                         Else
                             Me.tcMain.SelectedTab = Me.tpText
                             Me.dgvResults.DataSource = Nothing
@@ -449,6 +413,35 @@ Public Class frmMain
                 End Select
             End If
         Next
+    End Sub
+    Dim pageIndex As Integer = 0
+    Private Sub BindToGrid(ByVal forward As Nullable(Of Boolean))
+        If listOfTables Is Nothing Then
+            Return
+        End If
+        If Not forward.HasValue Then
+            pageIndex = 0
+        End If
+        If forward.HasValue Then
+            If forward.Value Then
+                pageIndex += 1
+            Else
+                pageIndex -= 1
+            End If
+        End If
+
+        If pageIndex >= 0 AndAlso pageIndex < listOfTables.Count Then
+            Me.dgvResults.DataSource = listOfTables(pageIndex)
+            Me.tcMain.SelectedTab = Me.tpGrid
+        Else
+            If forward.HasValue Then
+                If forward.Value Then
+                    pageIndex -= 1
+                Else
+                    pageIndex += 1
+                End If
+            End If
+        End If
     End Sub
     Private Sub ExecuteQuery()
         Dim oSqlCeExplorerData As New SqlCeExplorerData
@@ -522,23 +515,19 @@ Public Class frmMain
     End Sub
 
     Private Sub mniCopy_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniCopy.Click, ctxiCopy.Click
-        'Clipboard.SetText(Me.txtQueryWindow.SelectedText)
-        Me.txtQueryWindow.Copy()
+        DoCopy()
     End Sub
 
     Private Sub mniCut_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniCut.Click, ctxiCut.Click
-        Me.txtQueryWindow.Cut()
+        DoCut()
     End Sub
 
     Private Sub mniPaste_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniPaste.Click, ctxiPaste.Click
-        If Clipboard.ContainsText() Then
-            Me.txtQueryWindow.SelectedText = Clipboard.GetText()
-            Me.txtQueryWindow.DoSyntaxHighlight()
-        End If
+        DoPaste()
     End Sub
 
     Private Sub mniSelectAll_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniSelectAll.Click, ctxiSelectAllEditor.Click
-        Me.txtQueryWindow.SelectAll()
+        DoSelectAll()
     End Sub
 
     Private Sub mniClearAll_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniClearAll.Click
@@ -1082,8 +1071,36 @@ Public Class frmMain
                 Me.ActiveControl = lstSuggestions
                 isAutoSuggested = True
             End If
+        ElseIf e.Control Then
+            Select Case e.KeyCode
+                Case Keys.C
+                    DoCopy()
+                    e.SuppressKeyPress = True
+                Case Keys.V
+                    DoPaste()
+                    e.SuppressKeyPress = True
+                Case Keys.X
+                    DoCut()
+                    e.SuppressKeyPress = True
+                Case Keys.A
+                    DoSelectAll()
+                    e.SuppressKeyPress = True
+                Case Keys.F5
+                    DoParseQuery()
+                    e.SuppressKeyPress = True
+            End Select
+        ElseIf e.KeyCode = Keys.Delete Then
+            DoDelete()
+            e.SuppressKeyPress = True
+        ElseIf e.KeyCode = Keys.F3 Then
+            DoFind()
+            e.SuppressKeyPress = True
+        ElseIf e.KeyCode = Keys.F5 Then
+            DoExecuteQuery()
+            e.SuppressKeyPress = True
         Else
             isAutoSuggested = False
+            e.SuppressKeyPress = False
         End If
     End Sub
     Private Function FillSimilarWords(ByVal s As String) As Boolean
@@ -1216,5 +1233,96 @@ Public Class frmMain
                 End If
             End With
         End Using
+    End Sub
+
+    Private Sub llPrev_LinkClicked(ByVal sender As Object, ByVal e As LinkLabelLinkClickedEventArgs) Handles llPrev.LinkClicked
+        BindToGrid(False)
+    End Sub
+
+    Private Sub llNext_LinkClicked(ByVal sender As Object, ByVal e As LinkLabelLinkClickedEventArgs) Handles llNext.LinkClicked
+        BindToGrid(True)
+    End Sub
+
+    Private Sub DoCopy()
+        If Me.txtQueryWindow.SelectionLength <> 0 Then
+            Clipboard.SetText(Me.txtQueryWindow.SelectedText)
+        End If
+    End Sub
+
+    Private Sub DoCut()
+        If Me.txtQueryWindow.SelectionLength <> 0 Then
+            Clipboard.SetText(Me.txtQueryWindow.SelectedText)
+            Me.txtQueryWindow.SelectedText = String.Empty
+        End If
+    End Sub
+
+    Private Sub DoPaste()
+        If Clipboard.ContainsText() Then
+            Me.txtQueryWindow.SelectedText = Clipboard.GetText()
+            Me.txtQueryWindow.DoSyntaxHighlight()
+        End If
+    End Sub
+
+    Private Sub DoSelectAll()
+        Me.txtQueryWindow.SelectAll()
+    End Sub
+
+    Private Sub DoExecuteQuery()
+        If m_IsConnected Then
+            If IsMultipleQuery() Then
+                Me.ExecuteMultipleQuery()
+                Me.plNavControls.Enabled = True
+            Else
+                Me.ExecuteQuery()
+                Me.plNavControls.Enabled = False
+            End If
+        End If
+    End Sub
+
+    Private Sub DoParseQuery()
+        If m_IsConnected Then
+            Dim oSqlCeExplorerData As New SqlCeExplorerData
+            Dim query As String
+            If Me.txtQueryWindow.SelectionLength <= 0 Then
+                query = Me.txtQueryWindow.Text
+            Else
+                query = Me.txtQueryWindow.SelectedText
+            End If
+            Dim RecordsAffected As Integer = 0
+            Dim sqlResult As Boolean = oSqlCeExplorerData.ParseQuery(query)
+
+            If Not sqlResult Then
+                'Query failed
+                Me.tcMain.SelectedTab = Me.tpText
+                Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
+                Me.txtOutput.ForeColor = Color.Red
+                Me.txtOutput.SelectionLength = 0
+                Me.dgvResults.DataSource = Nothing
+            Else
+                'Insert, Update, or delete.
+                Me.tcMain.SelectedTab = Me.tpText
+                Me.txtOutput.ForeColor = Color.Black
+                Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
+                Me.dgvResults.DataSource = Nothing
+                Me.txtOutput.SelectionLength = 0
+            End If
+        End If
+    End Sub
+
+    Private Sub DoDelete()
+        If Me.txtQueryWindow.SelectionLength >= 1 Then
+            Me.txtQueryWindow.SelectedText = String.Empty
+        End If
+    End Sub
+
+    Private Sub DoFind()
+        If Me.txtQueryWindow.TextLength >= 1 Then
+            Dim ofrmFind As New frmFind
+            m_StartPos = 0
+            ofrmFind.StartPosition = FormStartPosition.Manual
+            ofrmFind.Location = New Point(Me.Left + 200, Me.Top + 100)
+            AddHandler ofrmFind.FindText, AddressOf ofrmFind_FindText
+            ofrmFind.Show(Me)
+        End If
     End Sub
 End Class
