@@ -222,7 +222,4 @@ Public Class frmOptions
         End If
         Return isAdmin
     End Function
-
-
-
 End Class

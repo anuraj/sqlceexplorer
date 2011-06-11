@@ -372,47 +372,48 @@ Public Class frmMain
         Dim dataReaders As List(Of SqlCeDataReader) =
             oSqlCeExplorerData.ExecuteMultipleQueries(IIf(Me.txtQueryWindow.SelectionLength >= 1, Me.txtQueryWindow.SelectedText, Me.txtQueryWindow.Text).
                                                       Split(Me.m_Delimeter, StringSplitOptions.RemoveEmptyEntries))
-
-        listOfTables = New List(Of DataTable)
-        Dim RecordsAffected As Integer = 0
-        For Each SqlCeReader As SqlCeDataReader In dataReaders
-            If SqlCeReader IsNot Nothing Then
-                RecordsAffected = SqlCeReader.RecordsAffected
-                Select Case RecordsAffected
-                    Case 0
-                        'Query failed
-                        Me.tcMain.SelectedTab = Me.tpText
-                        Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
-                        Me.txtOutput.ForeColor = Color.Red
-                        Me.txtOutput.SelectionLength = 0
-                    Case -1
-                        'Select statement
-
-                        Me.txtOutput.ForeColor = Color.Black
-                        Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
-                        Dim results As DataTable = Nothing
-                        If SqlCeReader IsNot Nothing Then
-                            results = oSqlCeExplorerData.Fill(SqlCeReader)
-                            listOfTables.Add(results)
-                        End If
-
-                        If results IsNot Nothing AndAlso results.Rows.Count >= 1 Then
-                            BindToGrid(Nothing)
-                        Else
+        If dataReaders IsNot Nothing Then
+            listOfTables = New List(Of DataTable)
+            Dim RecordsAffected As Integer = 0
+            For Each SqlCeReader As SqlCeDataReader In dataReaders
+                If SqlCeReader IsNot Nothing Then
+                    RecordsAffected = SqlCeReader.RecordsAffected
+                    Select Case RecordsAffected
+                        Case 0
+                            'Query failed
                             Me.tcMain.SelectedTab = Me.tpText
-                            Me.dgvResults.DataSource = Nothing
-                        End If
+                            Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
+                            Me.txtOutput.ForeColor = Color.Red
+                            Me.txtOutput.SelectionLength = 0
+                        Case -1
+                            'Select statement
 
-                    Case Else
-                        'Insert, Update, or delete.
-                        Me.tcMain.SelectedTab = Me.tpText
-                        Me.txtOutput.ForeColor = Color.Black
-                        Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
-                        Me.dgvResults.DataSource = Nothing
-                        Me.txtOutput.SelectionLength = 0
-                End Select
-            End If
-        Next
+                            Me.txtOutput.ForeColor = Color.Black
+                            Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
+                            Dim results As DataTable = Nothing
+                            If SqlCeReader IsNot Nothing Then
+                                results = oSqlCeExplorerData.Fill(SqlCeReader)
+                                listOfTables.Add(results)
+                            End If
+
+                            If results IsNot Nothing AndAlso results.Rows.Count >= 1 Then
+                                BindToGrid(Nothing)
+                            Else
+                                Me.tcMain.SelectedTab = Me.tpText
+                                Me.dgvResults.DataSource = Nothing
+                            End If
+
+                        Case Else
+                            'Insert, Update, or delete.
+                            Me.tcMain.SelectedTab = Me.tpText
+                            Me.txtOutput.ForeColor = Color.Black
+                            Me.txtOutput.Text = oSqlCeExplorerData.ParseMessage
+                            Me.dgvResults.DataSource = Nothing
+                            Me.txtOutput.SelectionLength = 0
+                    End Select
+                End If
+            Next
+        End If
     End Sub
     Dim pageIndex As Integer = 0
     Private Sub BindToGrid(ByVal forward As Nullable(Of Boolean))
@@ -671,8 +672,7 @@ Public Class frmMain
 
 
     Private Sub mniAbout_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mniAbout.Click
-        Dim ofrmAbout As New frmAbout
-        ofrmAbout.ShowDialog(Me)
+        SqlCeExplorerUtility.ShowInfoMessage(Constants.ABOUT)
     End Sub
 
     Private Sub ctxiDropTable_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ctxiDropTable.Click, mnuManageTableDelete.Click

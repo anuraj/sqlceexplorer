@@ -24,7 +24,9 @@ Public Class SqlCeExplorerUtility
             m_items = value
         End Set
     End Property
-
+    Public Shared Sub ShowInfoMessage(ByVal Message As String)
+        MessageBox.Show(Message, SqlCeMain.APPLICATION_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information)
+    End Sub
 
     Public Shared Sub ShowMessage(ByVal Message As String, ByVal Control As Control)
         MessageBox.Show(Message, SqlCeMain.APPLICATION_NAME, MessageBoxButtons.OK, MessageBoxIcon.Exclamation)

@@ -43,8 +43,8 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>None</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>Output\</OutputPath>
@@ -65,7 +65,11 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft SQL Server Compact Edition\v4.0\Desktop\System.Data.SqlServerCe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -97,12 +101,6 @@
     <Compile Include="Extensions\ImportModules\CSVImporter.vb" />
     <Compile Include="Extensions\ImportModules\Excel2003Importer.vb" />
     <Compile Include="Extensions\ImportModules\Excel2007Importer.vb" />
-    <Compile Include="Extensions\SQLServerImportExport\frmSqlImportExportWizard.Designer.vb">
-      <DependentUpon>frmSqlImportExportWizard.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Extensions\SQLServerImportExport\frmSqlImportExportWizard.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Framework\frmBaseUI.Designer.vb">
       <DependentUpon>frmBaseUI.vb</DependentUpon>
     </Compile>
@@ -138,12 +136,6 @@
     </Compile>
     <Compile Include="Interfaces\IImportModule.vb" />
     <Compile Include="Extensions\ImportModules\XmlImporter.vb" />
-    <Compile Include="UI\frmAbout.Designer.vb">
-      <DependentUpon>frmAbout.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UI\frmAbout.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="UI\frmConnect.Designer.vb">
       <DependentUpon>frmConnect.vb</DependentUpon>
     </Compile>
@@ -253,9 +245,6 @@
     <Compile Include="UIResources\Constants.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Extensions\SQLServerImportExport\frmSqlImportExportWizard.resx">
-      <DependentUpon>frmSqlImportExportWizard.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Framework\frmBaseUI.resx">
       <DependentUpon>frmBaseUI.vb</DependentUpon>
     </EmbeddedResource>
@@ -264,9 +253,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\frmGenerateCode.resx">
       <DependentUpon>frmGenerateCode.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\frmAbout.resx">
-      <DependentUpon>frmAbout.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\frmConnect.resx">
       <DependentUpon>frmConnect.vb</DependentUpon>

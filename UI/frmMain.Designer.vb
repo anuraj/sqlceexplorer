@@ -101,6 +101,8 @@ Partial Class frmMain
         Me.mnuRefresh = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuTools = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuOptions = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mniSep15 = New System.Windows.Forms.ToolStripSeparator()
+        Me.mnuImportExportSQL = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuHelp = New System.Windows.Forms.ToolStripMenuItem()
         Me.mniHomePage = New System.Windows.Forms.ToolStripMenuItem()
         Me.mniSep7 = New System.Windows.Forms.ToolStripSeparator()
@@ -693,7 +695,7 @@ Partial Class frmMain
         '
         'mnuTools
         '
-        Me.mnuTools.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuOptions})
+        Me.mnuTools.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuOptions, Me.mniSep15, Me.mnuImportExportSQL})
         Me.mnuTools.Name = "mnuTools"
         Me.mnuTools.Size = New System.Drawing.Size(48, 20)
         Me.mnuTools.Text = "&Tools"
@@ -702,8 +704,21 @@ Partial Class frmMain
         '
         Me.mnuOptions.Image = Global.SQLCEExplorer.My.Resources.Resources.wrench
         Me.mnuOptions.Name = "mnuOptions"
-        Me.mnuOptions.Size = New System.Drawing.Size(128, 22)
+        Me.mnuOptions.Size = New System.Drawing.Size(242, 22)
         Me.mnuOptions.Text = "&Options ..."
+        '
+        'mniSep15
+        '
+        Me.mniSep15.Name = "mniSep15"
+        Me.mniSep15.Size = New System.Drawing.Size(239, 6)
+        Me.mniSep15.Visible = False
+        '
+        'mnuImportExportSQL
+        '
+        Me.mnuImportExportSQL.Name = "mnuImportExportSQL"
+        Me.mnuImportExportSQL.Size = New System.Drawing.Size(242, 22)
+        Me.mnuImportExportSQL.Text = "&Import / Export from SQL Server"
+        Me.mnuImportExportSQL.Visible = False
         '
         'mnuHelp
         '
@@ -1383,7 +1398,7 @@ Partial Class frmMain
         Me.txtOutput.Name = "txtOutput"
         Me.txtOutput.ReadOnly = True
         Me.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.txtOutput.Size = New System.Drawing.Size(503, 295)
+        Me.txtOutput.Size = New System.Drawing.Size(503, 297)
         Me.txtOutput.TabIndex = 100
         Me.txtOutput.TabStop = False
         '
@@ -1664,5 +1679,7 @@ Partial Class frmMain
     Friend WithEvents dgvResults As System.Windows.Forms.DataGridView
     Friend WithEvents llNext As System.Windows.Forms.LinkLabel
     Friend WithEvents llPrev As System.Windows.Forms.LinkLabel
+    Friend WithEvents mniSep15 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents mnuImportExportSQL As System.Windows.Forms.ToolStripMenuItem
 
 End Class

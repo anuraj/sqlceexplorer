@@ -17,10 +17,7 @@ Public Class frmEditTable
         Dim commandBuilder As New SqlCeCommandBuilder(Me.m_CurrentAdapter)
         Me.m_DataTable = New DataTable
 
-        m_CurrentAdapter.Fill(m_DataTable)
-        Dim bsource As New BindingSource
-        bsource.DataSource = m_DataTable
-        Me.dgvEditRows.DataSource = bsource
+        Me.dgvEditRows.DataSource = m_DataTable
         Me.dgvEditRows.Width = Me.Width
         Me.dgvEditRows.AutoResizeColumns()
 
